@@ -18,6 +18,27 @@ window.addEventListener('error', function (event) {
   hideLoader();
 });
 
+// Función auxiliar para inicializar componentes de forma segura
+function safeInit(componentClass, name, targetSelector) {
+  try {
+    console.log(`Initializing ${name}...`);
+
+    // Verificar si el selector existe
+    const container = document.querySelector(targetSelector);
+    if (!container) {
+      console.warn(`Container ${targetSelector} for ${name} not found!`);
+    }
+
+    const component = new componentClass();
+    component.init();
+    console.log(`${name} initialized successfully`);
+    return component;
+  } catch (error) {
+    console.error(`Error initializing ${name}:`, error);
+    return null;
+  }
+}
+
 // Initialize components when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
   console.log('DOM Content Loaded - Initializing application');
@@ -25,27 +46,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize components
   try {
     console.log('Loading components...');
-
-    // Función auxiliar para inicializar componentes de forma segura
-    function safeInit(componentClass, name, targetSelector) {
-      try {
-        console.log(`Initializing ${name}...`);
-
-        // Verificar si el selector existe
-        const container = document.querySelector(targetSelector);
-        if (!container) {
-          console.warn(`Container ${targetSelector} for ${name} not found!`);
-        }
-
-        const component = new componentClass();
-        component.init();
-        console.log(`${name} initialized successfully`);
-        return component;
-      } catch (error) {
-        console.error(`Error initializing ${name}:`, error);
-        return null;
-      }
-    }
 
     // Initialize each component
     safeInit(Header, 'Header', '.site-header');
@@ -310,8 +310,8 @@ function setupCounterAnimation() {
 
 function initGlobalAnimations() {
   // Initialize AOS (Animate On Scroll) library if available
-  if (typeof AOS !== 'undefined') {
-    AOS.init({
+  if (typeof window !== 'undefined' && window.AOS) {
+    window.AOS.init({
       duration: 800,
       easing: 'ease-in-out',
       once: true,

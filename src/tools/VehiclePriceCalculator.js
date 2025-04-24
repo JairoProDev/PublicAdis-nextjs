@@ -61,15 +61,13 @@ class VehiclePriceCalculator {
     if (this.initialized) return;
 
     // Get DOM elements
-    this.form = document.getElementById("vehicle-price-form");
-    this.resultSection = document.getElementById("vehicle-price-result");
-    this.valueAmount = document.getElementById("vehicle-value-amount");
-    this.valueRange = document.getElementById("vehicle-value-range");
-    this.marketComparison = document.getElementById("market-comparison");
-    this.conditionDescription = document.getElementById(
-      "condition-description"
-    );
-    this.depreciationChart = document.getElementById("depreciation-chart");
+    this.form = document.getElementById('vehicle-price-form');
+    this.resultSection = document.getElementById('vehicle-price-result');
+    this.valueAmount = document.getElementById('vehicle-value-amount');
+    this.valueRange = document.getElementById('vehicle-value-range');
+    this.marketComparison = document.getElementById('market-comparison');
+    this.conditionDescription = document.getElementById('condition-description');
+    this.depreciationChart = document.getElementById('depreciation-chart');
 
     // Make sure all required elements exist
     if (
@@ -80,12 +78,12 @@ class VehiclePriceCalculator {
       !this.marketComparison ||
       !this.conditionDescription
     ) {
-      console.error("VehiclePriceCalculator: Missing required DOM elements");
+      console.error('VehiclePriceCalculator: Missing required DOM elements');
       return;
     }
 
     // Add event listener to form submission
-    this.form.addEventListener("submit", (e) => {
+    this.form.addEventListener('submit', e => {
       e.preventDefault();
       this.calculatePrice();
     });
@@ -103,43 +101,41 @@ class VehiclePriceCalculator {
    * Setup dynamic field behavior
    */
   setupDynamicFields() {
-    const vehicleType = document.getElementById("vehicle-type");
-    const motorcycleFields = document.getElementById("motorcycle-fields");
-    const carFields = document.getElementById("car-fields");
-    const mileageUnit = document.getElementById("mileage-unit");
+    const vehicleType = document.getElementById('vehicle-type');
+    const motorcycleFields = document.getElementById('motorcycle-fields');
+    const carFields = document.getElementById('car-fields');
+    const mileageUnit = document.getElementById('mileage-unit');
 
     if (vehicleType && motorcycleFields && carFields) {
-      vehicleType.addEventListener("change", () => {
-        const isMotorcycle = vehicleType.value === "motorcycle";
+      vehicleType.addEventListener('change', () => {
+        const isMotorcycle = vehicleType.value === 'motorcycle';
 
-        motorcycleFields.style.display = isMotorcycle ? "block" : "none";
-        carFields.style.display = isMotorcycle ? "none" : "block";
+        motorcycleFields.style.display = isMotorcycle ? 'block' : 'none';
+        carFields.style.display = isMotorcycle ? 'none' : 'block';
 
         if (mileageUnit) {
-          mileageUnit.textContent = isMotorcycle ? "km" : "km";
+          mileageUnit.textContent = isMotorcycle ? 'km' : 'km';
         }
       });
     }
 
     // Condition slider with visual indicator
-    const conditionSlider = document.getElementById("vehicle-condition");
-    const conditionValue = document.getElementById("condition-value");
+    const conditionSlider = document.getElementById('vehicle-condition');
+    const conditionValue = document.getElementById('condition-value');
 
     if (conditionSlider && conditionValue) {
-      conditionSlider.addEventListener("input", () => {
+      conditionSlider.addEventListener('input', () => {
         const value = conditionSlider.value;
         conditionValue.textContent = this.getConditionLabel(value);
 
         // Update slider color based on value
         const percentage =
-          ((value - conditionSlider.min) /
-            (conditionSlider.max - conditionSlider.min)) *
-          100;
+          ((value - conditionSlider.min) / (conditionSlider.max - conditionSlider.min)) * 100;
         conditionSlider.style.background = `linear-gradient(to right, #4CAF50 0%, #4CAF50 ${percentage}%, #ddd ${percentage}%, #ddd 100%)`;
       });
 
       // Trigger on load to set initial value
-      conditionSlider.dispatchEvent(new Event("input"));
+      conditionSlider.dispatchEvent(new Event('input'));
     }
   }
 
@@ -149,7 +145,7 @@ class VehiclePriceCalculator {
    * @returns {string} Condition label
    */
   getConditionLabel(value) {
-    const labels = ["Malo", "Regular", "Bueno", "Muy Bueno", "Excelente"];
+    const labels = ['Malo', 'Regular', 'Bueno', 'Muy Bueno', 'Excelente'];
 
     // Convert 1-10 value to 0-4 index
     const index = Math.floor((value - 1) / 2);
@@ -161,45 +157,37 @@ class VehiclePriceCalculator {
    */
   calculatePrice() {
     // Get input values
-    const vehicleType = document.getElementById("vehicle-type").value;
-    const brand = document.getElementById("vehicle-brand").value;
-    const year = parseInt(document.getElementById("vehicle-year").value) || 0;
-    const mileage =
-      parseInt(document.getElementById("vehicle-mileage").value) || 0;
-    const condition =
-      parseInt(document.getElementById("vehicle-condition").value) || 5;
+    const vehicleType = document.getElementById('vehicle-type').value;
+    const brand = document.getElementById('vehicle-brand').value;
+    const year = parseInt(document.getElementById('vehicle-year').value) || 0;
+    const mileage = parseInt(document.getElementById('vehicle-mileage').value) || 0;
+    const condition = parseInt(document.getElementById('vehicle-condition').value) || 5;
 
     // Get optional fields based on vehicle type
-    let transmissionType = "manual";
+    let transmissionType = 'manual';
     let engineSize = 0;
-    let fuelType = "gasolina";
+    let fuelType = 'gasolina';
     let cc = 0;
 
-    if (vehicleType === "motorcycle") {
-      cc = parseInt(document.getElementById("motorcycle-cc").value) || 0;
+    if (vehicleType === 'motorcycle') {
+      cc = parseInt(document.getElementById('motorcycle-cc').value) || 0;
     } else {
-      transmissionType = document.getElementById("transmission-type").value;
-      engineSize =
-        parseFloat(document.getElementById("engine-size").value) || 0;
-      fuelType = document.getElementById("fuel-type").value;
+      transmissionType = document.getElementById('transmission-type').value;
+      engineSize = parseFloat(document.getElementById('engine-size').value) || 0;
+      fuelType = document.getElementById('fuel-type').value;
     }
 
     // Validate required inputs
-    if (
-      !vehicleType ||
-      !brand ||
-      !year ||
-      year < 1970 ||
-      year > new Date().getFullYear() + 1
-    ) {
-      this.showError(
-        "Por favor completa correctamente el tipo de vehículo, marca y año (1970 - actual)."
+    if (!vehicleType || !brand || !year || year < 1970 || year > new Date().getFullYear() + 1) {
+      this.showToolAlert(
+        'Por favor completa correctamente el tipo de vehículo, marca y año (1970 - actual).',
+        'error'
       );
       return;
     }
 
     if (mileage < 0) {
-      this.showError("El kilometraje no puede ser negativo.");
+      this.showToolAlert('El kilometraje no puede ser negativo.', 'error');
       return;
     }
 
@@ -210,11 +198,9 @@ class VehiclePriceCalculator {
     let basePrice = this.basePrices[vehicleType] || this.basePrices.sedan;
 
     // Calculate motorcycle price differently
-    if (vehicleType === "motorcycle") {
+    if (vehicleType === 'motorcycle') {
       if (!cc || cc <= 0) {
-        this.showError(
-          "Por favor ingresa un valor válido para el cilindraje (cc)."
-        );
+        this.showToolAlert('Por favor ingresa un valor válido para el cilindraje (cc).', 'error');
         return;
       }
 
@@ -233,8 +219,7 @@ class VehiclePriceCalculator {
     }
 
     // Apply brand multiplier
-    const brandMultiplier =
-      this.brandMultipliers[brand] || this.brandMultipliers.other;
+    const brandMultiplier = this.brandMultipliers[brand] || this.brandMultipliers.other;
     basePrice *= brandMultiplier;
 
     // Age depreciation (loses ~10% per year, more in first years, less in later years)
@@ -259,7 +244,7 @@ class VehiclePriceCalculator {
 
     // Mileage adjustment
     let mileageMultiplier = 1.0;
-    const isMotorcycle = vehicleType === "motorcycle";
+    const isMotorcycle = vehicleType === 'motorcycle';
     const averageYearlyMileage = isMotorcycle ? 5000 : 15000;
     const expectedMileage = age * averageYearlyMileage;
 
@@ -286,9 +271,9 @@ class VehiclePriceCalculator {
 
     // Additional features for non-motorcycles
     let featuresMultiplier = 1.0;
-    if (vehicleType !== "motorcycle") {
+    if (vehicleType !== 'motorcycle') {
       // Transmission adjustment
-      if (transmissionType === "automatica") {
+      if (transmissionType === 'automatica') {
         featuresMultiplier += 0.05;
       }
 
@@ -304,22 +289,18 @@ class VehiclePriceCalculator {
       }
 
       // Fuel type adjustment
-      if (fuelType === "diesel") {
+      if (fuelType === 'diesel') {
         featuresMultiplier += 0.03;
-      } else if (fuelType === "hibrido") {
+      } else if (fuelType === 'hibrido') {
         featuresMultiplier += 0.1;
-      } else if (fuelType === "electrico") {
+      } else if (fuelType === 'electrico') {
         featuresMultiplier += 0.15;
       }
     }
 
     // Calculate final price
     let finalPrice =
-      basePrice *
-      ageMultiplier *
-      mileageMultiplier *
-      conditionMultiplier *
-      featuresMultiplier;
+      basePrice * ageMultiplier * mileageMultiplier * conditionMultiplier * featuresMultiplier;
 
     // Apply market adjustments
     const marketFluctuation = 0.1; // 10% market fluctuation
@@ -348,9 +329,9 @@ class VehiclePriceCalculator {
    */
   displayResults(finalPrice, minValue, maxValue, details) {
     // Format the values as currency
-    const formatter = new Intl.NumberFormat("es-PE", {
-      style: "currency",
-      currency: "PEN",
+    const formatter = new Intl.NumberFormat('es-PE', {
+      style: 'currency',
+      currency: 'PEN',
       maximumFractionDigits: 0,
     });
 
@@ -372,13 +353,13 @@ class VehiclePriceCalculator {
     }
 
     // Show the results section with animation
-    this.resultSection.style.display = "block";
+    this.resultSection.style.display = 'block';
 
     // Scroll to results
     setTimeout(() => {
       this.resultSection.scrollIntoView({
-        behavior: "smooth",
-        block: "nearest",
+        behavior: 'smooth',
+        block: 'nearest',
       });
     }, 100);
 
@@ -392,17 +373,9 @@ class VehiclePriceCalculator {
    * @param {number} price - Calculated price
    */
   generateMarketComparison(details, price) {
-    const {
-      vehicleType,
-      brand,
-      year,
-      mileage,
-      condition,
-      expectedMileage,
-      isMotorcycle,
-    } = details;
+    const { vehicleType, brand, year, mileage, condition, expectedMileage, isMotorcycle } = details;
 
-    let comparison = "";
+    let comparison = '';
 
     // Compare mileage to average
     if (mileage > 0) {
@@ -424,11 +397,11 @@ class VehiclePriceCalculator {
     }
 
     // Brand perception in Peruvian market
-    if (["toyota", "honda", "mazda", "subaru"].includes(brand)) {
+    if (['toyota', 'honda', 'mazda', 'subaru'].includes(brand)) {
       comparison += `<li>La marca ${this.capitalizeFirstLetter(
         brand
       )} es muy valorada por su durabilidad y mantiene bien su valor en el mercado peruano.</li>`;
-    } else if (["mercedes", "bmw", "audi"].includes(brand)) {
+    } else if (['mercedes', 'bmw', 'audi'].includes(brand)) {
       comparison += `<li>La marca ${this.capitalizeFirstLetter(
         brand
       )} tiene un alto valor inicial, pero puede tener una depreciación más rápida por costos de mantenimiento en Perú.</li>`;
@@ -443,14 +416,14 @@ class VehiclePriceCalculator {
 
     // Vehicle type specific analysis
     if (isMotorcycle) {
-      if (this.getVehicleCategory(details) === "deportiva") {
+      if (this.getVehicleCategory(details) === 'deportiva') {
         comparison += `<li>Las motocicletas deportivas suelen tener un mercado más específico pero con compradores dispuestos a pagar más.</li>`;
       }
     } else {
       // Car specific analysis
-      if (vehicleType === "suv") {
+      if (vehicleType === 'suv') {
         comparison += `<li>Los SUVs mantienen mejor su valor en el mercado peruano debido a su alta demanda.</li>`;
-      } else if (vehicleType === "pickup") {
+      } else if (vehicleType === 'pickup') {
         comparison += `<li>Las camionetas tienen buena reventa en Perú, especialmente para uso comercial o en provincias.</li>`;
       }
     }
@@ -465,28 +438,28 @@ class VehiclePriceCalculator {
   generateConditionDescription(details) {
     const { condition } = details;
 
-    let description = "";
+    let description = '';
 
     switch (Math.floor((condition - 1) / 2)) {
       case 0: // 1-2: Malo
         description =
-          "El vehículo presenta problemas mecánicos significativos, deterioro visible en carrocería/chasis, y requiere reparaciones importantes para operar correctamente.";
+          'El vehículo presenta problemas mecánicos significativos, deterioro visible en carrocería/chasis, y requiere reparaciones importantes para operar correctamente.';
         break;
       case 1: // 3-4: Regular
         description =
-          "El vehículo funciona pero presenta algunos problemas mecánicos, desgaste visible, y requiere mantenimiento para mejorar su condición.";
+          'El vehículo funciona pero presenta algunos problemas mecánicos, desgaste visible, y requiere mantenimiento para mejorar su condición.';
         break;
       case 2: // 5-6: Bueno
         description =
-          "El vehículo funciona correctamente, presenta desgaste normal para su edad y kilometraje, y requiere solo mantenimiento regular.";
+          'El vehículo funciona correctamente, presenta desgaste normal para su edad y kilometraje, y requiere solo mantenimiento regular.';
         break;
       case 3: // 7-8: Muy Bueno
         description =
-          "El vehículo está en excelente estado mecánico, con mínimos detalles estéticos, historial de mantenimiento completo y sin problemas visibles.";
+          'El vehículo está en excelente estado mecánico, con mínimos detalles estéticos, historial de mantenimiento completo y sin problemas visibles.';
         break;
       case 4: // 9-10: Excelente
         description =
-          "El vehículo está en condiciones casi perfectas, cuidado meticulosamente, sin problemas mecánicos o estéticos, y con mantenimiento documentado al día.";
+          'El vehículo está en condiciones casi perfectas, cuidado meticulosamente, sin problemas mecánicos o estéticos, y con mantenimiento documentado al día.';
         break;
     }
 
@@ -546,14 +519,14 @@ class VehiclePriceCalculator {
    */
   getVehicleCategory(details) {
     // Simplified categorization logic
-    if (!details.isMotorcycle) return "auto";
+    if (!details.isMotorcycle) return 'auto';
 
     // This would be more sophisticated in a real implementation
-    const cc = parseInt(document.getElementById("motorcycle-cc").value) || 0;
+    const cc = parseInt(document.getElementById('motorcycle-cc').value) || 0;
 
-    if (cc > 600) return "deportiva";
-    if (cc < 200) return "urbana";
-    return "touring";
+    if (cc > 600) return 'deportiva';
+    if (cc < 200) return 'urbana';
+    return 'touring';
   }
 
   /**
@@ -571,9 +544,9 @@ class VehiclePriceCalculator {
    * @returns {string} Formatted currency string
    */
   formatCurrency(value) {
-    return new Intl.NumberFormat("es-PE", {
-      style: "currency",
-      currency: "PEN",
+    return new Intl.NumberFormat('es-PE', {
+      style: 'currency',
+      currency: 'PEN',
       maximumFractionDigits: 0,
     }).format(value);
   }
@@ -582,13 +555,10 @@ class VehiclePriceCalculator {
    * Show error message to user
    * @param {string} message - Error message to display
    */
-  showError(message) {
-    // Using the global alert function (or implement your own)
-    if (typeof showAlert === "function") {
-      showAlert(message, "error");
-    } else {
-      alert(message);
-    }
+  showToolAlert(message, type) {
+    // Simple alert function
+    alert(message);
+    console.warn(`[${type}] ${message}`);
   }
 
   /**
@@ -598,7 +568,7 @@ class VehiclePriceCalculator {
    */
   logCalculation(value, details) {
     // For future analytics implementation
-    console.log("Vehicle Price Calculation:", {
+    console.log('Vehicle Price Calculation:', {
       timestamp: new Date().toISOString(),
       value,
       details,

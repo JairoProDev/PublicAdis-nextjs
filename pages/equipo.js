@@ -1,5 +1,6 @@
 import React from 'react';
 import Layout from '../src/components/Layout';
+import Link from 'next/link';
 
 export default function Team() {
   const teamMembers = [
@@ -146,12 +147,12 @@ export default function Team() {
               digital. Revisa nuestras vacantes disponibles y forma parte de la revolución
               publicitaria en Cusco.
             </p>
-            <a
+            <Link
               href="/carreras"
               className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-3 rounded-md transition-colors"
             >
               Ver Oportunidades Laborales
-            </a>
+            </Link>
           </div>
         </div>
       </section>

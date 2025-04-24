@@ -57,16 +57,16 @@ class RoiCalculator {
     if (this.initialized) return;
 
     // Get DOM elements
-    this.form = document.getElementById("roi-form");
-    this.resultSection = document.getElementById("roi-result");
-    this.roiPercentage = document.getElementById("roi-percentage");
-    this.roiProfit = document.getElementById("roi-profit");
-    this.roiCac = document.getElementById("roi-cac");
-    this.roiAnalysis = document.getElementById("roi-analysis");
-    this.chartInvestment = document.getElementById("chart-investment");
-    this.chartRevenue = document.getElementById("chart-revenue");
-    this.investmentBar = document.querySelector(".investment-bar");
-    this.revenueBar = document.querySelector(".revenue-bar");
+    this.form = document.getElementById('roi-form');
+    this.resultSection = document.getElementById('roi-result');
+    this.roiPercentage = document.getElementById('roi-percentage');
+    this.roiProfit = document.getElementById('roi-profit');
+    this.roiCac = document.getElementById('roi-cac');
+    this.roiAnalysis = document.getElementById('roi-analysis');
+    this.chartInvestment = document.getElementById('chart-investment');
+    this.chartRevenue = document.getElementById('chart-revenue');
+    this.investmentBar = document.querySelector('.investment-bar');
+    this.revenueBar = document.querySelector('.revenue-bar');
 
     // Make sure all elements exist
     if (
@@ -81,27 +81,27 @@ class RoiCalculator {
       !this.investmentBar ||
       !this.revenueBar
     ) {
-      console.error("RoiCalculator: Missing required DOM elements");
+      console.error('RoiCalculator: Missing required DOM elements');
       return;
     }
 
     // Add event listener to form submission
-    this.form.addEventListener("submit", (e) => {
+    this.form.addEventListener('submit', e => {
       e.preventDefault();
       this.calculateRoi();
     });
 
     // Add real-time validation
-    const investmentInput = document.getElementById("roi-investment");
-    const revenueInput = document.getElementById("roi-revenue");
-    const customersInput = document.getElementById("roi-customers");
+    const investmentInput = document.getElementById('roi-investment');
+    const revenueInput = document.getElementById('roi-revenue');
+    const customersInput = document.getElementById('roi-customers');
 
     // Validate numeric inputs
-    [investmentInput, revenueInput, customersInput].forEach((input) => {
+    [investmentInput, revenueInput, customersInput].forEach(input => {
       if (input) {
-        input.addEventListener("input", () => {
+        input.addEventListener('input', () => {
           // Only allow numbers
-          input.value = input.value.replace(/[^0-9.]/g, "");
+          input.value = input.value.replace(/[^0-9.]/g, '');
 
           // Validate the value is positive
           const value = parseFloat(input.value);
@@ -123,26 +123,25 @@ class RoiCalculator {
    */
   calculateRoi() {
     // Get input values
-    const investment =
-      parseFloat(document.getElementById("roi-investment").value) || 0;
-    const revenue =
-      parseFloat(document.getElementById("roi-revenue").value) || 0;
-    const customers =
-      parseInt(document.getElementById("roi-customers").value) || 0;
-    const period = parseInt(document.getElementById("roi-period").value) || 1;
-    const channel = document.getElementById("roi-channel").value;
+    const investment = parseFloat(document.getElementById('roi-investment').value) || 0;
+    const revenue = parseFloat(document.getElementById('roi-revenue').value) || 0;
+    const customers = parseInt(document.getElementById('roi-customers').value) || 0;
+    const period = parseInt(document.getElementById('roi-period').value) || 1;
+    const channel = document.getElementById('roi-channel').value;
 
     // Validate inputs
     if (!investment || !revenue) {
-      this.showError(
-        "Por favor ingresa tanto la inversión como los ingresos generados."
+      this.showToolAlert(
+        'Por favor ingresa tanto la inversión como los ingresos generados.',
+        'error'
       );
       return;
     }
 
     if (investment <= 0 || revenue < 0) {
-      this.showError(
-        "La inversión debe ser mayor que cero y los ingresos no pueden ser negativos."
+      this.showToolAlert(
+        'La inversión debe ser mayor que cero y los ingresos no pueden ser negativos.',
+        'error'
       );
       return;
     }
@@ -179,26 +178,16 @@ class RoiCalculator {
    * @param {number} period - Time period in months
    * @param {number} customers - Number of customers acquired
    */
-  displayResults(
-    investment,
-    revenue,
-    profit,
-    roi,
-    cac,
-    monthlyRoi,
-    channel,
-    period,
-    customers
-  ) {
+  displayResults(investment, revenue, profit, roi, cac, monthlyRoi, channel, period, customers) {
     // Format values
-    const currencyFormatter = new Intl.NumberFormat("es-PE", {
-      style: "currency",
-      currency: "PEN",
+    const currencyFormatter = new Intl.NumberFormat('es-PE', {
+      style: 'currency',
+      currency: 'PEN',
       maximumFractionDigits: 0,
     });
 
-    const percentFormatter = new Intl.NumberFormat("es-PE", {
-      style: "percent",
+    const percentFormatter = new Intl.NumberFormat('es-PE', {
+      style: 'percent',
       maximumFractionDigits: 1,
     });
 
@@ -227,13 +216,13 @@ class RoiCalculator {
     );
 
     // Show the results section with animation
-    this.resultSection.style.display = "block";
+    this.resultSection.style.display = 'block';
 
     // Scroll to results
     setTimeout(() => {
       this.resultSection.scrollIntoView({
-        behavior: "smooth",
-        block: "nearest",
+        behavior: 'smooth',
+        block: 'nearest',
       });
     }, 100);
 
@@ -262,7 +251,7 @@ class RoiCalculator {
    * @returns {string} Analysis text
    */
   generateAnalysis(roi, monthlyRoi, channel, period, cac, customers) {
-    let analysis = "";
+    let analysis = '';
 
     // Base ROI analysis
     if (roi < 0) {
@@ -309,16 +298,14 @@ class RoiCalculator {
     // Channel-specific advice
     if (channel) {
       const channelAdvice = {
-        digital:
-          "Optimiza tus palabras clave y segmentación para mejorar aún más tu rendimiento.",
+        digital: 'Optimiza tus palabras clave y segmentación para mejorar aún más tu rendimiento.',
         social:
-          "Analiza qué tipos de contenido generan más engagement para focalizar tus esfuerzos.",
+          'Analiza qué tipos de contenido generan más engagement para focalizar tus esfuerzos.',
         tradicional:
-          "Considera complementar con canales digitales para aumentar el alcance y medición.",
+          'Considera complementar con canales digitales para aumentar el alcance y medición.',
         clasificados:
-          "Destaca más tus anuncios con fotos profesionales y descripciones detalladas.",
-        email:
-          "Prueba diferentes asuntos y horarios de envío para mejorar la tasa de apertura.",
+          'Destaca más tus anuncios con fotos profesionales y descripciones detalladas.',
+        email: 'Prueba diferentes asuntos y horarios de envío para mejorar la tasa de apertura.',
       };
 
       analysis += ` ${channelAdvice[channel]}`;
@@ -343,11 +330,11 @@ class RoiCalculator {
 
       if (period > 6) {
         analysis +=
-          " Para campañas de larga duración, evalúa los resultados trimestralmente para optimizar la estrategia.";
+          ' Para campañas de larga duración, evalúa los resultados trimestralmente para optimizar la estrategia.';
       }
     } else {
       analysis +=
-        " Considera analizar el rendimiento durante un período más largo para obtener datos más confiables.";
+        ' Considera analizar el rendimiento durante un período más largo para obtener datos más confiables.';
     }
 
     return analysis;
@@ -360,11 +347,11 @@ class RoiCalculator {
    */
   getChannelName(channelKey) {
     const channelNames = {
-      digital: "Marketing Digital",
-      social: "Redes Sociales",
-      tradicional: "Medios Tradicionales",
-      clasificados: "Anuncios Clasificados",
-      email: "Email Marketing",
+      digital: 'Marketing Digital',
+      social: 'Redes Sociales',
+      tradicional: 'Medios Tradicionales',
+      clasificados: 'Anuncios Clasificados',
+      email: 'Email Marketing',
     };
 
     return channelNames[channelKey] || channelKey;
@@ -374,13 +361,10 @@ class RoiCalculator {
    * Show error message to user
    * @param {string} message - Error message to display
    */
-  showError(message) {
-    // Using the global alert function (or implement your own)
-    if (typeof showAlert === "function") {
-      showAlert(message, "error");
-    } else {
-      alert(message);
-    }
+  showToolAlert(message, type) {
+    // Simple alert function
+    alert(message);
+    console.warn(`[${type}] ${message}`);
   }
 
   /**
@@ -389,7 +373,7 @@ class RoiCalculator {
    */
   logCalculation(data) {
     // For future analytics implementation
-    console.log("ROI Calculation:", {
+    console.log('ROI Calculation:', {
       timestamp: new Date().toISOString(),
       ...data,
     });

@@ -108,15 +108,10 @@ class SalaryCompareCalculator {
     this.initialized = true;
 
     // Ya que este es un placeholder, mostramos una notificación
-    const notifyButton = document.querySelector(
-      "#salaryCompare .tool-notify-button"
-    );
+    const notifyButton = document.querySelector('#salaryCompare .tool-notify-button');
     if (notifyButton) {
-      notifyButton.addEventListener("click", () => {
-        this.showToolAlert(
-          "Te avisaremos cuando esta herramienta esté disponible",
-          "info"
-        );
+      notifyButton.addEventListener('click', () => {
+        this.showToolAlert('Te avisaremos cuando esta herramienta esté disponible', 'info');
       });
     }
   }
@@ -129,13 +124,10 @@ class SalaryCompareCalculator {
 
   compareSalary(sector, experiencia, educacion, ciudad, salarioActual) {
     // Validar si tenemos datos para este sector y nivel de experiencia
-    if (
-      !this.sectorSalaries[sector] ||
-      !this.sectorSalaries[sector][experiencia]
-    ) {
+    if (!this.sectorSalaries[sector] || !this.sectorSalaries[sector][experiencia]) {
       return {
         success: false,
-        message: "Sector o nivel de experiencia no reconocido",
+        message: 'Sector o nivel de experiencia no reconocido',
       };
     }
 
@@ -165,8 +157,7 @@ class SalaryCompareCalculator {
     let estaSobrePagado = false;
 
     if (salarioActual > 0) {
-      porcentajeDiferencia =
-        ((salarioActual - salarioReferencia) / salarioReferencia) * 100;
+      porcentajeDiferencia = ((salarioActual - salarioReferencia) / salarioReferencia) * 100;
       estaSubPagado = porcentajeDiferencia < -10; // Más de 10% por debajo
       estaSobrePagado = porcentajeDiferencia > 10; // Más de 10% por encima
     }
@@ -193,24 +184,24 @@ class SalaryCompareCalculator {
         )}% menos que el promedio para tu sector y experiencia.`
       );
       recomendaciones.push(
-        "Considera programar una reunión para negociar tu salario mostrando tus logros recientes."
+        'Considera programar una reunión para negociar tu salario mostrando tus logros recientes.'
       );
 
       // Recomendaciones específicas por nivel de experiencia
-      if (experiencia === "junior") {
+      if (experiencia === 'junior') {
         recomendaciones.push(
-          "Invierte en certificaciones específicas para tu sector que aumenten tu valor de mercado."
+          'Invierte en certificaciones específicas para tu sector que aumenten tu valor de mercado.'
         );
-      } else if (experiencia === "intermedio" || experiencia === "senior") {
+      } else if (experiencia === 'intermedio' || experiencia === 'senior') {
         recomendaciones.push(
-          "Documenta proyectos exitosos y resultados cuantificables para justificar un incremento salarial."
+          'Documenta proyectos exitosos y resultados cuantificables para justificar un incremento salarial.'
         );
       }
 
       // Recomendación por educación
-      if (educacion === "tecnico" || educacion === "bachiller") {
+      if (educacion === 'tecnico' || educacion === 'bachiller') {
         recomendaciones.push(
-          "Considera continuar tu formación académica para acceder a mejores rangos salariales."
+          'Considera continuar tu formación académica para acceder a mejores rangos salariales.'
         );
       }
     } else if (resultado.estaSobrePagado) {
@@ -218,42 +209,42 @@ class SalaryCompareCalculator {
         `Estás recibiendo aproximadamente ${resultado.porcentajeDiferencia}% más que el promedio para tu sector y experiencia.`
       );
       recomendaciones.push(
-        "Tu posición actual valora tus habilidades. Considera solicitar más responsabilidades para justificar tu compensación."
+        'Tu posición actual valora tus habilidades. Considera solicitar más responsabilidades para justificar tu compensación.'
       );
     } else {
       recomendaciones.push(
-        "Tu salario está dentro del rango promedio para tu sector y nivel de experiencia."
+        'Tu salario está dentro del rango promedio para tu sector y nivel de experiencia.'
       );
       recomendaciones.push(
-        "Para crecer profesionalmente, considera desarrollar habilidades especializadas en tu área."
+        'Para crecer profesionalmente, considera desarrollar habilidades especializadas en tu área.'
       );
     }
 
     // Recomendaciones específicas por sector
     switch (sector) {
-      case "tecnologia":
+      case 'tecnologia':
         recomendaciones.push(
-          "El sector tecnológico valora las certificaciones y habilidades actualizadas. Mantente al día con las últimas tendencias."
+          'El sector tecnológico valora las certificaciones y habilidades actualizadas. Mantente al día con las últimas tendencias.'
         );
         break;
-      case "marketing":
+      case 'marketing':
         recomendaciones.push(
-          "Refuerza tu portafolio con casos de éxito cuantificables y conocimientos en marketing digital."
+          'Refuerza tu portafolio con casos de éxito cuantificables y conocimientos en marketing digital.'
         );
         break;
-      case "ventas":
+      case 'ventas':
         recomendaciones.push(
-          "Documenta tus logros en términos de ingresos generados y clientes captados para negociaciones salariales."
+          'Documenta tus logros en términos de ingresos generados y clientes captados para negociaciones salariales.'
         );
         break;
-      case "contabilidad":
+      case 'contabilidad':
         recomendaciones.push(
-          "Las certificaciones en software financiero y conocimientos en tributación son altamente valorados."
+          'Las certificaciones en software financiero y conocimientos en tributación son altamente valorados.'
         );
         break;
-      case "salud":
+      case 'salud':
         recomendaciones.push(
-          "Las especializaciones y la formación continua son críticas para mejorar tu posición salarial."
+          'Las especializaciones y la formación continua son críticas para mejorar tu posición salarial.'
         );
         break;
     }
