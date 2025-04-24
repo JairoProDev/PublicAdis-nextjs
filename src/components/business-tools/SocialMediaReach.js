@@ -85,27 +85,26 @@ class SocialMediaReach {
   }
 
   setupEventListeners() {
-    const calculateButton = document.getElementById("calculate-reach");
+    const calculateButton = document.getElementById('calculate-reach');
     if (calculateButton) {
-      calculateButton.addEventListener("click", () => this.calculateReach());
+      calculateButton.addEventListener('click', () => this.calculateReach());
     }
 
     // Actualizar UI basado en opciones seleccionadas
-    const platformSelect = document.getElementById("platform");
+    const platformSelect = document.getElementById('platform');
     if (platformSelect) {
-      platformSelect.addEventListener("change", () =>
+      platformSelect.addEventListener('change', () =>
         this.updateContentTypes(platformSelect.value)
       );
     }
   }
 
   updateContentTypes(platform) {
-    const contentSelect = document.getElementById("content-type");
+    const contentSelect = document.getElementById('content-type');
     if (!contentSelect) return;
 
     // Resetear opciones
-    contentSelect.innerHTML =
-      '<option value="">Selecciona tipo de contenido</option>';
+    contentSelect.innerHTML = '<option value="">Selecciona tipo de contenido</option>';
 
     // Opciones comunes
     contentSelect.innerHTML += `
@@ -116,37 +115,37 @@ class SocialMediaReach {
 
     // Opciones específicas por plataforma
     switch (platform) {
-      case "facebook":
+      case 'facebook':
         contentSelect.innerHTML += `
           <option value="carousel">Carrusel de imágenes</option>
           <option value="livestream">Transmisión en vivo</option>
         `;
         break;
-      case "instagram":
+      case 'instagram':
         contentSelect.innerHTML += `
           <option value="carousel">Carrusel de imágenes</option>
           <option value="reels">Reels</option>
           <option value="livestream">Transmisión en vivo</option>
         `;
         break;
-      case "twitter":
+      case 'twitter':
         contentSelect.innerHTML += `
           <option value="carousel">Hilo</option>
         `;
         break;
-      case "linkedin":
+      case 'linkedin':
         contentSelect.innerHTML += `
           <option value="carousel">Carrusel de imágenes</option>
           <option value="livestream">Transmisión en vivo</option>
         `;
         break;
-      case "tiktok":
+      case 'tiktok':
         contentSelect.innerHTML += `
           <option value="reels">TikTok</option>
           <option value="livestream">LIVE</option>
         `;
         break;
-      case "youtube":
+      case 'youtube':
         contentSelect.innerHTML += `
           <option value="livestream">Livestream</option>
         `;
@@ -154,32 +153,30 @@ class SocialMediaReach {
     }
   }
 
+  showToolAlert(message, type) {
+    // Simple alert function
+    alert(message);
+    console.warn(`[${type}] ${message}`);
+  }
+
   calculateReach() {
     // Recoger valores del formulario
-    const platform = document.getElementById("platform").value;
-    const followers = parseInt(document.getElementById("followers").value);
-    const contentType = document.getElementById("content-type").value;
-    const category = document.getElementById("category").value;
-    const postTime = document.getElementById("post-time").value;
-    const frequency = parseInt(
-      document.getElementById("post-frequency").value || 1
-    );
-    const budget = parseFloat(document.getElementById("ad-budget").value || 0);
+    const platform = document.getElementById('platform').value;
+    const followers = parseInt(document.getElementById('followers').value);
+    const contentType = document.getElementById('content-type').value;
+    const category = document.getElementById('category').value;
+    const postTime = document.getElementById('post-time').value;
+    const frequency = parseInt(document.getElementById('post-frequency').value || 1);
+    const budget = parseFloat(document.getElementById('ad-budget').value || 0);
 
     // Validar entrada
     if (!platform || !followers || !contentType || !category || !postTime) {
-      showToolAlert(
-        "Por favor, completa todos los campos del formulario.",
-        "error"
-      );
+      this.showToolAlert('Por favor, completa todos los campos del formulario.', 'error');
       return;
     }
 
     if (isNaN(followers) || followers <= 0) {
-      showToolAlert(
-        "Por favor, introduce un número válido de seguidores.",
-        "error"
-      );
+      this.showToolAlert('Por favor, introduce un número válido de seguidores.', 'error');
       return;
     }
 
@@ -192,20 +189,16 @@ class SocialMediaReach {
     const contentAdjustedReach = baseReach * this.contentFactors[contentType];
 
     // 3. Ajustar por categoría
-    const categoryAdjustedReach =
-      contentAdjustedReach * this.categoryFactors[category];
+    const categoryAdjustedReach = contentAdjustedReach * this.categoryFactors[category];
 
     // 4. Ajustar por hora de publicación
-    const timeAdjustedReach =
-      categoryAdjustedReach * this.timeFactors[postTime];
+    const timeAdjustedReach = categoryAdjustedReach * this.timeFactors[postTime];
 
     // 5. Calcular alcance orgánico total
     const organicReach = Math.round(timeAdjustedReach);
 
     // 6. Calcular engagement orgánico
-    const organicEngagement = Math.round(
-      organicReach * this.engagementRates[platform]
-    );
+    const organicEngagement = Math.round(organicReach * this.engagementRates[platform]);
 
     // CÁLCULOS DE ALCANCE PAGADO (si hay presupuesto)
     let paidReach = 0;
@@ -219,9 +212,7 @@ class SocialMediaReach {
       paidReach = Math.round(estimatedClicks * 12);
 
       // Calcular engagement pagado
-      paidEngagement = Math.round(
-        paidReach * this.engagementRates[platform] * 1.2
-      ); // El engagement pagado suele ser ~20% mayor
+      paidEngagement = Math.round(paidReach * this.engagementRates[platform] * 1.2); // El engagement pagado suele ser ~20% mayor
     }
 
     // ALCANCE Y ENGAGEMENT TOTALES
@@ -229,9 +220,7 @@ class SocialMediaReach {
     const totalEngagement = organicEngagement + paidEngagement;
 
     // Calcular conversiones estimadas
-    const conversions = Math.round(
-      totalEngagement * this.conversionRates[platform]
-    );
+    const conversions = Math.round(totalEngagement * this.conversionRates[platform]);
 
     // Calcular métricas de frecuencia (mensual)
     const monthlyReach = totalReach * frequency;
@@ -292,24 +281,24 @@ class SocialMediaReach {
     monthlyBudget,
     roi
   ) {
-    const resultsContainer = document.getElementById("reach-results");
+    const resultsContainer = document.getElementById('reach-results');
 
     // Formatear números
-    const formatNumber = (num) => {
+    const formatNumber = num => {
       if (num >= 1000000) {
-        return (num / 1000000).toFixed(1) + "M";
+        return (num / 1000000).toFixed(1) + 'M';
       } else if (num >= 1000) {
-        return (num / 1000).toFixed(1) + "K";
+        return (num / 1000).toFixed(1) + 'K';
       } else {
         return num.toString();
       }
     };
 
     // Formatear moneda
-    const formatCurrency = (value) => {
+    const formatCurrency = value => {
       return (
-        "S/. " +
-        value.toLocaleString("es-PE", {
+        'S/. ' +
+        value.toLocaleString('es-PE', {
           minimumFractionDigits: 0,
           maximumFractionDigits: 0,
         })
@@ -318,99 +307,98 @@ class SocialMediaReach {
 
     // Mapear valores a nombres legibles
     const platformNames = {
-      facebook: "Facebook",
-      instagram: "Instagram",
-      twitter: "Twitter",
-      linkedin: "LinkedIn",
-      tiktok: "TikTok",
-      youtube: "YouTube",
+      facebook: 'Facebook',
+      instagram: 'Instagram',
+      twitter: 'Twitter',
+      linkedin: 'LinkedIn',
+      tiktok: 'TikTok',
+      youtube: 'YouTube',
     };
 
     const contentNames = {
-      text: "Texto/Estado",
-      image: "Imagen",
-      carousel: "Carrusel/Colección",
-      video: "Video",
-      reels: "Reels/Cortos",
-      livestream: "Transmisión en vivo",
+      text: 'Texto/Estado',
+      image: 'Imagen',
+      carousel: 'Carrusel/Colección',
+      video: 'Video',
+      reels: 'Reels/Cortos',
+      livestream: 'Transmisión en vivo',
     };
 
     const categoryNames = {
-      food: "Alimentos y Cocina",
-      fashion: "Moda y Estilo",
-      travel: "Viajes y Aventura",
-      tech: "Tecnología",
-      beauty: "Belleza",
-      health: "Salud y Bienestar",
-      business: "Negocios",
-      education: "Educación",
-      entertainment: "Entretenimiento",
-      sports: "Deportes",
+      food: 'Alimentos y Cocina',
+      fashion: 'Moda y Estilo',
+      travel: 'Viajes y Aventura',
+      tech: 'Tecnología',
+      beauty: 'Belleza',
+      health: 'Salud y Bienestar',
+      business: 'Negocios',
+      education: 'Educación',
+      entertainment: 'Entretenimiento',
+      sports: 'Deportes',
     };
 
     const timeNames = {
-      earlyMorning: "Temprano (5am-8am)",
-      morning: "Mañana (8am-11am)",
-      noon: "Mediodía (11am-2pm)",
-      afternoon: "Tarde (2pm-5pm)",
-      evening: "Noche (5pm-8pm)",
-      night: "Noche (8pm-11pm)",
-      lateNight: "Madrugada (11pm-5am)",
+      earlyMorning: 'Temprano (5am-8am)',
+      morning: 'Mañana (8am-11am)',
+      noon: 'Mediodía (11am-2pm)',
+      afternoon: 'Tarde (2pm-5pm)',
+      evening: 'Noche (5pm-8pm)',
+      night: 'Noche (8pm-11pm)',
+      lateNight: 'Madrugada (11pm-5am)',
     };
 
     // Obtener ícono de plataforma
     const platformIcons = {
-      facebook: "fa-brands fa-facebook",
-      instagram: "fa-brands fa-instagram",
-      twitter: "fa-brands fa-twitter",
-      linkedin: "fa-brands fa-linkedin",
-      tiktok: "fa-brands fa-tiktok",
-      youtube: "fa-brands fa-youtube",
+      facebook: 'fa-brands fa-facebook',
+      instagram: 'fa-brands fa-instagram',
+      twitter: 'fa-brands fa-twitter',
+      linkedin: 'fa-brands fa-linkedin',
+      tiktok: 'fa-brands fa-tiktok',
+      youtube: 'fa-brands fa-youtube',
     };
 
     // Calcular proporción orgánico vs pagado
-    const organicPercentage =
-      Math.round((organicReach / totalReach) * 100) || 100;
+    const organicPercentage = Math.round((organicReach / totalReach) * 100) || 100;
     const paidPercentage = Math.round((paidReach / totalReach) * 100) || 0;
 
     // Analizar resultados y dar recomendaciones
-    let reachAnalysis = "";
-    let engagementAnalysis = "";
-    let recommendedTime = "";
+    let reachAnalysis = '';
+    let engagementAnalysis = '';
+    let recommendedTime = '';
 
     // Análisis de alcance
     if (totalReach < followers * 0.05) {
       reachAnalysis =
-        "El alcance estimado es bajo para tu base de seguidores. Considera cambiar el tipo de contenido o categoría.";
+        'El alcance estimado es bajo para tu base de seguidores. Considera cambiar el tipo de contenido o categoría.';
     } else if (totalReach < followers * 0.15) {
       reachAnalysis =
-        "El alcance estimado es promedio para esta plataforma. Puedes mejorarlo con contenido más atractivo.";
+        'El alcance estimado es promedio para esta plataforma. Puedes mejorarlo con contenido más atractivo.';
     } else {
       reachAnalysis =
-        "El alcance estimado es bueno. Tu estrategia de contenido parece efectiva para esta plataforma.";
+        'El alcance estimado es bueno. Tu estrategia de contenido parece efectiva para esta plataforma.';
     }
 
     // Análisis de engagement
     const engagementRate = (totalEngagement / totalReach) * 100;
     if (engagementRate < 1) {
       engagementAnalysis =
-        "La tasa de engagement estimada es baja. Prueba con contenido más interactivo o preguntas a tu audiencia.";
+        'La tasa de engagement estimada es baja. Prueba con contenido más interactivo o preguntas a tu audiencia.';
     } else if (engagementRate < 3) {
       engagementAnalysis =
-        "La tasa de engagement es aceptable, pero hay margen para mejorar la interacción.";
+        'La tasa de engagement es aceptable, pero hay margen para mejorar la interacción.';
     } else {
       engagementAnalysis =
-        "La tasa de engagement es buena. Tu contenido parece resonar bien con tu audiencia.";
+        'La tasa de engagement es buena. Tu contenido parece resonar bien con tu audiencia.';
     }
 
     // Recomendar mejor hora basado en la plataforma
     const bestTimes = {
-      facebook: "evening",
-      instagram: "noon",
-      twitter: "afternoon",
-      linkedin: "morning",
-      tiktok: "evening",
-      youtube: "evening",
+      facebook: 'evening',
+      instagram: 'noon',
+      twitter: 'afternoon',
+      linkedin: 'morning',
+      tiktok: 'evening',
+      youtube: 'evening',
     };
 
     if (postTime !== bestTimes[platform]) {
@@ -463,7 +451,7 @@ class SocialMediaReach {
             <div class="metric-value">${formatNumber(paidEngagement)}</div>
           </div>
         `
-            : ""
+            : ''
         }
         
         <div class="metric">
@@ -506,11 +494,11 @@ class SocialMediaReach {
             <div class="metric">
               <div class="metric-label">ROI Estimado</div>
               <div class="metric-value ${
-                roi > 0 ? "positive" : "negative"
+                roi > 0 ? 'positive' : 'negative'
               }">${roi.toFixed(1)}%</div>
             </div>
           `
-              : ""
+              : ''
           }
         </div>
       </div>
@@ -538,15 +526,15 @@ class SocialMediaReach {
       <div class="result-analysis">
         <p>${reachAnalysis}</p>
         <p>${engagementAnalysis}</p>
-        ${recommendedTime ? `<p>${recommendedTime}</p>` : ""}
+        ${recommendedTime ? `<p>${recommendedTime}</p>` : ''}
       </div>
     `;
 
-    resultsContainer.classList.add("show");
+    resultsContainer.classList.add('show');
   }
 }
 
 // Si está en un entorno global, exponer la clase
-if (typeof window !== "undefined") {
+if (typeof window !== 'undefined') {
   window.SocialMediaReach = SocialMediaReach;
 }

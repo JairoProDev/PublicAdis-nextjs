@@ -537,7 +537,7 @@ class EventPlanner {
 
     // Validar entrada
     if (!eventType || !eventDate || !location || !attendees || !duration) {
-      showToolAlert(
+      this.showToolAlert(
         "Por favor, completa todos los campos requeridos del formulario.",
         "error"
       );
@@ -545,13 +545,13 @@ class EventPlanner {
     }
 
     if (isNaN(Date.parse(eventDate))) {
-      showToolAlert("Por favor, selecciona una fecha válida.", "error");
+      this.showToolAlert("Por favor, selecciona una fecha válida.", "error");
       return;
     }
 
     const today = new Date();
     if (eventDate < today) {
-      showToolAlert("La fecha del evento debe ser futura.", "error");
+      this.showToolAlert("La fecha del evento debe ser futura.", "error");
       return;
     }
 
@@ -978,6 +978,12 @@ class EventPlanner {
     `;
 
     resultsContainer.classList.add("show");
+  }
+
+  showToolAlert(message, type) {
+    // Simple alert function
+    alert(message);
+    console.warn(`[${type}] ${message}`);
   }
 }
 

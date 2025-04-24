@@ -62,52 +62,48 @@ class VehiclePriceCalculator {
   }
 
   setupEventListeners() {
-    const calculateButton = document.getElementById("calculate-vehicle-price");
+    const calculateButton = document.getElementById('calculate-vehicle-price');
     if (calculateButton) {
-      calculateButton.addEventListener("click", () => this.calculatePrice());
+      calculateButton.addEventListener('click', () => this.calculatePrice());
     }
 
     // Actualizamos los rangos cuando se seleccionan
-    const yearSelect = document.getElementById("vehicle-year");
+    const yearSelect = document.getElementById('vehicle-year');
     if (yearSelect) {
-      yearSelect.addEventListener("change", () =>
-        this.updateYearRange(yearSelect.value)
-      );
+      yearSelect.addEventListener('change', () => this.updateYearRange(yearSelect.value));
     }
 
-    const mileageSelect = document.getElementById("vehicle-mileage");
+    const mileageSelect = document.getElementById('vehicle-mileage');
     if (mileageSelect) {
-      mileageSelect.addEventListener("change", () =>
-        this.updateMileageRange(mileageSelect.value)
-      );
+      mileageSelect.addEventListener('change', () => this.updateMileageRange(mileageSelect.value));
     }
   }
 
   updateYearRange(yearValue) {
-    const yearRangeElement = document.getElementById("year-range");
+    const yearRangeElement = document.getElementById('year-range');
     if (!yearRangeElement) return;
 
     const currentYear = new Date().getFullYear();
     const age = currentYear - parseInt(yearValue);
 
     if (age === 0) {
-      yearRangeElement.textContent = "Nuevo";
+      yearRangeElement.textContent = 'Nuevo';
     } else if (age === 1) {
-      yearRangeElement.textContent = "1 año";
+      yearRangeElement.textContent = '1 año';
     } else {
       yearRangeElement.textContent = `${age} años`;
     }
   }
 
   updateMileageRange(mileageValue) {
-    const mileageRangeElement = document.getElementById("mileage-range");
+    const mileageRangeElement = document.getElementById('mileage-range');
     if (!mileageRangeElement) return;
 
     const mileageRanges = {
-      low: "Menos de 40,000 km",
-      medium: "Entre 40,000 y 100,000 km",
-      high: "Entre 100,000 y 180,000 km",
-      veryhigh: "Más de 180,000 km",
+      low: 'Menos de 40,000 km',
+      medium: 'Entre 40,000 y 100,000 km',
+      high: 'Entre 100,000 y 180,000 km',
+      veryhigh: 'Más de 180,000 km',
     };
 
     mileageRangeElement.textContent = mileageRanges[mileageValue];
@@ -115,21 +111,18 @@ class VehiclePriceCalculator {
 
   calculatePrice() {
     // Recoger valores del formulario
-    const vehicleType = document.getElementById("vehicle-type").value;
-    const brand = document.getElementById("vehicle-brand").value;
-    const year = parseInt(document.getElementById("vehicle-year").value);
-    const condition = document.getElementById("vehicle-condition").value;
-    const mileage = document.getElementById("vehicle-mileage").value;
-    const extras = Array.from(
-      document.querySelectorAll('input[name="extra"]:checked')
-    ).map((el) => el.value);
+    const vehicleType = document.getElementById('vehicle-type').value;
+    const brand = document.getElementById('vehicle-brand').value;
+    const year = parseInt(document.getElementById('vehicle-year').value);
+    const condition = document.getElementById('vehicle-condition').value;
+    const mileage = document.getElementById('vehicle-mileage').value;
+    const extras = Array.from(document.querySelectorAll('input[name="extra"]:checked')).map(
+      el => el.value
+    );
 
     // Validar entrada
     if (!vehicleType || !brand || !year || !condition || !mileage) {
-      showToolAlert(
-        "Por favor, completa todos los campos del formulario.",
-        "error"
-      );
+      this.showToolAlert('Por favor, completa todos los campos del formulario.', 'error');
       return;
     }
 
@@ -154,29 +147,25 @@ class VehiclePriceCalculator {
 
     // Calcular precio base ajustado
     let adjustedPrice =
-      basePrice *
-      depreciationFactor *
-      brandFactor *
-      conditionFactor *
-      mileageFactor;
+      basePrice * depreciationFactor * brandFactor * conditionFactor * mileageFactor;
 
     // Añadir extras
     let extrasValue = 0;
-    extras.forEach((extra) => {
+    extras.forEach(extra => {
       switch (extra) {
-        case "leather":
+        case 'leather':
           extrasValue += 1500;
           break;
-        case "sunroof":
+        case 'sunroof':
           extrasValue += 2000;
           break;
-        case "alloy":
+        case 'alloy':
           extrasValue += 1000;
           break;
-        case "navigation":
+        case 'navigation':
           extrasValue += 1200;
           break;
-        case "camera":
+        case 'camera':
           extrasValue += 800;
           break;
       }
@@ -252,13 +241,13 @@ class VehiclePriceCalculator {
     extras,
     extrasValue
   ) {
-    const resultsContainer = document.getElementById("vehicle-price-results");
+    const resultsContainer = document.getElementById('vehicle-price-results');
 
     // Formatear moneda
-    const formatCurrency = (value) => {
+    const formatCurrency = value => {
       return (
-        "S/. " +
-        value.toLocaleString("es-PE", {
+        'S/. ' +
+        value.toLocaleString('es-PE', {
           minimumFractionDigits: 0,
           maximumFractionDigits: 0,
         })
@@ -267,51 +256,51 @@ class VehiclePriceCalculator {
 
     // Mapear valores a nombres legibles
     const vehicleTypes = {
-      sedan: "Sedán",
-      suv: "SUV",
-      pickup: "Pickup",
-      hatchback: "Hatchback",
-      van: "Van/Minivan",
+      sedan: 'Sedán',
+      suv: 'SUV',
+      pickup: 'Pickup',
+      hatchback: 'Hatchback',
+      van: 'Van/Minivan',
     };
 
     const brandNames = {
-      toyota: "Toyota",
-      nissan: "Nissan",
-      hyundai: "Hyundai",
-      kia: "Kia",
-      volkswagen: "Volkswagen",
-      chevrolet: "Chevrolet",
-      ford: "Ford",
-      honda: "Honda",
-      mazda: "Mazda",
-      suzuki: "Suzuki",
-      other: "Otra marca",
+      toyota: 'Toyota',
+      nissan: 'Nissan',
+      hyundai: 'Hyundai',
+      kia: 'Kia',
+      volkswagen: 'Volkswagen',
+      chevrolet: 'Chevrolet',
+      ford: 'Ford',
+      honda: 'Honda',
+      mazda: 'Mazda',
+      suzuki: 'Suzuki',
+      other: 'Otra marca',
     };
 
     const conditionNames = {
-      excellent: "Excelente",
-      good: "Bueno",
-      fair: "Regular",
-      poor: "Pobre",
+      excellent: 'Excelente',
+      good: 'Bueno',
+      fair: 'Regular',
+      poor: 'Pobre',
     };
 
     const mileageRanges = {
-      low: "Menos de 40,000 km",
-      medium: "Entre 40,000 y 100,000 km",
-      high: "Entre 100,000 y 180,000 km",
-      veryhigh: "Más de 180,000 km",
+      low: 'Menos de 40,000 km',
+      medium: 'Entre 40,000 y 100,000 km',
+      high: 'Entre 100,000 y 180,000 km',
+      veryhigh: 'Más de 180,000 km',
     };
 
     const extraNames = {
-      leather: "Asientos de cuero",
-      sunroof: "Techo solar",
-      alloy: "Aros de aleación",
-      navigation: "Sistema de navegación",
-      camera: "Cámara de retroceso",
+      leather: 'Asientos de cuero',
+      sunroof: 'Techo solar',
+      alloy: 'Aros de aleación',
+      navigation: 'Sistema de navegación',
+      camera: 'Cámara de retroceso',
     };
 
     // Convertir extras a lista legible
-    const extrasList = extras.map((e) => extraNames[e]).join(", ");
+    const extrasList = extras.map(e => extraNames[e]).join(', ');
 
     // HTML para los resultados
     resultsContainer.innerHTML = `
@@ -326,9 +315,7 @@ class VehiclePriceCalculator {
       <div class="vehicle-features">
         <div class="feature">
           <i class="fa-solid fa-car"></i>
-          <span>${vehicleTypes[vehicleType]} ${
-      brandNames[brand]
-    } (${year})</span>
+          <span>${vehicleTypes[vehicleType]} ${brandNames[brand]} (${year})</span>
         </div>
         <div class="feature">
           <i class="fa-solid fa-gauge"></i>
@@ -344,33 +331,30 @@ class VehiclePriceCalculator {
         <h4><i class="fa-solid fa-calculator"></i> Desglose del Precio</h4>
         <div class="breakdown-item">
           <div class="breakdown-label">Valor base</div>
-          <div class="breakdown-value">${formatCurrency(
-            this.baseValues[vehicleType]
-          )}</div>
+          <div class="breakdown-value">${formatCurrency(this.baseValues[vehicleType])}</div>
         </div>
         <div class="breakdown-item">
           <div class="breakdown-label">Ajuste por año (${year})</div>
           <div class="breakdown-value">-${Math.round(
-            (1 - this.getDepreciationFactor(new Date().getFullYear() - year)) *
-              100
+            (1 - this.getDepreciationFactor(new Date().getFullYear() - year)) * 100
           )}%</div>
         </div>
         <div class="breakdown-item">
           <div class="breakdown-label">Ajuste por marca</div>
           <div class="breakdown-value">${
-            this.brandFactors[brand] > 1 ? "+" : ""
+            this.brandFactors[brand] > 1 ? '+' : ''
           }${Math.round((this.brandFactors[brand] - 1) * 100)}%</div>
         </div>
         <div class="breakdown-item">
           <div class="breakdown-label">Ajuste por condición</div>
           <div class="breakdown-value">${
-            this.conditionFactors[condition] > 1 ? "+" : ""
+            this.conditionFactors[condition] > 1 ? '+' : ''
           }${Math.round((this.conditionFactors[condition] - 1) * 100)}%</div>
         </div>
         <div class="breakdown-item">
           <div class="breakdown-label">Ajuste por kilometraje</div>
           <div class="breakdown-value">${
-            this.mileageFactors[mileage] > 1 ? "+" : ""
+            this.mileageFactors[mileage] > 1 ? '+' : ''
           }${Math.round((this.mileageFactors[mileage] - 1) * 100)}%</div>
         </div>
         ${
@@ -381,7 +365,7 @@ class VehiclePriceCalculator {
             <div class="breakdown-value">+${formatCurrency(extrasValue)}</div>
           </div>
         `
-            : ""
+            : ''
         }
       </div>
       
@@ -393,11 +377,17 @@ class VehiclePriceCalculator {
       </div>
     `;
 
-    resultsContainer.classList.add("show");
+    resultsContainer.classList.add('show');
+  }
+
+  showToolAlert(message, type) {
+    // Simple alert function
+    alert(message);
+    console.warn(`[${type}] ${message}`);
   }
 }
 
 // Si está en un entorno global, exponer la clase
-if (typeof window !== "undefined") {
+if (typeof window !== 'undefined') {
   window.VehiclePriceCalculator = VehiclePriceCalculator;
 }
