@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 
 const Hero = () => {
@@ -32,6 +32,18 @@ const Hero = () => {
     },
   ];
 
+  const nextSlide = useCallback(() => {
+    setCurrentSlide(prevSlide => (prevSlide + 1) % slides.length);
+  }, [slides.length]);
+
+  const prevSlide = useCallback(() => {
+    setCurrentSlide(prevSlide => (prevSlide - 1 + slides.length) % slides.length);
+  }, [slides.length]);
+
+  const goToSlide = useCallback(index => {
+    setCurrentSlide(index);
+  }, []);
+
   useEffect(() => {
     // Rotate title text
     const titleInterval = setInterval(() => {
@@ -47,19 +59,7 @@ const Hero = () => {
       clearInterval(titleInterval);
       clearInterval(slideInterval.current);
     };
-  }, [dynamicTexts.length, slides.length, nextSlide]);
-
-  const goToSlide = index => {
-    setCurrentSlide(index);
-  };
-
-  const nextSlide = () => {
-    setCurrentSlide(prevSlide => (prevSlide + 1) % slides.length);
-  };
-
-  const prevSlide = () => {
-    setCurrentSlide(prevSlide => (prevSlide - 1 + slides.length) % slides.length);
-  };
+  }, [dynamicTexts.length, nextSlide]);
 
   return (
     <section className="relative bg-blue-50 py-16 lg:py-24">

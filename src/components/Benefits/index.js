@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -139,13 +139,13 @@ const Benefits = () => {
     return stars;
   };
 
-  const nextTestimonial = () => {
+  const nextTestimonial = useCallback(() => {
     setActiveTestimonial(prev => (prev + 1) % testimonials.length);
-  };
+  }, [testimonials.length]);
 
-  const prevTestimonial = () => {
+  const prevTestimonial = useCallback(() => {
     setActiveTestimonial(prev => (prev - 1 + testimonials.length) % testimonials.length);
-  };
+  }, [testimonials.length]);
 
   useEffect(() => {
     // Auto rotate testimonials
