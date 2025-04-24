@@ -14,8 +14,8 @@ const Hero = () => {
     'Multiplica Tus Ventas con',
     'Aumenta Tu Visibilidad con',
     'Conquista Nuevos Clientes con',
-    'Potencia Tu Marca con',
-    'Expande Tu Alcance con',
+    'Potencia Tu Empresa con',
+    'Incrementa Tu Alcance con',
     'Transforma Tu Presencia con',
     'Maximiza Tu Inversión con',
   ];
