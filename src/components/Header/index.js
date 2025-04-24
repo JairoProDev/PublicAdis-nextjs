@@ -82,7 +82,9 @@ const Header = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 py-3 transition-all duration-300 ${isScrolled ? 'bg-white shadow-md py-2' : 'bg-transparent'}`}
+      className={`fixed top-0 left-0 right-0 z-50 py-3 transition-all duration-300 ${
+        isScrolled ? 'bg-white shadow-md py-2' : 'bg-white/80 backdrop-blur-sm'
+      }`}
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
@@ -92,7 +94,9 @@ const Header = () => {
               <div className="w-10 h-10 bg-amber-500 rounded-full flex items-center justify-center text-white">
                 <span className="font-bold">P</span>
               </div>
-              <span className={`font-bold text-xl ${isScrolled ? 'text-gray-800' : 'text-white'}`}>
+              <span
+                className={`font-bold text-xl ${isScrolled ? 'text-gray-800' : 'text-gray-800'}`}
+              >
                 PublicAdis
               </span>
             </Link>
@@ -108,7 +112,7 @@ const Header = () => {
                     className={`flex items-center gap-1.5 px-2 py-1 rounded-md transition-colors ${
                       isScrolled
                         ? 'text-gray-700 hover:text-blue-600'
-                        : 'text-white hover:text-amber-500'
+                        : 'text-gray-700 hover:text-blue-600'
                     }`}
                   >
                     <i className={`fas ${item.icon} text-sm`}></i>
@@ -126,7 +130,7 @@ const Header = () => {
               className={`px-3 py-1.5 rounded-md border transition-colors ${
                 isScrolled
                   ? 'border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white'
-                  : 'border-white text-white hover:bg-white hover:text-blue-600'
+                  : 'border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white'
               }`}
               target="_blank"
               rel="noopener noreferrer"
@@ -151,16 +155,16 @@ const Header = () => {
             aria-expanded={isMenuOpen}
           >
             <div
-              className={`w-6 h-5 relative flex flex-col justify-between ${isScrolled ? 'text-gray-800' : 'text-white'}`}
+              className={`w-6 h-5 relative flex flex-col justify-between ${isScrolled ? 'text-gray-800' : 'text-gray-800'}`}
             >
               <span
-                className={`w-full h-0.5 rounded-full transform transition-transform duration-300 ${isMenuOpen ? 'bg-gray-800 rotate-45 translate-y-2' : isScrolled ? 'bg-gray-800' : 'bg-white'}`}
+                className={`w-full h-0.5 rounded-full transform transition-transform duration-300 ${isMenuOpen ? 'bg-gray-800 rotate-45 translate-y-2' : isScrolled ? 'bg-gray-800' : 'bg-gray-800'}`}
               ></span>
               <span
-                className={`w-full h-0.5 rounded-full transition-opacity duration-300 ${isMenuOpen ? 'bg-gray-800 opacity-0' : isScrolled ? 'bg-gray-800' : 'bg-white'}`}
+                className={`w-full h-0.5 rounded-full transition-opacity duration-300 ${isMenuOpen ? 'bg-gray-800 opacity-0' : isScrolled ? 'bg-gray-800' : 'bg-gray-800'}`}
               ></span>
               <span
-                className={`w-full h-0.5 rounded-full transform transition-transform duration-300 ${isMenuOpen ? 'bg-gray-800 -rotate-45 -translate-y-2' : isScrolled ? 'bg-gray-800' : 'bg-white'}`}
+                className={`w-full h-0.5 rounded-full transform transition-transform duration-300 ${isMenuOpen ? 'bg-gray-800 -rotate-45 -translate-y-2' : isScrolled ? 'bg-gray-800' : 'bg-gray-800'}`}
               ></span>
             </div>
           </button>
