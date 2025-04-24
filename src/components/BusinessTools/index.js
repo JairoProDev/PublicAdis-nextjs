@@ -8,6 +8,12 @@ import VehiclePriceCalculator from '../business-tools/VehiclePriceCalculator';
 import SalaryComparator from '../business-tools/SalaryComparator';
 import SocialMediaReach from '../business-tools/SocialMediaReach';
 import EventPlanner from '../business-tools/EventPlanner';
+import SeoAnalyzer from '../business-tools/SeoAnalyzer';
+import MarketingBudgetCalculator from '../business-tools/MarketingBudgetCalculator';
+import AdCopyGenerator from '../business-tools/AdCopyGenerator';
+import CustomerAvatarBuilder from '../business-tools/CustomerAvatarBuilder';
+import HeadlineAnalyzer from '../business-tools/HeadlineAnalyzer';
+import ContentCalendarGenerator from '../business-tools/ContentCalendarGenerator';
 
 const BusinessTools = () => {
   const [activeToolId, setActiveToolId] = useState(null);
@@ -60,6 +66,54 @@ const BusinessTools = () => {
       description: 'Organiza tus eventos y calcula presupuestos, asistencia y recursos necesarios.',
       component: EventPlanner,
     },
+    {
+      id: 'seo-analyzer',
+      icon: 'fa-magnifying-glass-chart',
+      title: 'Analizador SEO',
+      description:
+        'Analiza aspectos básicos de SEO en tu sitio web y recibe recomendaciones de mejora.',
+      component: SeoAnalyzer,
+    },
+    {
+      id: 'marketing-budget',
+      icon: 'fa-wallet',
+      title: 'Calculadora de Presupuesto',
+      description:
+        'Planifica la distribución óptima de tu presupuesto de marketing entre diferentes canales.',
+      component: MarketingBudgetCalculator,
+    },
+    {
+      id: 'ad-copy-generator',
+      icon: 'fa-pen-fancy',
+      title: 'Generador de Anuncios',
+      description:
+        'Crea textos publicitarios atractivos para diferentes plataformas digitales en segundos.',
+      component: AdCopyGenerator,
+    },
+    {
+      id: 'customer-avatar',
+      icon: 'fa-user-gear',
+      title: 'Creador de Avatar Cliente',
+      description:
+        'Define detalladamente a tu cliente ideal para mejorar tu estrategia de marketing y comunicación.',
+      component: CustomerAvatarBuilder,
+    },
+    {
+      id: 'headline-analyzer',
+      icon: 'fa-heading',
+      title: 'Analizador de Titulares',
+      description:
+        'Evalúa la efectividad de tus titulares para artículos, anuncios o emails y mejora su rendimiento.',
+      component: HeadlineAnalyzer,
+    },
+    {
+      id: 'content-calendar',
+      icon: 'fa-calendar-check',
+      title: 'Calendario de Contenido',
+      description:
+        'Genera un calendario de contenido personalizado para tu estrategia de marketing digital.',
+      component: ContentCalendarGenerator,
+    },
   ];
 
   const handleToolClick = toolId => {
@@ -96,7 +150,7 @@ const BusinessTools = () => {
           <h2 className="text-3xl font-bold mb-4">Herramientas Gratuitas</h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
             Aprovecha nuestras herramientas gratuitas para potenciar tu presencia digital y
-            maximizar tu inversión
+            maximizar tu inversión en marketing y publicidad
           </p>
         </div>
 

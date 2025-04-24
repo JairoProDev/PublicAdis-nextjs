@@ -34,6 +34,48 @@ export class BusinessTools {
         description:
           'Estima el alcance potencial de tus publicaciones según plataforma, hora y contenido.',
       },
+      'event-planner': {
+        icon: 'fa-calendar-days',
+        title: 'Planificador de Eventos',
+        description:
+          'Organiza tus eventos y calcula presupuestos, asistencia y recursos necesarios.',
+      },
+      'seo-analyzer': {
+        icon: 'fa-magnifying-glass-chart',
+        title: 'Analizador SEO',
+        description:
+          'Analiza aspectos básicos de SEO en tu sitio web y recibe recomendaciones de mejora.',
+      },
+      'marketing-budget': {
+        icon: 'fa-wallet',
+        title: 'Calculadora de Presupuesto',
+        description:
+          'Planifica la distribución óptima de tu presupuesto de marketing entre diferentes canales.',
+      },
+      'ad-copy-generator': {
+        icon: 'fa-pen-fancy',
+        title: 'Generador de Anuncios',
+        description:
+          'Crea textos publicitarios atractivos para diferentes plataformas digitales en segundos.',
+      },
+      'customer-avatar': {
+        icon: 'fa-user-gear',
+        title: 'Creador de Avatar Cliente',
+        description:
+          'Define detalladamente a tu cliente ideal para mejorar tu estrategia de marketing y comunicación.',
+      },
+      'headline-analyzer': {
+        icon: 'fa-heading',
+        title: 'Analizador de Titulares',
+        description:
+          'Evalúa la efectividad de tus titulares para artículos, anuncios o emails y mejora su rendimiento.',
+      },
+      'content-calendar': {
+        icon: 'fa-calendar-check',
+        title: 'Calendario de Contenido',
+        description:
+          'Genera un calendario de contenido personalizado para tu estrategia de marketing digital.',
+      },
     };
   }
 
@@ -121,11 +163,11 @@ export class BusinessTools {
   setupTools() {
     // Animar la aparición de las tarjetas
     const toolCards = document.querySelectorAll('.tool-card');
-    
+
     // Usar Intersection Observer para animar las tarjetas cuando son visibles
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
+      entries => {
+        entries.forEach(entry => {
           if (entry.isIntersecting) {
             setTimeout(() => {
               entry.target.classList.add('animate');
@@ -136,15 +178,15 @@ export class BusinessTools {
       },
       { threshold: 0.1 }
     );
-    
-    toolCards.forEach((card) => {
+
+    toolCards.forEach(card => {
       observer.observe(card);
     });
-    
+
     // Configurar los botones de herramientas
     const toolButtons = document.querySelectorAll('.tool-button');
-    toolButtons.forEach((button) => {
-      button.addEventListener('click', (e) => {
+    toolButtons.forEach(button => {
+      button.addEventListener('click', e => {
         e.preventDefault();
         const href = button.getAttribute('onclick').split("'")[1];
         if (href) {
