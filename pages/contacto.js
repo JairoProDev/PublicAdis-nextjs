@@ -180,8 +180,8 @@ export default function Contact() {
                     <div>
                       <h3 className="font-semibold text-gray-800">Email</h3>
                       <p className="text-gray-600">
-                        <a href="mailto:publicadis@gmail.com" className="hover:text-blue-600">
-                          publicadis@gmail.com
+                        <a href="mailto:publicadiss@gmail.com" className="hover:text-blue-600">
+                          publicadiss@gmail.com
                         </a>
                       </p>
                     </div>

@@ -188,10 +188,10 @@ const Contact = () => {
                       Respuesta garantizada en menos de 2 horas
                     </p>
                     <a
-                      href="mailto:publicadis@gmail.com"
+                      href="mailto:publicadiss@gmail.com"
                       className="text-yellow-400 hover:text-yellow-300 transition-colors"
                     >
-                      publicadis@gmail.com
+                      publicadiss@gmail.com
                     </a>
                   </div>
                 </div>

@@ -219,10 +219,10 @@ const Footer = () => {
               <li className="flex items-start gap-3 text-gray-400">
                 <i className="fas fa-envelope mt-1 text-primary-orange"></i>
                 <a
-                  href="mailto:publicadis@gmail.com"
+                  href="mailto:publicadiss@gmail.com"
                   className="hover:text-white transition-colors"
                 >
-                  publicadis@gmail.com
+                  publicadiss@gmail.com
                 </a>
               </li>
             </ul>

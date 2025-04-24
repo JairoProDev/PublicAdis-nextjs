@@ -124,7 +124,7 @@ export class Footer {
               </li>
               <li>
                 <i class="fa-solid fa-envelope"></i>
-                <span><a href="mailto:publicadis@gmail.com">publicadis@gmail.com</a></span>
+                <span><a href="mailto:publicadiss@gmail.com">publicadiss@gmail.com</a></span>
               </li>
             </ul>
             <div class="footer-app-download">

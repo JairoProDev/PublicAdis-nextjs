@@ -443,7 +443,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       gmailIcon.addEventListener('click', event => {
         event.preventDefault();
-        navigator.clipboard.writeText('publicadis@gmail.com');
+        navigator.clipboard.writeText('publicadiss@gmail.com');
 
         // Show feedback if available
         if (typeof showAlert === 'function') {

@@ -72,7 +72,7 @@ export class Contact {
                     <div class="method-info">
                       <h4>Escríbanos</h4>
                       <p>Respuesta garantizada en menos de 2 horas</p>
-                      <a href="mailto:publicadis@gmail.com" class="premium-link">publicadis@gmail.com</a>
+                      <a href="mailto:publicadiss@gmail.com" class="premium-link">publicadiss@gmail.com</a>
                     </div>
                   </div>
                   

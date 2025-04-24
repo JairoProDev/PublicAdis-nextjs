@@ -130,6 +130,6 @@ Este proyecto está bajo la Licencia MIT - vea el archivo LICENSE para más deta
 
 ## Contacto 📧
 
-- Email: publicadis@gmail.com
+- Email: publicadiss@gmail.com
 - WhatsApp: +51 937 054 328
 - Sitio: [www.publicadis.com](https://www.publicadis.com)
