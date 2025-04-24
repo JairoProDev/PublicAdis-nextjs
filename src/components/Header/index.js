@@ -15,14 +15,26 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    // When menu state changes, toggle body overflow to prevent scrolling when menu is open
+    if (isMenuOpen) {
+      document.body.classList.add('overflow-hidden');
+    } else {
+      document.body.classList.remove('overflow-hidden');
+    }
+
+    // Cleanup when component unmounts
+    return () => {
+      document.body.classList.remove('overflow-hidden');
+    };
+  }, [isMenuOpen]);
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
-    document.body.classList.toggle('overflow-hidden', !isMenuOpen);
   };
 
   const closeMenu = () => {
     setIsMenuOpen(false);
-    document.body.classList.remove('overflow-hidden');
   };
 
   const navItems = [
@@ -53,6 +65,21 @@ const Header = () => {
     },
   ];
 
+  const socialLinks = [
+    { icon: 'fa-whatsapp', href: 'https://wa.me/937054328', label: 'WhatsApp' },
+    {
+      icon: 'fa-facebook-f',
+      href: 'https://www.facebook.com/publicadis',
+      label: 'Facebook',
+    },
+    {
+      icon: 'fa-instagram',
+      href: 'https://www.instagram.com/publicadis',
+      label: 'Instagram',
+    },
+    { icon: 'fa-tiktok', href: 'https://www.tiktok.com/@publicadis', label: 'TikTok' },
+  ];
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 py-3 transition-all duration-300 ${isScrolled ? 'bg-white shadow-md py-2' : 'bg-transparent'}`}
@@ -61,7 +88,7 @@ const Header = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">
-            <Link href="/" className="flex items-center gap-2">
+            <Link href="/" className="flex items-center gap-2" onClick={closeMenu}>
               <div className="w-10 h-10 bg-amber-500 rounded-full flex items-center justify-center text-white">
                 <span className="font-bold">P</span>
               </div>
@@ -108,7 +135,7 @@ const Header = () => {
               Ir a Buscadis
             </a>
             <Link
-              href="#contacto"
+              href="/contacto"
               className="px-3 py-1.5 rounded-md bg-gradient-to-r from-yellow-500 to-amber-600 text-white hover:shadow-md transition-shadow"
             >
               <i className="fas fa-envelope mr-1.5"></i>
@@ -117,7 +144,12 @@ const Header = () => {
           </div>
 
           {/* Mobile Menu Button */}
-          <button className="block md:hidden text-xl" onClick={toggleMenu} aria-label="Abrir menú">
+          <button
+            className="block md:hidden text-xl"
+            onClick={toggleMenu}
+            aria-label={isMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
+            aria-expanded={isMenuOpen}
+          >
             <div
               className={`w-6 h-5 relative flex flex-col justify-between ${isScrolled ? 'text-gray-800' : 'text-white'}`}
             >
@@ -159,7 +191,7 @@ const Header = () => {
               ))}
               <li>
                 <Link
-                  href="#contacto"
+                  href="/contacto"
                   className="flex items-center text-lg py-2 text-amber-500 border-b border-gray-100"
                   onClick={closeMenu}
                 >
@@ -171,20 +203,7 @@ const Header = () => {
           </nav>
 
           <div className="flex justify-center space-x-4 mb-8">
-            {[
-              { icon: 'fa-whatsapp', href: 'https://wa.me/937054328', label: 'WhatsApp' },
-              {
-                icon: 'fa-facebook-f',
-                href: 'https://www.facebook.com/publicadis',
-                label: 'Facebook',
-              },
-              {
-                icon: 'fa-instagram',
-                href: 'https://www.instagram.com/publicadis',
-                label: 'Instagram',
-              },
-              { icon: 'fa-tiktok', href: 'https://www.tiktok.com/@publicadis', label: 'TikTok' },
-            ].map((social, index) => (
+            {socialLinks.map((social, index) => (
               <a
                 key={index}
                 href={social.href}
@@ -202,12 +221,28 @@ const Header = () => {
             <i className="fas fa-crown"></i>
             <span className="font-medium">Publicidad Premium</span>
           </div>
+
+          <div className="mt-8 text-center">
+            <a
+              href="https://buscadis.com"
+              className="px-4 py-2 border border-blue-600 text-blue-600 rounded-md hover:bg-blue-600 hover:text-white transition-colors inline-block"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i className="fas fa-search mr-1.5"></i>
+              Ir a Buscadis
+            </a>
+          </div>
         </div>
       </div>
 
-      {/* Overlay */}
+      {/* Overlay - only shown when menu is open */}
       {isMenuOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-30" onClick={closeMenu}></div>
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-30"
+          onClick={closeMenu}
+          aria-hidden="true"
+        ></div>
       )}
     </header>
   );
