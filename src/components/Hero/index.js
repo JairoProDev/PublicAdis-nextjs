@@ -40,14 +40,14 @@ const Hero = () => {
 
     // Start slider autoplay
     slideInterval.current = setInterval(() => {
-      setCurrentSlide(prevSlide => (prevSlide + 1) % slides.length);
+      nextSlide();
     }, 5000);
 
     return () => {
       clearInterval(titleInterval);
       clearInterval(slideInterval.current);
     };
-  }, [dynamicTexts.length, slides.length]);
+  }, [dynamicTexts.length, slides.length, nextSlide]);
 
   const goToSlide = index => {
     setCurrentSlide(index);

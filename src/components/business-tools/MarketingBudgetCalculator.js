@@ -97,7 +97,7 @@ const MarketingBudgetCalculator = () => {
       allocation: Math.round((channel.percentage / 100) * totalBudget),
     }));
     setChannels(updatedChannels);
-  }, [totalBudget]);
+  }, [totalBudget, channels]);
 
   // Apply preset when business type or goal changes
   useEffect(() => {
@@ -114,7 +114,7 @@ const MarketingBudgetCalculator = () => {
       });
       setChannels(updatedChannels);
     }
-  }, [businessType, businessGoal]);
+  }, [businessType, businessGoal, channels, totalBudget, businessTypePresets]);
 
   // Update percentage when allocation changes
   const handleAllocationChange = (id, value) => {

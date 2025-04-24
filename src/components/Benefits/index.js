@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const Benefits = () => {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
@@ -155,7 +156,7 @@ const Benefits = () => {
     return () => {
       clearInterval(testimonialInterval.current);
     };
-  }, []);
+  }, [nextTestimonial]);
 
   return (
     <section id="benefits" className="py-20 bg-white relative overflow-hidden">
@@ -257,11 +258,13 @@ const Benefits = () => {
                       <p className="text-gray-600 mb-6">{testimonial.text}</p>
                       <div className="flex mb-6">{renderRatingStars(testimonial.rating)}</div>
                       <div className="flex items-center">
-                        <div className="w-12 h-12 rounded-full overflow-hidden mr-4">
-                          <img
+                        <div className="w-12 h-12 rounded-full overflow-hidden mr-4 relative">
+                          <Image
                             src={testimonial.image}
                             alt={testimonial.author}
-                            className="w-full h-full object-cover"
+                            className="object-cover"
+                            fill
+                            sizes="48px"
                             onError={e => {
                               e.target.onerror = null;
                               e.target.src = `https://ui-avatars.com/api/?name=${testimonial.author
