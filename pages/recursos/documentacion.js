@@ -345,35 +345,55 @@ export default function ApiDocumentation() {
               {/* Code Examples */}
               <div id="ejemplos" className="bg-white rounded-lg shadow-md p-8 mb-8">
                 <h2 className="text-2xl font-bold mb-4">Ejemplos de código</h2>
+                <p className="text-gray-700 mb-4">
+                  A continuación, te mostramos cómo interactuar con nuestra API en diferentes
+                  lenguajes de programación:
+                </p>
 
                 <div className="mb-6">
                   <h3 className="text-lg font-semibold mb-3">JavaScript (Node.js)</h3>
                   <pre className="text-sm bg-gray-800 text-white p-4 rounded overflow-x-auto">
-                    {`const axios = require('axios');
+                    {`const fetch = require('node-fetch');
 
 const API_TOKEN = 'tu_token_api';
 const BASE_URL = 'https://api.publicadis.com/v1';
 
-async function getCampaigns() {
+async function createCampaign(campaignData) {
   try {
-    const response = await axios.get(\`\${BASE_URL}/campaigns\`, {
+    const response = await fetch(\`\${BASE_URL}/campaigns\`, {
+      method: 'POST',
       headers: {
         'Authorization': \`Bearer \${API_TOKEN}\`,
-        'Content-Type': 'application/json'
-      }
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(campaignData),
     });
-    
-    return response.data;
+
+    if (!response.ok) {
+      throw new Error(\`Error: \${response.status}\`);
+    }
+
+    const data = await response.json();
+    return data;
   } catch (error) {
-    console.error('Error al obtener campañas:', error.response ? error.response.data : error.message);
+    console.error('Error creating campaign:', error);
     throw error;
   }
 }
 
 // Ejemplo de uso
-getCampaigns()
-  .then(campaigns => console.log(campaigns))
-  .catch(err => console.error(err));`}
+const newCampaign = {
+  name: 'Campaña de Invierno',
+  budget: 5000,
+  start_date: '2023-06-01',
+  end_date: '2023-08-31',
+  status: 'active',
+  objective: 'conversions',
+};
+
+createCampaign(newCampaign)
+  .then(campaign => console.log('Campaña creada:', campaign))
+  .catch(error => console.error(error));`}
                   </pre>
                 </div>
 

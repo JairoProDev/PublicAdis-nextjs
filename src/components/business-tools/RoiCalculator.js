@@ -5,19 +5,26 @@
 class RoiCalculator {
   constructor() {
     this.channelEfficiencyFactors = {
-      digital: 1.2,
-      social: 1.3,
-      traditional: 0.9,
-      classified: 1.1,
-      email: 1.2,
+      digital: 1.25,
+      social: 1.15,
+      traditional: 0.85,
+      classified: 1.05,
+      email: 1.1,
     };
 
     this.periodFactors = {
-      1: 1.0, // 1 mes
-      3: 1.05, // 3 meses
-      6: 1.08, // 6 meses
-      12: 1.15, // 12 meses
+      1: 0.85,
+      3: 1.0,
+      6: 1.15,
+      12: 1.25,
     };
+  }
+
+  // Añadir la función de alerta
+  showToolAlert(message, type) {
+    // Función simple para mostrar alertas
+    alert(message);
+    console.warn(`[${type}] ${message}`);
   }
 
   init() {
@@ -25,48 +32,32 @@ class RoiCalculator {
   }
 
   setupEventListeners() {
-    const calculateButton = document.getElementById("calculate-roi");
+    const calculateButton = document.getElementById('calculate-roi');
     if (calculateButton) {
-      calculateButton.addEventListener("click", () => this.calculateRoi());
+      calculateButton.addEventListener('click', () => this.calculateRoi());
     }
   }
 
   calculateRoi() {
-    // Recoger valores del formulario
-    const investment = parseFloat(
-      document.getElementById("total-investment").value
-    );
-    const revenue = parseFloat(
-      document.getElementById("revenue-generated").value
-    );
-    const channel = document.getElementById("advertising-channel").value;
-    const customers = parseFloat(
-      document.getElementById("customers-acquired").value
-    );
-    const period = parseInt(document.getElementById("period").value);
+    const investment = parseFloat(document.getElementById('advertising-investment').value);
+    const revenue = parseFloat(document.getElementById('revenue-generated').value);
+    const channel = document.getElementById('advertising-channel').value;
+    const customers = parseFloat(document.getElementById('customers-acquired').value);
+    const period = parseInt(document.getElementById('period').value);
 
     // Validar los valores de entrada
     if (!investment || investment <= 0) {
-      showToolAlert(
-        "Por favor, introduce un valor válido para la inversión.",
-        "error"
-      );
+      this.showToolAlert('Por favor, introduce un valor válido para la inversión.', 'error');
       return;
     }
 
     if (!revenue && revenue !== 0) {
-      showToolAlert(
-        "Por favor, introduce un valor para los ingresos generados.",
-        "error"
-      );
+      this.showToolAlert('Por favor, introduce un valor para los ingresos generados.', 'error');
       return;
     }
 
     if (!customers && customers !== 0) {
-      showToolAlert(
-        "Por favor, introduce el número de clientes adquiridos.",
-        "error"
-      );
+      this.showToolAlert('Por favor, introduce el número de clientes adquiridos.', 'error');
       return;
     }
 
@@ -107,17 +98,17 @@ class RoiCalculator {
     channel,
     period
   ) {
-    const resultsContainer = document.getElementById("roi-results");
+    const resultsContainer = document.getElementById('roi-results');
 
     // Formatear valores
-    const formatPercent = (value) => {
-      return value.toFixed(2) + "%";
+    const formatPercent = value => {
+      return value.toFixed(2) + '%';
     };
 
-    const formatCurrency = (value) => {
+    const formatCurrency = value => {
       return (
-        "S/. " +
-        value.toLocaleString("es-PE", {
+        'S/. ' +
+        value.toLocaleString('es-PE', {
           minimumFractionDigits: 2,
           maximumFractionDigits: 2,
         })
@@ -127,42 +118,42 @@ class RoiCalculator {
     // Evaluar el ROI
     let roiRating, roiMessage;
     if (roi > 200) {
-      roiRating = "Excelente";
+      roiRating = 'Excelente';
       roiMessage =
-        "Tu campaña está generando resultados excepcionales. Considera aumentar la inversión para maximizar el retorno.";
+        'Tu campaña está generando resultados excepcionales. Considera aumentar la inversión para maximizar el retorno.';
     } else if (roi > 100) {
-      roiRating = "Muy bueno";
+      roiRating = 'Muy bueno';
       roiMessage =
-        "Tu campaña está funcionando bien. Analiza qué elementos están teniendo mejor desempeño para potenciarlos.";
+        'Tu campaña está funcionando bien. Analiza qué elementos están teniendo mejor desempeño para potenciarlos.';
     } else if (roi > 50) {
-      roiRating = "Bueno";
+      roiRating = 'Bueno';
       roiMessage =
-        "Tu campaña tiene un rendimiento positivo. Hay margen para optimizar y mejorar los resultados.";
+        'Tu campaña tiene un rendimiento positivo. Hay margen para optimizar y mejorar los resultados.';
     } else if (roi > 0) {
-      roiRating = "Aceptable";
+      roiRating = 'Aceptable';
       roiMessage =
-        "Tu campaña está generando retorno positivo pero limitado. Considera ajustar tu estrategia para mejorar resultados.";
+        'Tu campaña está generando retorno positivo pero limitado. Considera ajustar tu estrategia para mejorar resultados.';
     } else {
-      roiRating = "Negativo";
+      roiRating = 'Negativo';
       roiMessage =
-        "Tu campaña no está generando suficiente retorno. Recomendamos revisar tu estrategia y hacer cambios significativos.";
+        'Tu campaña no está generando suficiente retorno. Recomendamos revisar tu estrategia y hacer cambios significativos.';
     }
 
     // Nombre del canal en español
     const channelNames = {
-      digital: "Marketing Digital",
-      social: "Redes Sociales",
-      traditional: "Publicidad Tradicional",
-      classified: "Anuncios Clasificados",
-      email: "Email Marketing",
+      digital: 'Marketing Digital',
+      social: 'Redes Sociales',
+      traditional: 'Publicidad Tradicional',
+      classified: 'Anuncios Clasificados',
+      email: 'Email Marketing',
     };
 
     // Periodo en texto
     const periodText = {
-      1: "1 mes",
-      3: "3 meses",
-      6: "6 meses",
-      12: "12 meses",
+      1: '1 mes',
+      3: '3 meses',
+      6: '6 meses',
+      12: '12 meses',
     };
 
     // HTML para los resultados
@@ -187,10 +178,7 @@ class RoiCalculator {
         </div>
         
         <div class="chart-bar">
-          <div class="chart-value revenue-bar" style="height: ${Math.min(
-            100,
-            revenue / 100
-          )}px;">
+          <div class="chart-value revenue-bar" style="height: ${Math.min(100, revenue / 100)}px;">
             ${formatCurrency(revenue)}
           </div>
           <div class="chart-label">Ingresos</div>
@@ -226,25 +214,19 @@ class RoiCalculator {
       <div class="result-analysis">
         <h4><i class="fa-solid fa-chart-pie"></i> Análisis de Resultados</h4>
         <p>
-          ${roiMessage} Tu campaña en <strong>${
-      channelNames[channel]
-    }</strong> durante <strong>${periodText[period]}</strong> 
-          ha generado un retorno de inversión del <strong>${formatPercent(
-            roi
-          )}</strong>. 
-          Cada cliente te ha costado <strong>${formatCurrency(
-            costPerCustomer
-          )}</strong> y ha generado 
+          ${roiMessage} Tu campaña en <strong>${channelNames[channel]}</strong> durante <strong>${periodText[period]}</strong> 
+          ha generado un retorno de inversión del <strong>${formatPercent(roi)}</strong>. 
+          Cada cliente te ha costado <strong>${formatCurrency(costPerCustomer)}</strong> y ha generado 
           <strong>${formatCurrency(revenuePerCustomer)}</strong> en ingresos.
         </p>
       </div>
     `;
 
-    resultsContainer.classList.add("show");
+    resultsContainer.classList.add('show');
   }
 }
 
 // Si está en un entorno global, exponer la clase
-if (typeof window !== "undefined") {
+if (typeof window !== 'undefined') {
   window.RoiCalculator = RoiCalculator;
 }
