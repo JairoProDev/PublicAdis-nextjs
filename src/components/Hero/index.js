@@ -11,7 +11,7 @@ const Hero = () => {
   const dynamicTexts = [
     'Transforma Tu Presencia con',
     'Multiplica Tus Ventas con',
-    'Potencia Tu Marca con',
+    'Potencia Tu Empresa con',
     'Conquista Nuevos Clientes con',
     'Maximiza Tu Inversión con',
     'Lidera Tu Industria con',
@@ -58,31 +58,37 @@ const Hero = () => {
     {
       name: 'Web',
       icon: 'globe',
+      type: 'fas',
       color: 'bg-blue-100 text-blue-600',
     },
     {
       name: 'App',
       icon: 'mobile-alt',
+      type: 'fas',
       color: 'bg-indigo-100 text-indigo-600',
     },
     {
       name: 'Digital',
       icon: 'tablet',
+      type: 'fas',
       color: 'bg-purple-100 text-purple-600',
     },
     {
       name: 'Social',
       icon: 'hashtag',
+      type: 'fas',
       color: 'bg-pink-100 text-pink-600',
     },
     {
       name: 'Local',
       icon: 'store',
+      type: 'fas',
       color: 'bg-emerald-100 text-emerald-600',
     },
     {
       name: 'WhatsApp',
       icon: 'whatsapp',
+      type: 'fab',
       color: 'bg-green-100 text-green-600',
     },
   ];
@@ -218,9 +224,7 @@ const Hero = () => {
                     transition: 'all 0.5s ease-out',
                   }}
                 >
-                  <i
-                    className={`fab fa-${channel.icon === 'whatsapp' ? 'whatsapp' : `fas fa-${channel.icon}`} text-lg`}
-                  ></i>
+                  <i className={`${channel.type} fa-${channel.icon} text-lg`}></i>
                   <span className="font-medium text-sm">{channel.name}</span>
                 </div>
               ))}
