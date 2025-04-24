@@ -113,12 +113,18 @@ class SalaryCompareCalculator {
     );
     if (notifyButton) {
       notifyButton.addEventListener("click", () => {
-        showAlert(
+        this.showToolAlert(
           "Te avisaremos cuando esta herramienta esté disponible",
           "info"
         );
       });
     }
+  }
+
+  showToolAlert(message, type) {
+    // Simple alert function
+    alert(message);
+    console.warn(`[${type}] ${message}`);
   }
 
   compareSalary(sector, experiencia, educacion, ciudad, salarioActual) {

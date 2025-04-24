@@ -1,30 +1,17 @@
 /**
- * Calculadora de ROI Publicitario
- * Analiza el retorno de inversión de campañas publicitarias
+ * Calculadora de ROI para Publicidad
+ * Calcula el retorno de inversión para campañas publicitarias
  */
 class RoiCalculator {
   constructor() {
-    this.channelEfficiencyFactors = {
-      digital: 1.25,
-      social: 1.15,
-      traditional: 0.85,
-      classified: 1.05,
-      email: 1.1,
+    // Factores de conversión por canal
+    this.channelFactors = {
+      search: 0.065, // 6.5% tasa de conversión Google Ads
+      social: 0.043, // 4.3% tasa de conversión en redes sociales
+      display: 0.018, // 1.8% tasa de conversión en anuncios display
+      email: 0.073, // 7.3% tasa de conversión email marketing
+      content: 0.032, // 3.2% tasa de conversión marketing de contenidos
     };
-
-    this.periodFactors = {
-      1: 0.85,
-      3: 1.0,
-      6: 1.15,
-      12: 1.25,
-    };
-  }
-
-  // Añadir la función de alerta
-  showToolAlert(message, type) {
-    // Función simple para mostrar alertas
-    alert(message);
-    console.warn(`[${type}] ${message}`);
   }
 
   init() {
@@ -36,6 +23,12 @@ class RoiCalculator {
     if (calculateButton) {
       calculateButton.addEventListener('click', () => this.calculateRoi());
     }
+  }
+
+  showToolAlert(message, type) {
+    // Simple alert function
+    alert(message);
+    console.warn(`[${type}] ${message}`);
   }
 
   calculateRoi() {
@@ -61,30 +54,50 @@ class RoiCalculator {
       return;
     }
 
-    // Calcular ROI básico
-    const basicRoi = ((revenue - investment) / investment) * 100;
-
-    // Aplicar factores de eficiencia por canal
-    const adjustedRoi = basicRoi * this.channelEfficiencyFactors[channel];
-
-    // Ajustar por período
-    const finalRoi = adjustedRoi * this.periodFactors[period];
+    // Calcular ROI
+    const roi = ((revenue - investment) / investment) * 100;
 
     // Calcular métricas adicionales
-    const costPerCustomer = investment / customers;
-    const revenuePerCustomer = revenue / customers;
-    const customerLifetimeValue = revenuePerCustomer * (1 + finalRoi / 100);
+    const costPerCustomer = customers > 0 ? investment / customers : 0;
+    const revenuePerCustomer = customers > 0 ? revenue / customers : 0;
+
+    // Estimar valor de por vida del cliente (LTV)
+    // Asumiendo que un cliente típico genera 3 veces su valor inicial a lo largo de su vida
+    const customerLifetimeValue = revenuePerCustomer * 3;
+
+    // Determinar si el ROI es bueno o no
+    let roiRating;
+    let roiMessage;
+
+    if (roi < 0) {
+      roiRating = 'Negativo';
+      roiMessage = 'Tu campaña está generando pérdidas.';
+    } else if (roi < 50) {
+      roiRating = 'Bajo';
+      roiMessage = 'Tu campaña tiene un rendimiento bajo.';
+    } else if (roi < 100) {
+      roiRating = 'Promedio';
+      roiMessage = 'Tu campaña tiene un rendimiento aceptable.';
+    } else if (roi < 200) {
+      roiRating = 'Bueno';
+      roiMessage = 'Tu campaña tiene un buen rendimiento.';
+    } else {
+      roiRating = 'Excelente';
+      roiMessage = '¡Felicidades! Tu campaña tiene un excelente rendimiento.';
+    }
 
     // Mostrar resultados
     this.displayResults(
-      finalRoi,
+      roi,
       investment,
       revenue,
       costPerCustomer,
       revenuePerCustomer,
       customerLifetimeValue,
       channel,
-      period
+      period,
+      roiRating,
+      roiMessage
     );
   }
 
@@ -96,59 +109,43 @@ class RoiCalculator {
     revenuePerCustomer,
     customerLifetimeValue,
     channel,
-    period
+    period,
+    roiRating,
+    roiMessage
   ) {
     const resultsContainer = document.getElementById('roi-results');
 
-    // Formatear valores
-    const formatPercent = value => {
-      return value.toFixed(2) + '%';
-    };
-
+    // Formatear moneda
     const formatCurrency = value => {
       return (
         'S/. ' +
         value.toLocaleString('es-PE', {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 0,
         })
       );
     };
 
-    // Evaluar el ROI
-    let roiRating, roiMessage;
-    if (roi > 200) {
-      roiRating = 'Excelente';
-      roiMessage =
-        'Tu campaña está generando resultados excepcionales. Considera aumentar la inversión para maximizar el retorno.';
-    } else if (roi > 100) {
-      roiRating = 'Muy bueno';
-      roiMessage =
-        'Tu campaña está funcionando bien. Analiza qué elementos están teniendo mejor desempeño para potenciarlos.';
-    } else if (roi > 50) {
-      roiRating = 'Bueno';
-      roiMessage =
-        'Tu campaña tiene un rendimiento positivo. Hay margen para optimizar y mejorar los resultados.';
-    } else if (roi > 0) {
-      roiRating = 'Aceptable';
-      roiMessage =
-        'Tu campaña está generando retorno positivo pero limitado. Considera ajustar tu estrategia para mejorar resultados.';
-    } else {
-      roiRating = 'Negativo';
-      roiMessage =
-        'Tu campaña no está generando suficiente retorno. Recomendamos revisar tu estrategia y hacer cambios significativos.';
-    }
-
-    // Nombre del canal en español
-    const channelNames = {
-      digital: 'Marketing Digital',
-      social: 'Redes Sociales',
-      traditional: 'Publicidad Tradicional',
-      classified: 'Anuncios Clasificados',
-      email: 'Email Marketing',
+    // Formatear porcentaje
+    const formatPercent = value => {
+      return (
+        value.toLocaleString('es-PE', {
+          minimumFractionDigits: 1,
+          maximumFractionDigits: 1,
+        }) + '%'
+      );
     };
 
-    // Periodo en texto
+    // Nombres legibles para los canales
+    const channelNames = {
+      search: 'Google Ads / Búsqueda',
+      social: 'Redes Sociales',
+      display: 'Anuncios Display',
+      email: 'Email Marketing',
+      content: 'Marketing de Contenidos',
+    };
+
+    // Periodos en texto
     const periodText = {
       1: '1 mes',
       3: '3 meses',
@@ -168,10 +165,7 @@ class RoiCalculator {
       
       <div class="chart-container">
         <div class="chart-bar">
-          <div class="chart-value investment-bar" style="height: ${Math.min(
-            100,
-            investment / 100
-          )}px;">
+          <div class="chart-value investment-bar" style="height: ${Math.min(100, investment / 100)}px;">
             ${formatCurrency(investment)}
           </div>
           <div class="chart-label">Inversión</div>

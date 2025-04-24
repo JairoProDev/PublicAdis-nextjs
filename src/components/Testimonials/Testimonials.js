@@ -91,6 +91,8 @@ export class Testimonials {
 
     this.currentTestimonial = 0;
     this.autoplayInterval = null;
+    this.touchStartX = 0;
+    this.touchEndX = 0;
   }
 
   init() {
@@ -227,14 +229,11 @@ export class Testimonials {
     }
 
     // Configurar interacción táctil
-    let touchStartX = 0;
-    let touchEndX = 0;
-
     if (carousel) {
       carousel.addEventListener(
         'touchstart',
         e => {
-          touchStartX = e.changedTouches[0].screenX;
+          this.touchStartX = e.changedTouches[0].screenX;
         },
         { passive: true }
       );
@@ -242,7 +241,7 @@ export class Testimonials {
       carousel.addEventListener(
         'touchend',
         e => {
-          touchEndX = e.changedTouches[0].screenX;
+          this.touchEndX = e.changedTouches[0].screenX;
           this.handleSwipe();
         },
         { passive: true }
@@ -302,11 +301,11 @@ export class Testimonials {
   handleSwipe() {
     const SWIPE_THRESHOLD = 50;
 
-    if (touchEndX < touchStartX - SWIPE_THRESHOLD) {
+    if (this.touchEndX < this.touchStartX - SWIPE_THRESHOLD) {
       this.nextTestimonial(); // Swipe izquierdo
     }
 
-    if (touchEndX > touchStartX + SWIPE_THRESHOLD) {
+    if (this.touchEndX > this.touchStartX + SWIPE_THRESHOLD) {
       this.prevTestimonial(); // Swipe derecho
     }
   }

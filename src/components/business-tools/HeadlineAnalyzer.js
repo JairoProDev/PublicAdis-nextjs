@@ -280,7 +280,7 @@ const HeadlineAnalyzer = () => {
     }
 
     // Check for use of parentheses or brackets (can increase CTR)
-    if (/[\(\[\{].*[\)\]\}]/.test(text)) {
+    if (/[([{].*[)\]}]/.test(text)) {
       score += 5;
     }
 
