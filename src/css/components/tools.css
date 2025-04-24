@@ -1,0 +1,434 @@
+/* Business Tools Section Styles */
+#businessToolsSection {
+  background-color: var(--gray-light);
+  padding: 5rem 0;
+  position: relative;
+}
+
+.tools-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.tool-card {
+  background-color: white;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: 2rem;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease,
+    box-shadow 0.3s ease;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.tool-card.animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.tool-card:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--shadow-lg);
+}
+
+.tool-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.tool-icon {
+  width: 60px;
+  height: 60px;
+  background: var(--gradient-secondary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.tool-icon i {
+  font-size: 1.8rem;
+  color: white;
+}
+
+.tool-header h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-blue);
+  margin: 0;
+}
+
+.tool-description {
+  font-size: 1rem;
+  color: var(--text-medium);
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.tool-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--dark-text);
+}
+
+.form-group input,
+.form-group select {
+  padding: 0.8rem 1rem;
+  border-radius: var(--border-radius-sm);
+  border: 1px solid var(--gray-medium);
+  font-size: 1rem;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 3px rgba(16, 72, 145, 0.2);
+}
+
+.tool-button {
+  background: var(--gradient-primary);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius-md);
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  margin-top: 0.5rem;
+  align-self: flex-start;
+}
+
+.tool-button:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.tool-button i {
+  transition: transform 0.3s ease;
+}
+
+.tool-button:hover i {
+  transform: translateX(3px);
+}
+
+.tool-results {
+  background-color: var(--gray-light);
+  border-radius: var(--border-radius-md);
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+  animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+.result-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.8rem;
+  font-size: 1rem;
+}
+
+.result-label {
+  font-weight: 600;
+  color: var(--dark-text);
+}
+
+.result-value {
+  font-weight: 700;
+  color: var(--primary-blue);
+  font-size: 1.1rem;
+}
+
+.result-note {
+  font-size: 0.8rem;
+  color: var(--gray-dark);
+  margin-top: 1rem;
+  font-style: italic;
+}
+
+.tools-cta {
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.tools-cta-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  background: var(--gradient-secondary);
+  color: white;
+  text-decoration: none;
+  padding: 1rem 2rem;
+  border-radius: var(--border-radius-md);
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  box-shadow: var(--shadow-md);
+}
+
+.tools-cta-button:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.tools-cta-button i {
+  transition: transform 0.3s ease;
+}
+
+.tools-cta-button:hover i {
+  transform: translateX(5px);
+}
+
+/* Quick Action Button */
+.quick-action-button {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 99;
+}
+
+.action-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  background-color: #25d366;
+  color: white;
+  font-size: 2rem;
+  border-radius: 50%;
+  box-shadow: var(--shadow-lg);
+  text-decoration: none;
+  transition: transform 0.3s ease;
+  animation: pulse 2s infinite;
+}
+
+.action-button:hover {
+  transform: scale(1.1);
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+  }
+}
+
+/* Responsive Styles */
+@media (max-width: 992px) {
+  .tools-container {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .tool-card {
+    padding: 1.5rem;
+  }
+
+  .tool-icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .tool-icon i {
+    font-size: 1.5rem;
+  }
+
+  .tool-header h3 {
+    font-size: 1.3rem;
+  }
+
+  .tools-cta-button {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  #businessToolsSection {
+    padding: 4rem 0;
+  }
+
+  .tool-card {
+    padding: 1.2rem;
+  }
+
+  .tool-icon {
+    width: 45px;
+    height: 45px;
+  }
+
+  .tool-icon i {
+    font-size: 1.3rem;
+  }
+
+  .tool-header h3 {
+    font-size: 1.2rem;
+  }
+
+  .form-group label {
+    font-size: 0.85rem;
+  }
+
+  .form-group input,
+  .form-group select {
+    padding: 0.7rem 0.9rem;
+    font-size: 0.9rem;
+  }
+
+  .tool-button {
+    padding: 0.7rem 1.2rem;
+    font-size: 0.9rem;
+  }
+
+  .quick-action-button {
+    bottom: 5.5rem;
+    right: 1.5rem;
+  }
+
+  .action-button {
+    width: 50px;
+    height: 50px;
+    font-size: 1.7rem;
+  }
+}
+
+@media (max-width: 450px) {
+  #businessToolsSection {
+    padding: 3rem 0;
+  }
+
+  .tool-card {
+    padding: 1rem;
+  }
+
+  .tool-header {
+    margin-bottom: 1rem;
+  }
+
+  .tool-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .tool-icon i {
+    font-size: 1.2rem;
+  }
+
+  .tool-header h3 {
+    font-size: 1.1rem;
+  }
+
+  .tool-description {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+
+  .form-group {
+    gap: 0.3rem;
+  }
+
+  .form-group label {
+    font-size: 0.8rem;
+  }
+
+  .form-group input,
+  .form-group select {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.85rem;
+  }
+
+  .tool-results {
+    padding: 1rem;
+  }
+
+  .result-item {
+    font-size: 0.9rem;
+  }
+
+  .result-value {
+    font-size: 1rem;
+  }
+
+  .result-note {
+    font-size: 0.75rem;
+  }
+
+  .tools-cta {
+    margin-top: 2rem;
+  }
+
+  .tools-cta-button {
+    padding: 0.7rem 1.2rem;
+    font-size: 0.9rem;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .quick-action-button {
+    bottom: 5rem;
+    right: 1rem;
+  }
+
+  .action-button {
+    width: 45px;
+    height: 45px;
+    font-size: 1.5rem;
+  }
+}

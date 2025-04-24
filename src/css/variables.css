@@ -1,0 +1,203 @@
+/**
+ * Variables globales para toda la aplicación
+ * Combinación de todas las variables CSS para mantener consistencia
+ */
+
+:root {
+  /* Fuentes */
+  --global-font: 'Poppins', sans-serif;
+  --font-primary: 'Poppins', sans-serif;
+
+  /* Colores principales */
+  --primary-blue: #104891;
+  --primary-blue-light: #2a6bc2;
+  --primary-blue-dark: #003b7a;
+
+  --primary-orange: #ff7a00;
+  --primary-orange-light: #ff9a3f;
+  --primary-orange-dark: #e56e00;
+
+  --primary-gold: #ffd700;
+  --primary-gold-light: #ffea80;
+  --primary-gold-dark: #b7a000;
+
+  --accent-light: #00a8e8;
+  --accent-dark: #0077b6;
+
+  /* Colores premium */
+  --premium-gold: #d4af37;
+  --premium-gold-light: #f4d03f;
+  --premium-gold-dark: #996515;
+  --premium-blue: #1e3d59;
+  --premium-blue-light: #2a5f8f;
+  --premium-blue-dark: #0c2845;
+
+  /* Colores de texto y fondos */
+  --text-dark: #161925;
+  --text-medium: #4a5568;
+  --text-light: #a0aec0;
+  --light-text: #ffffff;
+  --dark-text: #333333;
+
+  --background-light: #f8f9fa;
+  --background-white: #ffffff;
+  --background-dark: #030a1c;
+  --background-lighter: #f1f5f9;
+
+  --gray-light: #f8f9fa;
+  --gray-medium: #dee2e6;
+  --gray-dark: #6c757d;
+
+  /* Gradientes */
+  --gradient-primary: linear-gradient(
+    135deg,
+    var(--primary-orange) 0%,
+    var(--primary-orange-light) 100%
+  );
+
+  --gradient-secondary: linear-gradient(
+    135deg,
+    var(--primary-blue) 0%,
+    var(--primary-blue-light) 100%
+  );
+
+  --gradient-gold: linear-gradient(135deg, var(--primary-gold) 0%, var(--primary-gold-light) 100%);
+
+  --gradient-accent: linear-gradient(135deg, var(--accent-light) 0%, var(--accent-dark) 100%);
+
+  /* Gradientes premium */
+  --gradient-premium: linear-gradient(
+    135deg,
+    var(--premium-gold) 0%,
+    var(--premium-gold-dark) 100%
+  );
+
+  --gradient-premium-blue: linear-gradient(
+    135deg,
+    var(--premium-blue) 0%,
+    var(--premium-blue-dark) 100%
+  );
+
+  --gradient-premium-reverse: linear-gradient(
+    -45deg,
+    var(--premium-gold-light) 0%,
+    var(--premium-gold) 100%
+  );
+
+  /* Nuevo gradiente dorado más realista */
+  --gradient-gold-realistic: linear-gradient(
+    45deg,
+    #bf953f 0%,
+    #fcf6ba 20%,
+    #b38728 45%,
+    #fbf5b7 70%,
+    #aa771c 100%
+  );
+
+  /* Sombras */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.12);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.15);
+  --shadow-xl: 0 12px 24px rgba(0, 0, 0, 0.2);
+
+  /* Sombras premium */
+  --shadow-premium: 0 8px 16px rgba(212, 175, 55, 0.15);
+  --shadow-premium-lg: 0 12px 24px rgba(212, 175, 55, 0.2);
+  --shadow-premium-hover: 0 16px 32px rgba(212, 175, 55, 0.25);
+  --shadow-gold: 0 10px 30px rgba(180, 145, 25, 0.25);
+
+  /* Efectos */
+  --glow-premium: 0 0 20px rgba(212, 175, 55, 0.3);
+  --border-premium: 2px solid var(--premium-gold);
+  --backdrop-blur: blur(8px);
+
+  /* Animaciones */
+  --animation-speed-fast: 0.3s;
+  --animation-speed-normal: 0.5s;
+  --animation-speed-slow: 0.8s;
+  --animation-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --animation-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Transiciones */
+  --transition-fast: all 0.3s ease;
+  --transition-medium: all 0.5s ease;
+  --transition-slow: all 0.8s ease;
+  --transition-normal: 0.3s ease;
+
+  /* Bordes */
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 16px;
+  --border-radius-xl: 24px;
+
+  /* Espaciado */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 2rem;
+  --spacing-lg: 4rem;
+  --spacing-xl: 8rem;
+  --max-width: 1400px;
+  --container-padding: 20px;
+
+  /* Tamaños de fuente */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.5rem;
+  --font-size-2xl: 2rem;
+  --font-size-3xl: 2.5rem;
+  --font-size-4xl: 3rem;
+
+  /* Tamaños de título */
+  --main-titles-size: 2.57rem;
+  --sub-titles-size: 1.5rem;
+  --title-size: 1.2rem;
+  --section-main-title-span: 2.4rem;
+  --normal-font-size: 1rem;
+  --link-font-size: 1.3rem;
+
+  /* Botones y componentes específicos */
+  --app-button-radius: 1rem;
+  --app-button-font-size: 1.3rem;
+  --carousel-border-radius: 1.6rem;
+  --slide-border-size: 0.5rem;
+  --slide-text-size: 1.8rem;
+  --slide-text-span-size: 1.9rem;
+
+  /* Servicios */
+  --service-title-span-size: 1.45rem;
+  --service-title-font-size: 1.35rem;
+  --service-title-radius-value: 1.2rem;
+
+  /* Beneficios */
+  --benefit-title-font-size: 1.4rem;
+  --benefit-title-span-font-size: 1.5rem;
+
+  /* Contacto */
+  --contact-card-border-radius: 1.6rem;
+  --main-image-card-width: 200px;
+  --main-image-card-height: 200px;
+  --contact-text-font-size: 1.6rem;
+  --contact-span-font-size: 1.7rem;
+  --icons-title-span-font-size: 1.5rem;
+  --icons-title-font-size: 1.4rem;
+
+  /* Slider y mensajes */
+  --step-message-font-size: 2rem;
+  --slider-title-font-size: 2.3rem;
+  --slide-title-font-size: 2.3rem;
+  --slider-animation-translate-size: 1rem;
+
+  /* Iconos */
+  --access-icon-width: 2.5rem;
+  --access-icon-height: 2.5rem;
+  --main-icon-width: 3.2rem;
+  --main-icon-heigth: 3.2rem;
+  --contact-icon-width: 6rem;
+  --contact-icon-height: 6rem;
+  --service-icon-width: 62%;
+  --service-icon-height: 62%;
+  --benefit-icon-width: 104%;
+  --benefit-icon-height: 104%;
+}
