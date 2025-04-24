@@ -24,36 +24,65 @@ export default function ApiDocumentation() {
                 <nav>
                   <ul className="space-y-2">
                     <li>
-                      <a href="#introduccion" className="text-blue-600 hover:text-blue-800">Introducción</a>
+                      <a href="#introduccion" className="text-blue-600 hover:text-blue-800">
+                        Introducción
+                      </a>
                     </li>
                     <li>
-                      <a href="#autenticacion" className="text-blue-600 hover:text-blue-800">Autenticación</a>
+                      <a href="#autenticacion" className="text-blue-600 hover:text-blue-800">
+                        Autenticación
+                      </a>
                     </li>
                     <li>
-                      <a href="#endpoints" className="text-blue-600 hover:text-blue-800">Endpoints</a>
+                      <a href="#endpoints" className="text-blue-600 hover:text-blue-800">
+                        Endpoints
+                      </a>
                       <ul className="pl-4 mt-2 space-y-1">
                         <li>
-                          <a href="#endpoint-campanas" className="text-gray-700 hover:text-blue-600">Campañas</a>
+                          <a
+                            href="#endpoint-campanas"
+                            className="text-gray-700 hover:text-blue-600"
+                          >
+                            Campañas
+                          </a>
                         </li>
                         <li>
-                          <a href="#endpoint-anuncios" className="text-gray-700 hover:text-blue-600">Anuncios</a>
+                          <a
+                            href="#endpoint-anuncios"
+                            className="text-gray-700 hover:text-blue-600"
+                          >
+                            Anuncios
+                          </a>
                         </li>
                         <li>
-                          <a href="#endpoint-metricas" className="text-gray-700 hover:text-blue-600">Métricas</a>
+                          <a
+                            href="#endpoint-metricas"
+                            className="text-gray-700 hover:text-blue-600"
+                          >
+                            Métricas
+                          </a>
                         </li>
                       </ul>
                     </li>
                     <li>
-                      <a href="#ejemplos" className="text-blue-600 hover:text-blue-800">Ejemplos de código</a>
+                      <a href="#ejemplos" className="text-blue-600 hover:text-blue-800">
+                        Ejemplos de código
+                      </a>
                     </li>
                     <li>
-                      <a href="#errores" className="text-blue-600 hover:text-blue-800">Manejo de errores</a>
+                      <a href="#errores" className="text-blue-600 hover:text-blue-800">
+                        Manejo de errores
+                      </a>
                     </li>
                     <li>
-                      <a href="#limites" className="text-blue-600 hover:text-blue-800">Límites de uso</a>
+                      <a href="#limites" className="text-blue-600 hover:text-blue-800">
+                        Límites de uso
+                      </a>
                     </li>
                     <li>
-                      <a href="#versiones" className="text-blue-600 hover:text-blue-800">Versionado</a>
+                      <a href="#versiones" className="text-blue-600 hover:text-blue-800">
+                        Versionado
+                      </a>
                     </li>
                   </ul>
                 </nav>
@@ -63,8 +92,8 @@ export default function ApiDocumentation() {
                   <p className="text-sm text-gray-600 mb-3">
                     Si tienes preguntas sobre nuestra API, contáctanos:
                   </p>
-                  <a 
-                    href="mailto:api@publicadis.com" 
+                  <a
+                    href="mailto:api@publicadis.com"
                     className="text-blue-600 hover:text-blue-800 text-sm flex items-center"
                   >
                     <i className="fas fa-envelope mr-2"></i>
@@ -80,15 +109,19 @@ export default function ApiDocumentation() {
               <div id="introduccion" className="bg-white rounded-lg shadow-md p-8 mb-8">
                 <h2 className="text-2xl font-bold mb-4">Introducción</h2>
                 <p className="text-gray-700 mb-4">
-                  La API de PublicAdis te permite integrar nuestras soluciones publicitarias en tus aplicaciones. 
-                  Puedes crear y gestionar campañas, anuncios, y acceder a datos de rendimiento en tiempo real.
+                  La API de PublicAdis te permite integrar nuestras soluciones publicitarias en tus
+                  aplicaciones. Puedes crear y gestionar campañas, anuncios, y acceder a datos de
+                  rendimiento en tiempo real.
                 </p>
                 <p className="text-gray-700 mb-4">
-                  Esta API RESTful utiliza JSON para todas las solicitudes y respuestas, y se encuentra actualmente en la versión 1.0.
+                  Esta API RESTful utiliza JSON para todas las solicitudes y respuestas, y se
+                  encuentra actualmente en la versión 1.0.
                 </p>
                 <div className="bg-gray-100 p-4 rounded-lg">
                   <p className="font-medium">URL Base:</p>
-                  <code className="text-sm bg-gray-800 text-white px-2 py-1 rounded">https://api.publicadis.com/v1</code>
+                  <code className="text-sm bg-gray-800 text-white px-2 py-1 rounded">
+                    https://api.publicadis.com/v1
+                  </code>
                 </div>
               </div>
 
@@ -96,8 +129,8 @@ export default function ApiDocumentation() {
               <div id="autenticacion" className="bg-white rounded-lg shadow-md p-8 mb-8">
                 <h2 className="text-2xl font-bold mb-4">Autenticación</h2>
                 <p className="text-gray-700 mb-4">
-                  Todas las solicitudes a la API requieren autenticación mediante un token API. Para obtener tu token,
-                  sigue estos pasos:
+                  Todas las solicitudes a la API requieren autenticación mediante un token API. Para
+                  obtener tu token, sigue estos pasos:
                 </p>
                 <ol className="list-decimal pl-6 mb-6 space-y-2 text-gray-700">
                   <li>Inicia sesión en tu panel de control de PublicAdis</li>
@@ -113,7 +146,8 @@ export default function ApiDocumentation() {
                 </div>
                 <div className="bg-amber-50 border-l-4 border-amber-500 p-4">
                   <p className="text-amber-800">
-                    <strong>Importante:</strong> Mantén tu token API seguro. No lo compartas ni expongas en código público.
+                    <strong>Importante:</strong> Mantén tu token API seguro. No lo compartas ni
+                    expongas en código público.
                   </p>
                 </div>
               </div>
@@ -121,17 +155,20 @@ export default function ApiDocumentation() {
               {/* Endpoints */}
               <div id="endpoints" className="bg-white rounded-lg shadow-md p-8 mb-8">
                 <h2 className="text-2xl font-bold mb-6">Endpoints</h2>
-                
+
                 {/* Campaigns Endpoint */}
                 <div id="endpoint-campanas" className="mb-10">
                   <h3 className="text-xl font-bold mb-3">Campañas</h3>
                   <p className="text-gray-700 mb-4">
-                    Estos endpoints te permiten crear, consultar, actualizar y eliminar campañas publicitarias.
+                    Estos endpoints te permiten crear, consultar, actualizar y eliminar campañas
+                    publicitarias.
                   </p>
-                  
+
                   <div className="mb-6">
                     <div className="flex items-center gap-3 mb-2">
-                      <span className="bg-green-100 text-green-800 px-2 py-1 rounded text-sm font-medium">GET</span>
+                      <span className="bg-green-100 text-green-800 px-2 py-1 rounded text-sm font-medium">
+                        GET
+                      </span>
                       <code className="text-sm">/campaigns</code>
                     </div>
                     <p className="text-gray-700 mb-2">Obtiene una lista de todas tus campañas.</p>
@@ -139,10 +176,12 @@ export default function ApiDocumentation() {
                       <p className="font-medium mb-2">Parámetros opcionales:</p>
                       <ul className="list-disc pl-6 text-gray-700 text-sm">
                         <li>
-                          <code>status</code> (string): Filtra por estado de campaña (active, paused, completed)
+                          <code>status</code> (string): Filtra por estado de campaña (active,
+                          paused, completed)
                         </li>
                         <li>
-                          <code>limit</code> (integer): Límite de resultados (por defecto: 20, máx: 100)
+                          <code>limit</code> (integer): Límite de resultados (por defecto: 20, máx:
+                          100)
                         </li>
                         <li>
                           <code>offset</code> (integer): Desplazamiento para paginación
@@ -150,25 +189,29 @@ export default function ApiDocumentation() {
                       </ul>
                     </div>
                   </div>
-                  
+
                   <div className="mb-6">
                     <div className="flex items-center gap-3 mb-2">
-                      <span className="bg-green-100 text-green-800 px-2 py-1 rounded text-sm font-medium">GET</span>
+                      <span className="bg-green-100 text-green-800 px-2 py-1 rounded text-sm font-medium">
+                        GET
+                      </span>
                       <code className="text-sm">/campaigns/{'{campaign_id}'}</code>
                     </div>
                     <p className="text-gray-700">Obtiene detalles de una campaña específica.</p>
                   </div>
-                  
+
                   <div className="mb-6">
                     <div className="flex items-center gap-3 mb-2">
-                      <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm font-medium">POST</span>
+                      <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm font-medium">
+                        POST
+                      </span>
                       <code className="text-sm">/campaigns</code>
                     </div>
                     <p className="text-gray-700 mb-2">Crea una nueva campaña publicitaria.</p>
                     <div className="bg-gray-100 p-4 rounded-lg mt-3">
                       <p className="font-medium mb-2">Cuerpo de la solicitud (JSON):</p>
                       <pre className="text-sm bg-gray-800 text-white p-3 rounded overflow-x-auto">
-{`{
+                        {`{
   "name": "Mi Campaña de Verano",
   "budget": 1000,
   "start_date": "2023-07-01",
@@ -184,74 +227,92 @@ export default function ApiDocumentation() {
                       </pre>
                     </div>
                   </div>
-                  
+
                   <div className="mb-6">
                     <div className="flex items-center gap-3 mb-2">
-                      <span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-sm font-medium">PUT</span>
+                      <span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-sm font-medium">
+                        PUT
+                      </span>
                       <code className="text-sm">/campaigns/{'{campaign_id}'}</code>
                     </div>
                     <p className="text-gray-700">Actualiza una campaña existente.</p>
                   </div>
-                  
+
                   <div>
                     <div className="flex items-center gap-3 mb-2">
-                      <span className="bg-red-100 text-red-800 px-2 py-1 rounded text-sm font-medium">DELETE</span>
+                      <span className="bg-red-100 text-red-800 px-2 py-1 rounded text-sm font-medium">
+                        DELETE
+                      </span>
                       <code className="text-sm">/campaigns/{'{campaign_id}'}</code>
                     </div>
                     <p className="text-gray-700">Elimina una campaña.</p>
                   </div>
                 </div>
-                
+
                 {/* Ads Endpoint */}
                 <div id="endpoint-anuncios" className="mb-10">
                   <h3 className="text-xl font-bold mb-3">Anuncios</h3>
                   <p className="text-gray-700 mb-4">
                     Estos endpoints te permiten gestionar los anuncios asociados a tus campañas.
                   </p>
-                  
+
                   <div className="mb-6">
                     <div className="flex items-center gap-3 mb-2">
-                      <span className="bg-green-100 text-green-800 px-2 py-1 rounded text-sm font-medium">GET</span>
+                      <span className="bg-green-100 text-green-800 px-2 py-1 rounded text-sm font-medium">
+                        GET
+                      </span>
                       <code className="text-sm">/campaigns/{'{campaign_id}'}/ads</code>
                     </div>
-                    <p className="text-gray-700">Lista todos los anuncios de una campaña específica.</p>
+                    <p className="text-gray-700">
+                      Lista todos los anuncios de una campaña específica.
+                    </p>
                   </div>
-                  
+
                   <div className="mb-6">
                     <div className="flex items-center gap-3 mb-2">
-                      <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm font-medium">POST</span>
+                      <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm font-medium">
+                        POST
+                      </span>
                       <code className="text-sm">/campaigns/{'{campaign_id}'}/ads</code>
                     </div>
                     <p className="text-gray-700">Crea un nuevo anuncio para una campaña.</p>
                   </div>
-                  
+
                   <div>
                     <div className="flex items-center gap-3 mb-2">
-                      <span className="bg-green-100 text-green-800 px-2 py-1 rounded text-sm font-medium">GET</span>
+                      <span className="bg-green-100 text-green-800 px-2 py-1 rounded text-sm font-medium">
+                        GET
+                      </span>
                       <code className="text-sm">/ads/{'{ad_id}'}</code>
                     </div>
                     <p className="text-gray-700">Obtiene detalles de un anuncio específico.</p>
                   </div>
                 </div>
-                
+
                 {/* Metrics Endpoint */}
                 <div id="endpoint-metricas">
                   <h3 className="text-xl font-bold mb-3">Métricas</h3>
                   <p className="text-gray-700 mb-4">
-                    Estos endpoints te permiten acceder a datos de rendimiento de tus campañas y anuncios.
+                    Estos endpoints te permiten acceder a datos de rendimiento de tus campañas y
+                    anuncios.
                   </p>
-                  
+
                   <div className="mb-6">
                     <div className="flex items-center gap-3 mb-2">
-                      <span className="bg-green-100 text-green-800 px-2 py-1 rounded text-sm font-medium">GET</span>
+                      <span className="bg-green-100 text-green-800 px-2 py-1 rounded text-sm font-medium">
+                        GET
+                      </span>
                       <code className="text-sm">/campaigns/{'{campaign_id}'}/metrics</code>
                     </div>
-                    <p className="text-gray-700 mb-2">Obtiene métricas de rendimiento para una campaña específica.</p>
+                    <p className="text-gray-700 mb-2">
+                      Obtiene métricas de rendimiento para una campaña específica.
+                    </p>
                     <div className="bg-gray-100 p-4 rounded-lg mt-3">
                       <p className="font-medium mb-2">Parámetros opcionales:</p>
                       <ul className="list-disc pl-6 text-gray-700 text-sm">
                         <li>
-                          <code>date_range</code> (string): Rango de fechas (last_7_days, last_30_days, custom)
+                          <code>date_range</code> (string): Rango de fechas (last_7_days,
+                          last_30_days, custom)
                         </li>
                         <li>
                           <code>start_date</code> (string): Fecha de inicio (formato: YYYY-MM-DD)
@@ -260,18 +321,23 @@ export default function ApiDocumentation() {
                           <code>end_date</code> (string): Fecha de fin (formato: YYYY-MM-DD)
                         </li>
                         <li>
-                          <code>metrics</code> (array): Métricas específicas a obtener (impresiones, clics, conversiones, etc.)
+                          <code>metrics</code> (array): Métricas específicas a obtener (impresiones,
+                          clics, conversiones, etc.)
                         </li>
                       </ul>
                     </div>
                   </div>
-                  
+
                   <div>
                     <div className="flex items-center gap-3 mb-2">
-                      <span className="bg-green-100 text-green-800 px-2 py-1 rounded text-sm font-medium">GET</span>
+                      <span className="bg-green-100 text-green-800 px-2 py-1 rounded text-sm font-medium">
+                        GET
+                      </span>
                       <code className="text-sm">/ads/{'{ad_id}'}/metrics</code>
                     </div>
-                    <p className="text-gray-700">Obtiene métricas de rendimiento para un anuncio específico.</p>
+                    <p className="text-gray-700">
+                      Obtiene métricas de rendimiento para un anuncio específico.
+                    </p>
                   </div>
                 </div>
               </div>
@@ -279,20 +345,20 @@ export default function ApiDocumentation() {
               {/* Code Examples */}
               <div id="ejemplos" className="bg-white rounded-lg shadow-md p-8 mb-8">
                 <h2 className="text-2xl font-bold mb-4">Ejemplos de código</h2>
-                
+
                 <div className="mb-6">
                   <h3 className="text-lg font-semibold mb-3">JavaScript (Node.js)</h3>
                   <pre className="text-sm bg-gray-800 text-white p-4 rounded overflow-x-auto">
-{`const axios = require('axios');
+                    {`const axios = require('axios');
 
 const API_TOKEN = 'tu_token_api';
 const BASE_URL = 'https://api.publicadis.com/v1';
 
 async function getCampaigns() {
   try {
-    const response = await axios.get(`${BASE_URL}/campaigns`, {
+    const response = await axios.get(\`\${BASE_URL}/campaigns\`, {
       headers: {
-        'Authorization': `Bearer ${API_TOKEN}`,
+        'Authorization': \`Bearer \${API_TOKEN}\`,
         'Content-Type': 'application/json'
       }
     });
@@ -310,11 +376,11 @@ getCampaigns()
   .catch(err => console.error(err));`}
                   </pre>
                 </div>
-                
+
                 <div className="mb-6">
                   <h3 className="text-lg font-semibold mb-3">Python</h3>
                   <pre className="text-sm bg-gray-800 text-white p-4 rounded overflow-x-auto">
-{`import requests
+                    {`import requests
 
 API_TOKEN = 'tu_token_api'
 BASE_URL = 'https://api.publicadis.com/v1'
@@ -347,11 +413,11 @@ metrics = get_campaign_metrics('campaign_12345')
 print(metrics)`}
                   </pre>
                 </div>
-                
+
                 <div>
                   <h3 className="text-lg font-semibold mb-3">cURL</h3>
                   <pre className="text-sm bg-gray-800 text-white p-4 rounded overflow-x-auto">
-{`curl -X POST \\
+                    {`curl -X POST \\
   https://api.publicadis.com/v1/campaigns \\
   -H 'Authorization: Bearer tu_token_api' \\
   -H 'Content-Type: application/json' \\
@@ -376,10 +442,10 @@ print(metrics)`}
               <div id="errores" className="bg-white rounded-lg shadow-md p-8 mb-8">
                 <h2 className="text-2xl font-bold mb-4">Manejo de errores</h2>
                 <p className="text-gray-700 mb-4">
-                  La API utiliza códigos de estado HTTP estándar para indicar el éxito o fracaso de una solicitud.
-                  Los códigos comunes incluyen:
+                  La API utiliza códigos de estado HTTP estándar para indicar el éxito o fracaso de
+                  una solicitud. Los códigos comunes incluyen:
                 </p>
-                
+
                 <table className="w-full mb-6">
                   <thead className="bg-gray-100">
                     <tr>
@@ -390,23 +456,33 @@ print(metrics)`}
                   <tbody className="divide-y divide-gray-200">
                     <tr>
                       <td className="px-4 py-3">200 - OK</td>
-                      <td className="px-4 py-3 text-gray-700">La solicitud se ha completado con éxito</td>
+                      <td className="px-4 py-3 text-gray-700">
+                        La solicitud se ha completado con éxito
+                      </td>
                     </tr>
                     <tr>
                       <td className="px-4 py-3">201 - Created</td>
-                      <td className="px-4 py-3 text-gray-700">El recurso se ha creado correctamente</td>
+                      <td className="px-4 py-3 text-gray-700">
+                        El recurso se ha creado correctamente
+                      </td>
                     </tr>
                     <tr>
                       <td className="px-4 py-3">400 - Bad Request</td>
-                      <td className="px-4 py-3 text-gray-700">La solicitud contiene errores o datos inválidos</td>
+                      <td className="px-4 py-3 text-gray-700">
+                        La solicitud contiene errores o datos inválidos
+                      </td>
                     </tr>
                     <tr>
                       <td className="px-4 py-3">401 - Unauthorized</td>
-                      <td className="px-4 py-3 text-gray-700">Autenticación requerida o inválida</td>
+                      <td className="px-4 py-3 text-gray-700">
+                        Autenticación requerida o inválida
+                      </td>
                     </tr>
                     <tr>
                       <td className="px-4 py-3">403 - Forbidden</td>
-                      <td className="px-4 py-3 text-gray-700">No tienes permisos para acceder al recurso</td>
+                      <td className="px-4 py-3 text-gray-700">
+                        No tienes permisos para acceder al recurso
+                      </td>
                     </tr>
                     <tr>
                       <td className="px-4 py-3">404 - Not Found</td>
@@ -414,7 +490,9 @@ print(metrics)`}
                     </tr>
                     <tr>
                       <td className="px-4 py-3">429 - Too Many Requests</td>
-                      <td className="px-4 py-3 text-gray-700">Has excedido el límite de solicitudes</td>
+                      <td className="px-4 py-3 text-gray-700">
+                        Has excedido el límite de solicitudes
+                      </td>
                     </tr>
                     <tr>
                       <td className="px-4 py-3">500 - Server Error</td>
@@ -422,13 +500,14 @@ print(metrics)`}
                     </tr>
                   </tbody>
                 </table>
-                
+
                 <p className="text-gray-700 mb-4">
-                  Cuando ocurre un error, la API devuelve una respuesta JSON con información detallada:
+                  Cuando ocurre un error, la API devuelve una respuesta JSON con información
+                  detallada:
                 </p>
-                
+
                 <pre className="text-sm bg-gray-800 text-white p-4 rounded overflow-x-auto mb-4">
-{`{
+                  {`{
   "error": {
     "code": "invalid_request",
     "message": "El campo 'budget' debe ser un número positivo",
@@ -441,9 +520,10 @@ print(metrics)`}
   }
 }`}
                 </pre>
-                
+
                 <p className="text-gray-700">
-                  Recomendamos siempre manejar los errores adecuadamente en tu aplicación para proporcionar una mejor experiencia al usuario.
+                  Recomendamos siempre manejar los errores adecuadamente en tu aplicación para
+                  proporcionar una mejor experiencia al usuario.
                 </p>
               </div>
 
@@ -451,9 +531,10 @@ print(metrics)`}
               <div id="limites" className="bg-white rounded-lg shadow-md p-8 mb-8">
                 <h2 className="text-2xl font-bold mb-4">Límites de uso</h2>
                 <p className="text-gray-700 mb-4">
-                  Para garantizar un servicio estable, aplicamos límites al número de solicitudes que puedes realizar:
+                  Para garantizar un servicio estable, aplicamos límites al número de solicitudes
+                  que puedes realizar:
                 </p>
-                
+
                 <table className="w-full mb-6">
                   <thead className="bg-gray-100">
                     <tr>
@@ -476,13 +557,14 @@ print(metrics)`}
                     </tr>
                   </tbody>
                 </table>
-                
+
                 <p className="text-gray-700 mb-4">
-                  Si excedes estos límites, recibirás un error 429 Too Many Requests. Cada respuesta incluye encabezados que indican tu límite y cuántas solicitudes te quedan:
+                  Si excedes estos límites, recibirás un error 429 Too Many Requests. Cada respuesta
+                  incluye encabezados que indican tu límite y cuántas solicitudes te quedan:
                 </p>
-                
+
                 <pre className="text-sm bg-gray-800 text-white p-4 rounded overflow-x-auto">
-{`X-RateLimit-Limit: 100
+                  {`X-RateLimit-Limit: 100
 X-RateLimit-Remaining: 85
 X-RateLimit-Reset: 1624987483`}
                 </pre>
@@ -492,17 +574,21 @@ X-RateLimit-Reset: 1624987483`}
               <div id="versiones" className="bg-white rounded-lg shadow-md p-8">
                 <h2 className="text-2xl font-bold mb-4">Versionado</h2>
                 <p className="text-gray-700 mb-4">
-                  Para garantizar la compatibilidad a largo plazo, nuestra API está versionada. La versión actual es v1.
+                  Para garantizar la compatibilidad a largo plazo, nuestra API está versionada. La
+                  versión actual es v1.
                 </p>
-                
+
                 <p className="text-gray-700 mb-4">
-                  Cuando realizamos cambios importantes que podrían romper la compatibilidad, incrementamos el número de versión.
-                  Las versiones anteriores siguen siendo compatibles durante al menos 12 meses después del lanzamiento de una nueva versión.
+                  Cuando realizamos cambios importantes que podrían romper la compatibilidad,
+                  incrementamos el número de versión. Las versiones anteriores siguen siendo
+                  compatibles durante al menos 12 meses después del lanzamiento de una nueva
+                  versión.
                 </p>
-                
+
                 <div className="bg-amber-50 border-l-4 border-amber-500 p-4">
                   <p className="text-amber-800">
-                    <strong>Recomendación:</strong> Especifica siempre la versión en tus solicitudes a la API para asegurar la compatibilidad a largo plazo.
+                    <strong>Recomendación:</strong> Especifica siempre la versión en tus solicitudes
+                    a la API para asegurar la compatibilidad a largo plazo.
                   </p>
                 </div>
               </div>
@@ -513,19 +599,20 @@ X-RateLimit-Reset: 1624987483`}
           <div className="bg-blue-50 border border-blue-100 rounded-lg p-8 mt-12 text-center">
             <h2 className="text-2xl font-bold mb-3">¿Listo para empezar a integrar nuestra API?</h2>
             <p className="text-gray-700 mb-6 max-w-2xl mx-auto">
-              Regístrate en nuestra plataforma, obtén tu token API y comienza a desarrollar aplicaciones que aprovechen nuestras soluciones publicitarias.
+              Regístrate en nuestra plataforma, obtén tu token API y comienza a desarrollar
+              aplicaciones que aprovechen nuestras soluciones publicitarias.
             </p>
             <div className="flex justify-center gap-4">
-              <a 
-                href="https://panel.publicadis.com/registro" 
+              <a
+                href="https://panel.publicadis.com/registro"
                 className="px-6 py-3 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 transition-colors"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 Crear Cuenta
               </a>
-              <a 
-                href="https://github.com/publicadis/api-examples" 
+              <a
+                href="https://github.com/publicadis/api-examples"
                 className="px-6 py-3 bg-gray-800 text-white font-medium rounded-md hover:bg-gray-900 transition-colors"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -538,4 +625,4 @@ X-RateLimit-Reset: 1624987483`}
       </section>
     </Layout>
   );
-} 
+}
