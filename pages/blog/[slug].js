@@ -112,7 +112,7 @@ export default function BlogPost({ post, relatedPosts }) {
               <div>
                 <h3 className="text-xl font-bold mb-2">{post.author}</h3>
                 <p className="text-gray-600 mb-4">
-                  Experto en marketing digital y estrategias de crecimiento. Ayudando a empresas a
+                  Co-founder de PublicAdis. Dominio de nuevas tecnologias, publicidad digital y estrategias de crecimiento. Ayudando a empresas a
                   alcanzar su máximo potencial en el mundo digital.
                 </p>
                 <div className="flex gap-4">
