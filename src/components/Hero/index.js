@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
-// import Image from 'next/image'; // Next.js Image puede ser usado si optimizas las imágenes de Unsplash
+// import Image from 'next/image';
 
 const Hero = () => {
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
   const slideInterval = useRef(null);
-  const clientsScrollRef = useRef(null);
 
   const dynamicTexts = [
     'Transforma Tu Empresa con',
@@ -21,37 +20,29 @@ const Hero = () => {
   const slides = [
     {
       title: 'Inteligencia Publicitaria',
-      description:
-        'Algoritmos avanzados que optimizan automáticamente tus campañas en tiempo real.',
-      image:
-        'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1800&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      description: 'Algoritmos avanzados que optimizan tus campañas en tiempo real.',
+      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1800&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       icon: 'brain',
       color: 'from-blue-600 to-violet-600',
     },
     {
       title: 'Analytics en Tiempo Real',
-      description:
-        'Visualiza resultados detallados y toma decisiones estratégicas basadas en datos precisos.',
-      image:
-        'https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=1800&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      description: 'Visualiza resultados y toma decisiones estratégicas con datos precisos.',
+      image: 'https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=1800&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       icon: 'chart-line',
       color: 'from-emerald-600 to-teal-600',
     },
     {
       title: 'Integración con Buscadis™',
-      description:
-        'Amplifica tu alcance exponencialmente en el marketplace líder y de mayor crecimiento en Cusco.',
-      image:
-        'https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?q=80&w=1800&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      description: 'Amplifica tu alcance en el marketplace líder y de mayor crecimiento.',
+      image: 'https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?q=80&w=1800&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       icon: 'rocket',
       color: 'from-amber-500 to-orange-600',
     },
     {
       title: 'Estrategia Multicanal',
-      description:
-        'Conecta con tu audiencia dondequiera que esté, a través de todos nuestros puntos de contacto integrados.',
-      image:
-        'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1800&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      description: 'Conecta con tu audiencia en todos nuestros puntos de contacto integrados.',
+      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1800&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       icon: 'network-wired',
       color: 'from-purple-600 to-pink-600',
     },
@@ -74,16 +65,45 @@ const Hero = () => {
     { value: '+30%', label: 'Nuevos clientes al mes', icon: 'user-plus', color: 'bg-gradient-to-br from-pink-500 to-red-500' },
   ];
 
-  const baseClients = [
-    'https://placehold.co/120x50/FFFFFF/0284c7?text=KFC&font=montserrat&fontColor=0284c7',
-    'https://placehold.co/120x50/FFFFFF/dc2626?text=Toyota&font=montserrat&fontColor=dc2626',
-    'https://placehold.co/120x50/FFFFFF/16a34a?text=Interbank&font=montserrat&fontColor=16a34a',
-    'https://placehold.co/120x50/FFFFFF/ea580c?text=Promart&font=montserrat&fontColor=ea580c',
-    'https://placehold.co/120x50/FFFFFF/4f46e5?text=Samsung&font=montserrat&fontColor=4f46e5',
-    'https://placehold.co/120x50/FFFFFF/0891b2?text=Claro&font=montserrat&fontColor=0891b2',
-  ];
-  const clients = [...baseClients, ...baseClients];
+  // Ancho estimado de logo para cálculo de animación: 100px. Margen entre logos: mx-1.5 (6px por lado = 12px total)
+  const logoWidthForAnim = 100;
+  const logoMarginForAnim = 12; // 6px de cada lado (mx-1.5 = 0.375rem * 2 = 0.75rem = 12px si 1rem=16px)
+  const totalWidthPerLogoAnim = logoWidthForAnim + logoMarginForAnim;
 
+  const baseCuscoClients = [
+    'https://placehold.co/100x35/FFFFFF/B71C1C?text=Cusque%C3%B1a&font=montserrat', // Cerveza Cusqueña
+    'https://placehold.co/100x35/FFFFFF/6D4C41?text=Chicha&font=montserrat',         // Restaurante Chicha
+    'https://placehold.co/100x35/FFFFFF/FF8F00?text=IncaRail&font=montserrat',        // Inca Rail
+    'https://placehold.co/100x35/FFFFFF/5D4037?text=ChocoMuseo&font=montserrat',      // ChocoMuseo
+    'https://placehold.co/100x35/FFFFFF/004D40?text=EcoTerra&font=montserrat',        // Agencia de Turismo Ecológico (Ejemplo)
+    'https://placehold.co/100x35/FFFFFF/880E4F?text=AlpacaArt&font=montserrat',      // Tienda de Artesanía (Ejemplo)
+    'https://placehold.co/100x35/FFFFFF/BF360C?text=ValleSagradoCafe&font=montserrat',// Café local (Ejemplo)
+  ];
+  const cuscoClients = [...baseCuscoClients, ...baseCuscoClients];
+
+  const basePeruvianClients = [
+    'https://placehold.co/100x35/FFFFFF/0033A0?text=BCP&font=montserrat',             // BCP
+    'https://placehold.co/100x35/FFFFFF/00A9E0?text=Interbank&font=montserrat',     // Interbank
+    'https://placehold.co/100x35/FFFFFF/D21034?text=LATAM&font=montserrat',           // LATAM Airlines
+    'https://placehold.co/100x35/FFFFFF/005EB8?text=Gloria&font=montserrat',          // Gloria
+    'https://placehold.co/100x35/FFFFFF/FFCB05?text=InkaKola&font=montserrat&fontColor=000000', // Inka Kola
+    'https://placehold.co/100x35/FFFFFF/ED1C24?text=PlazaVea&font=montserrat',      // Plaza Vea
+    'https://placehold.co/100x35/FFFFFF/007A33?text=Backus&font=montserrat',          // Backus
+  ];
+  const peruvianClients = [...basePeruvianClients, ...basePeruvianClients];
+
+  const baseInternationalClients = [
+    'https://placehold.co/100x35/FFFFFF/DB4437?text=Google&font=montserrat&fontColor=DB4437', // Google
+    'https://placehold.co/100x35/FFFFFF/000000?text=Nike&font=montserrat',            // Nike
+    'https://placehold.co/100x35/FFFFFF/F40009?text=Coca-Cola&font=montserrat',       // Coca-Cola
+    'https://placehold.co/100x35/FFFFFF/FFC72C?text=McDonalds&font=montserrat&fontColor=DA291C', // McDonald's
+    'https://placehold.co/100x35/FFFFFF/0072C6?text=Microsoft&font=montserrat',   // Microsoft
+    'https://placehold.co/100x35/FFFFFF/F2A900?text=Amazon&font=montserrat&fontColor=232F3E',  // Amazon
+    'https://placehold.co/100x35/FFFFFF/1DB954?text=Spotify&font=montserrat',       // Spotify
+  ];
+  const internationalClients = [...baseInternationalClients, ...baseInternationalClients];
+
+  // ... (resto de hooks y funciones sin cambios: nextSlide, prevSlide, goToSlide, useEffect)
   const nextSlide = useCallback(() => {
     setCurrentSlide(prevSlide => (prevSlide + 1) % slides.length);
   }, [slides.length]);
@@ -113,6 +133,7 @@ const Hero = () => {
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-blue-50 to-blue-100/30 py-12 md:py-16 lg:py-20">
       <div className="absolute inset-0 overflow-hidden z-0">
+        {/* ... (código de fondos animados y contenedor principal) ... */}
         <div className="absolute top-0 -left-40 w-80 h-80 bg-gradient-to-br from-blue-500/5 to-purple-500/5 rounded-full blur-3xl opacity-50"></div>
         <div className="absolute bottom-0 -right-40 w-80 h-80 bg-gradient-to-br from-amber-500/5 to-yellow-500/5 rounded-full blur-3xl opacity-50"></div>
         <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-40 h-40 bg-gradient-to-br from-emerald-500/5 to-teal-500/5 rounded-full blur-3xl opacity-50"></div>
@@ -127,7 +148,9 @@ const Hero = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           <div className="lg:col-span-7 space-y-8 transform transition-all duration-1000 ease-out">
-            <div
+            {/* ... (Premium Badge, Título Dinámico, Descripción, Channel Logos, Métricas, CTAs - sin cambios) ... */}
+             {/* Premium Badge */}
+             <div
               className={`inline-flex items-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 text-white px-5 py-2.5 rounded-full shadow-lg ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-10'} transition-all duration-700 delay-200`}
             >
               <i className="fas fa-crown"></i>
@@ -136,6 +159,7 @@ const Hero = () => {
               </span>
             </div>
 
+            {/* Dynamic Heading */}
             <div>
               <h1
                 className={`text-4xl md:text-5xl xl:text-6xl font-bold leading-tight ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} transition-all duration-700 delay-300 mb-3`}
@@ -152,7 +176,6 @@ const Hero = () => {
                   </span>
                 </span>
               </h1>
-
               <p
                 className={`text-gray-700 text-lg md:text-xl max-w-xl leading-relaxed ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} transition-all duration-700 delay-400`}
               >
@@ -161,6 +184,7 @@ const Hero = () => {
               </p>
             </div>
 
+            {/* Channel Logos */}
             <div
               className={`flex flex-wrap gap-3 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} transition-all duration-700 delay-500`}
             >
@@ -181,6 +205,7 @@ const Hero = () => {
               ))}
             </div>
 
+            {/* Metrics Cards */}
             <div
               className={`grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} transition-all duration-700 delay-600`}
             >
@@ -210,6 +235,7 @@ const Hero = () => {
               ))}
             </div>
 
+            {/* CTA Buttons */}
             <div
               className={`flex flex-col sm:flex-row gap-4 pt-4 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} transition-all duration-700 delay-700`}
             >
@@ -232,17 +258,18 @@ const Hero = () => {
             </div>
           </div>
 
+
           {/* Hero Right Content - Slider y logos de clientes */}
-          <div className="lg:col-span-5 mt-8 lg:mt-0 flex flex-col"> {/* Añadido flex flex-col */}
+          <div className="lg:col-span-5 mt-8 lg:mt-0 flex flex-col">
+            {/* Slider de Imágenes (con navegación debajo) */}
             <div
               className={`relative ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} transition-all duration-1000 delay-500`}
             >
+              {/* ... (código del slider de imágenes y su navegación, sin cambios respecto a la versión anterior donde ya estaba debajo) ... */}
               <div className="absolute -top-10 -right-10 w-28 h-28 bg-gradient-to-br from-indigo-600/10 to-purple-600/10 rounded-full blur-2xl opacity-70 z-0"></div>
-              
-              {/* Contenedor del slider (imagen y contenido superpuesto) */}
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-white/20 backdrop-blur-sm bg-white/5">
+              <div className="relative rounded-2xl shadow-2xl border border-white/20 backdrop-blur-sm bg-white/5"> {/* Contenedor general del slider visual */}
                 {/* Área de la imagen del slider (altura reducida) */}
-                <div className="relative overflow-hidden h-[280px] sm:h-[320px] md:h-[350px] lg:h-[380px] w-full"> {/* ALTURA REDUCIDA */}
+                <div className="relative overflow-hidden h-[280px] sm:h-[320px] md:h-[350px] lg:h-[380px] w-full rounded-t-2xl"> {/* Redondeado solo arriba si la nav va pegada */}
                   {slides.map((slide, index) => (
                     <div
                       key={index}
@@ -253,11 +280,10 @@ const Hero = () => {
                         <img
                           src={slide.image}
                           alt={slide.title}
-                          className="absolute inset-0 w-full h-full object-cover transition-transform duration-10000 ease-in-out" // Ken Burns effect
-                          style={{ transform: index === currentSlide ? 'scale(1.1)' : 'scale(1.05)' }} // Ajuste del zoom para Ken Burns
+                          className="absolute inset-0 w-full h-full object-cover transition-transform duration-[10000ms] ease-in-out"
+                          style={{ transform: index === currentSlide ? 'scale(1.1)' : 'scale(1.05)' }}
                           loading="lazy"
                         />
-                        {/* Contenido del Slide (CTA, título, etc.) */}
                         <div className="absolute inset-0 flex flex-col justify-end p-4 sm:p-6 md:p-8 z-20">
                           <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br ${slide.color} flex items-center justify-center text-white shadow-lg mb-2 sm:mb-3 transform transition-all duration-700 ${index === currentSlide ? 'opacity-100 translate-y-0 rotate-0' : 'opacity-0 -translate-y-8 rotate-45'}`}>
                             <i className={`fas fa-${slide.icon} text-lg sm:text-xl`}></i>
@@ -279,10 +305,10 @@ const Hero = () => {
                     </div>
                   ))}
                 </div>
-              </div>
+              </div> {/* Fin del contenedor visual del slider */}
               
-              {/* Navegación del Slider (AHORA DEBAJO DEL CONTENEDOR DE IMAGEN) */}
-              <div className="mt-4 flex justify-center items-center gap-3 sm:gap-4 z-30 relative"> {/* z-30 y relative por si acaso */}
+              {/* Navegación del Slider (Debajo del área de imagen) */}
+              <div className="mt-4 flex justify-center items-center gap-3 sm:gap-4 z-30 relative">
                 <button 
                   onClick={prevSlide} 
                   className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-slate-700/60 backdrop-blur-sm flex items-center justify-center text-white border border-white/20 hover:bg-slate-600/80 transition-colors" 
@@ -315,29 +341,84 @@ const Hero = () => {
               <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-gradient-to-br from-amber-500/10 to-yellow-600/10 rounded-full blur-xl opacity-70 z-0"></div>
             </div>
 
-            <div
-              className={`mt-8 lg:mt-10 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} transition-all duration-700 delay-800`}
-            >
-              <p className="text-gray-600 text-sm mb-3 text-center lg:text-left">
-                Empresas que confían en nosotros:
-              </p>
-              <div className="relative w-full overflow-hidden group">
-                <div
-                  ref={clientsScrollRef}
-                  className="flex animate-infinite-scroll group-hover:pause-animation"
-                >
-                  {clients.map((client, index) => (
-                    <div
-                      key={`client-${index}`}
-                      className="flex-shrink-0 w-auto mx-4 grayscale hover:grayscale-0 transition-all duration-300 py-2"
-                    >
-                      <img
-                        src={client}
-                        alt={`Logo Cliente ${(index % baseClients.length) + 1}`}
-                        className="h-8 sm:h-10 object-contain"
-                      />
-                    </div>
-                  ))}
+            {/* Sección de Logos de Clientes con TÍTULOS LATERALES */}
+            <div className="mt-8 lg:mt-10 space-y-3"> {/* Espacio entre cada fila con título */}
+
+              {/* Fila Cusco */}
+              <div className={`flex items-center gap-3 ${isLoaded ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'} transition-all duration-700 delay-800`}>
+                <div className="w-20 sm:w-24 text-right pr-2 shrink-0"> {/* Ancho fijo para el título lateral */}
+                  <span className="text-xs sm:text-sm font-semibold text-gray-500 transform group-hover:text-amber-600 transition-colors">Cusco</span>
+                </div>
+                <div className="relative flex-grow w-full overflow-hidden group h-10 sm:h-12 flex items-center">
+                  <div
+                    className="flex animate-infinite-scroll group-hover:pause-animation"
+                    style={{ animationDuration: '25s' }} 
+                  >
+                    {cuscoClients.map((client, index) => (
+                      <div
+                        key={`cusco-client-${index}`}
+                        className="flex-shrink-0 w-auto mx-1.5 grayscale hover:grayscale-0 transition-all duration-300 h-full flex items-center"
+                      >
+                        <img
+                          src={client}
+                          alt={`Logo Negocio Cusqueño ${index % baseCuscoClients.length + 1}`}
+                          className="max-h-6 sm:max-h-8 object-contain"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Fila Perú */}
+              <div className={`flex items-center gap-3 ${isLoaded ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'} transition-all duration-700 delay-[950ms]`}>
+                <div className="w-20 sm:w-24 text-right pr-2 shrink-0">
+                  <span className="text-xs sm:text-sm font-semibold text-gray-500 group-hover:text-red-600 transition-colors">Perú</span>
+                </div>
+                <div className="relative flex-grow w-full overflow-hidden group h-10 sm:h-12 flex items-center">
+                  <div
+                    className="flex animate-infinite-scroll-reverse group-hover:pause-animation"
+                    style={{ animationDuration: '30s' }} 
+                  >
+                    {peruvianClients.map((client, index) => (
+                      <div
+                        key={`peruvian-client-${index}`}
+                        className="flex-shrink-0 w-auto mx-1.5 grayscale hover:grayscale-0 transition-all duration-300 h-full flex items-center"
+                      >
+                        <img
+                          src={client}
+                          alt={`Logo Negocio Peruano ${index % basePeruvianClients.length + 1}`}
+                          className="max-h-6 sm:max-h-8 object-contain"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              
+              {/* Fila Internacional */}
+              <div className={`flex items-center gap-3 ${isLoaded ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'} transition-all duration-700 delay-[1100ms]`}>
+                <div className="w-20 sm:w-24 text-right pr-2 shrink-0">
+                  <span className="text-xs sm:text-sm font-semibold text-gray-500 group-hover:text-blue-600 transition-colors">Internacional</span>
+                </div>
+                <div className="relative flex-grow w-full overflow-hidden group h-10 sm:h-12 flex items-center">
+                  <div
+                    className="flex animate-infinite-scroll group-hover:pause-animation"
+                    style={{ animationDuration: '35s' }}
+                  >
+                    {internationalClients.map((client, index) => (
+                      <div
+                        key={`international-client-${index}`}
+                        className="flex-shrink-0 w-auto mx-1.5 grayscale hover:grayscale-0 transition-all duration-300 h-full flex items-center"
+                      >
+                        <img
+                          src={client}
+                          alt={`Logo Negocio Internacional ${index % baseInternationalClients.length + 1}`}
+                          className="max-h-6 sm:max-h-8 object-contain"
+                        />
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
@@ -360,13 +441,29 @@ const Hero = () => {
 
         @keyframes infiniteScroll {
           0% { transform: translateX(0); }
-          100% { transform: translateX(-${baseClients.length * (120 + 32)}px); }
+          100% { transform: translateX(-${baseCuscoClients.length * totalWidthPerLogoAnim}px); } 
         }
+        
+        @keyframes infiniteScrollReverse {
+          0% { transform: translateX(-${basePeruvianClients.length * totalWidthPerLogoAnim}px); }
+          100% { transform: translateX(0); }
+        }
+
         .animate-infinite-scroll {
-          animation: infiniteScroll 25s linear infinite;
+          animation-name: infiniteScroll;
+          animation-timing-function: linear;
+          animation-iteration-count: infinite;
         }
+        .animate-infinite-scroll-reverse {
+          animation-name: infiniteScrollReverse;
+          animation-timing-function: linear;
+          animation-iteration-count: infinite;
+        }
+        
         .group-hover\\:pause-animation:hover .animate-infinite-scroll,
-        .group-hover\\:pause-animation:focus-within .animate-infinite-scroll {
+        .group-hover\\:pause-animation:focus-within .animate-infinite-scroll,
+        .group-hover\\:pause-animation:hover .animate-infinite-scroll-reverse,
+        .group-hover\\:pause-animation:focus-within .animate-infinite-scroll-reverse {
           animation-play-state: paused;
         }
       `}</style>
