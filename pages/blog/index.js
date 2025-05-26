@@ -3,7 +3,7 @@ import Layout from '../../src/components/Layout';
 import Link from 'next/link';
 import Image from 'next/image';
 import BlogSidebar from '../../src/components/BlogSidebar';
-import { getAllPosts } from '../../src/utils/mdx';
+import { blogPosts } from '../../src/data/blog-posts';
 
 // Function to calculate relevance score for search
 function calculateRelevance(post, searchTerm) {
@@ -12,27 +12,28 @@ function calculateRelevance(post, searchTerm) {
   const searchLower = searchTerm.toLowerCase();
   const titleScore = post.title.toLowerCase().includes(searchLower) ? 3 : 0;
   const excerptScore = post.excerpt.toLowerCase().includes(searchLower) ? 2 : 0;
+  const contentScore = post.content.toLowerCase().includes(searchLower) ? 1 : 0;
   const categoryScore = post.category.toLowerCase().includes(searchLower) ? 1.5 : 0;
 
-  return titleScore + excerptScore + categoryScore;
+  return titleScore + excerptScore + contentScore + categoryScore;
 }
 
-export default function Blog({ posts }) {
+export default function Blog() {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
 
   // Filter and sort posts based on search term and category
   const filteredPosts = useMemo(() => {
-    let filtered = [...posts];
+    let posts = [...blogPosts];
 
     // Filter by category
     if (selectedCategory !== 'all') {
-      filtered = filtered.filter(post => post.category === selectedCategory);
+      posts = posts.filter(post => post.category === selectedCategory);
     }
 
     // If there's a search term, filter and sort by relevance
     if (searchTerm) {
-      filtered = filtered
+      posts = posts
         .map(post => ({
           ...post,
           relevance: calculateRelevance(post, searchTerm),
@@ -41,11 +42,11 @@ export default function Blog({ posts }) {
         .sort((a, b) => b.relevance - a.relevance);
     } else {
       // If no search term, sort by date
-      filtered = filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
+      posts = posts.sort((a, b) => new Date(b.date) - new Date(a.date));
     }
 
-    return filtered;
-  }, [selectedCategory, searchTerm, posts]);
+    return posts;
+  }, [selectedCategory, searchTerm]);
 
   const handleSearch = term => {
     setSearchTerm(term);
@@ -76,18 +77,10 @@ export default function Blog({ posts }) {
               {/* Blog Posts Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {filteredPosts.map(post => (
-                  <article
-                    key={post.slug}
-                    className="bg-white rounded-lg shadow-lg overflow-hidden"
-                  >
+                  <article key={post.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
                     <Link href={`/blog/${post.slug}`} className="block">
                       <div className="relative h-48 w-full">
-                        <Image
-                          src={post.coverImage}
-                          alt={post.title}
-                          fill
-                          className="object-cover"
-                        />
+                        <Image src={post.image} alt={post.title} fill className="object-cover" />
                       </div>
                       <div className="p-6">
                         <div className="flex items-center mb-4">
@@ -102,21 +95,15 @@ export default function Blog({ posts }) {
                         <div className="flex items-center">
                           <div className="relative h-10 w-10 rounded-full overflow-hidden">
                             <Image
-                              src={post.author.picture}
-                              alt={post.author.name}
+                              src={post.authorImage}
+                              alt={post.author}
                               fill
                               className="object-cover"
                             />
                           </div>
                           <div className="ml-3">
-                            <p className="text-sm font-medium">{post.author.name}</p>
-                            <p className="text-sm text-gray-500">
-                              {new Date(post.date).toLocaleDateString('es-ES', {
-                                day: 'numeric',
-                                month: 'long',
-                                year: 'numeric',
-                              })}
-                            </p>
+                            <p className="text-sm font-medium">{post.author}</p>
+                            <p className="text-sm text-gray-500">{post.date}</p>
                           </div>
                         </div>
                       </div>
@@ -151,13 +138,4 @@ export default function Blog({ posts }) {
       </section>
     </Layout>
   );
-}
-
-export async function getStaticProps() {
-  const posts = await getAllPosts();
-  return {
-    props: {
-      posts,
-    },
-  };
 }

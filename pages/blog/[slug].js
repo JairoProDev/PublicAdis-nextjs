@@ -112,8 +112,9 @@ export default function BlogPost({ post, relatedPosts }) {
               <div>
                 <h3 className="text-xl font-bold mb-2">{post.author}</h3>
                 <p className="text-gray-600 mb-4">
-                  Co-founder de PublicAdis. Dominio de nuevas tecnologias, publicidad digital y estrategias de crecimiento. Ayudando a empresas a
-                  alcanzar su máximo potencial en el mundo digital.
+                  Co-founder de PublicAdis. Dominio de nuevas tecnologias, publicidad digital y
+                  estrategias de crecimiento. Ayudando a empresas a alcanzar su máximo potencial en
+                  el mundo digital.
                 </p>
                 <div className="flex gap-4">
                   <a
@@ -139,9 +140,9 @@ export default function BlogPost({ post, relatedPosts }) {
 
           {/* Related Posts */}
           {relatedPosts.length > 0 && (
-            <div className="max-w-6xl mx-auto mt-16">
+            <div className="max-w-4xl mx-auto mt-16">
               <h2 className="text-3xl font-bold mb-8">Artículos Relacionados</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {relatedPosts.map(relatedPost => (
                   <Link
                     key={relatedPost.id}
@@ -154,15 +155,14 @@ export default function BlogPost({ post, relatedPosts }) {
                           src={relatedPost.image}
                           alt={relatedPost.title}
                           fill
-                          className="object-cover transition-transform duration-300 group-hover:scale-105"
+                          className="object-cover group-hover:scale-105 transition-transform duration-300"
                         />
                       </div>
                       <div className="p-6">
-                        <span className="text-sm text-blue-600">{relatedPost.category}</span>
-                        <h3 className="text-xl font-semibold mt-2 group-hover:text-blue-600 transition-colors">
+                        <h3 className="text-lg font-semibold mb-2 group-hover:text-blue-600 transition-colors">
                           {relatedPost.title}
                         </h3>
-                        <p className="text-gray-600 mt-2 line-clamp-2">{relatedPost.excerpt}</p>
+                        <p className="text-gray-600 text-sm line-clamp-2">{relatedPost.excerpt}</p>
                       </div>
                     </article>
                   </Link>
