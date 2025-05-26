@@ -360,23 +360,32 @@ class RoiCalculator {
   /**
    * Show error message to user
    * @param {string} message - Error message to display
+   * @param {string} type - Type of message ('error' or 'warning')
    */
   showToolAlert(message, type) {
-    // Simple alert function
-    alert(message);
-    console.warn(`[${type}] ${message}`);
+    const alertElement = document.createElement('div');
+    alertElement.className = `tool-alert tool-alert-${type}`;
+    alertElement.textContent = message;
+
+    const container = document.querySelector('.roi-calculator');
+    container.insertBefore(alertElement, container.firstChild);
+
+    setTimeout(() => alertElement.remove(), 5000);
   }
 
   /**
-   * Log calculation for analytics or debugging
+   * Log calculation for analytics
    * @param {Object} data - Calculation data
    */
   logCalculation(data) {
     // For future analytics implementation
-    console.log('ROI Calculation:', {
-      timestamp: new Date().toISOString(),
-      ...data,
-    });
+    if (window.dataLayer) {
+      window.dataLayer.push({
+        event: 'roiCalculation',
+        timestamp: new Date().toISOString(),
+        ...data,
+      });
+    }
   }
 }
 

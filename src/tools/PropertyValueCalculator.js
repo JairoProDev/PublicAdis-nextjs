@@ -185,9 +185,9 @@ class PropertyValueCalculator {
 
     // Update the DOM with values
     this.valueAmount.textContent = formatter.format(finalValue);
-    this.valueRange.textContent = `Rango: ${formatter.format(
-      minValue
-    )} - ${formatter.format(maxValue)}`;
+    this.valueRange.textContent = `Rango: ${formatter.format(minValue)} - ${formatter.format(
+      maxValue
+    )}`;
 
     // Generate recommendations
     this.generateRecommendations(propertyDetails);
@@ -273,25 +273,34 @@ class PropertyValueCalculator {
   /**
    * Show error message to user
    * @param {string} message - Error message to display
+   * @param {string} type - Type of message ('error' or 'warning')
    */
   showToolAlert(message, type) {
-    // Simple alert function
-    alert(message);
-    console.warn(`[${type}] ${message}`);
+    const alertElement = document.createElement('div');
+    alertElement.className = `tool-alert tool-alert-${type}`;
+    alertElement.textContent = message;
+
+    const container = document.querySelector('.property-value-calculator');
+    container.insertBefore(alertElement, container.firstChild);
+
+    setTimeout(() => alertElement.remove(), 5000);
   }
 
   /**
-   * Log calculation for analytics or debugging
+   * Log calculation for analytics
    * @param {number} value - Calculated property value
    * @param {Object} details - Property details
    */
   logCalculation(value, details) {
     // For future analytics implementation
-    console.log('Property Value Calculation:', {
-      timestamp: new Date().toISOString(),
-      value,
-      details,
-    });
+    if (window.dataLayer) {
+      window.dataLayer.push({
+        event: 'propertyValueCalculation',
+        timestamp: new Date().toISOString(),
+        calculatedValue: value,
+        propertyDetails: details,
+      });
+    }
   }
 }
 

@@ -3,13 +3,20 @@ import Image from 'next/image';
 import Layout from '../../../src/components/Layout';
 import { getGuideBySlug, getGuideFiles } from '../../../src/utils/guides';
 import { guiasCategories } from '../../../src/data/guias';
+import Tip from '../../../components/Tip';
 
 const components = {
   Image: props => (
     <div className="relative w-full h-[400px] my-8">
-      <Image {...props} fill className="object-cover rounded-lg" />
+      <Image
+        {...props}
+        fill
+        className="object-cover rounded-lg"
+        alt={props.alt || 'Imagen de la guía'}
+      />
     </div>
   ),
+  Tip,
   pre: props => <pre {...props} className="language-javascript my-8 rounded-lg" />,
   h2: props => <h2 {...props} className="text-2xl font-bold mt-8 mb-4" />,
   h3: props => <h3 {...props} className="text-xl font-semibold mt-6 mb-3" />,
@@ -41,8 +48,8 @@ export default function GuidePage({ guide }) {
               guide.frontmatter.level === 'Principiante'
                 ? 'bg-green-100 text-green-800'
                 : guide.frontmatter.level === 'Intermedio'
-                  ? 'bg-yellow-100 text-yellow-800'
-                  : 'bg-red-100 text-red-800'
+                ? 'bg-yellow-100 text-yellow-800'
+                : 'bg-red-100 text-red-800'
             }`}
           >
             {guide.frontmatter.level}

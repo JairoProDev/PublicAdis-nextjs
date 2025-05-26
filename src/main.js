@@ -11,30 +11,34 @@ import { Sectors } from './components/Sectors/Sectors.js';
 import { Testimonials } from './components/Testimonials/Testimonials.js';
 import { Contact } from './components/Contact/Contact.js';
 
-// Manejador global de errores para facilitar la depuración
+// Global error handler for debugging
 window.addEventListener('error', function (event) {
-  console.error('Global error caught:', event.error || event.message);
-  // Evitar que el loader se quede visible si hay errores
+  // Only log errors in development
+  if (process.env.NODE_ENV === 'development') {
+    console.error('Global error caught:', event.error || event.message);
+  }
+  // Hide loader if there are errors
   hideLoader();
 });
 
-// Función auxiliar para inicializar componentes de forma segura
+// Helper function to safely initialize components
 function safeInit(componentClass, name, targetSelector) {
   try {
-    console.log(`Initializing ${name}...`);
-
-    // Verificar si el selector existe
     const container = document.querySelector(targetSelector);
     if (!container) {
-      console.warn(`Container ${targetSelector} for ${name} not found!`);
+      if (process.env.NODE_ENV === 'development') {
+        console.warn(`Container ${targetSelector} for ${name} not found!`);
+      }
+      return null;
     }
 
     const component = new componentClass();
     component.init();
-    console.log(`${name} initialized successfully`);
     return component;
   } catch (error) {
-    console.error(`Error initializing ${name}:`, error);
+    if (process.env.NODE_ENV === 'development') {
+      console.error(`Error initializing ${name}:`, error);
+    }
     return null;
   }
 }

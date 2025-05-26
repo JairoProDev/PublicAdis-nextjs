@@ -12,7 +12,7 @@ const ChevronDownIcon = ({ className = "w-4 h-4" }) => (
 );
 
 export default function CaseStudies() {
-  const allCaseStudiesData = [
+  const allCaseStudiesData = useMemo(() => [
     // --- Hotelería / Turismo ---
     {
       id: 1,
@@ -288,7 +288,7 @@ export default function CaseStudies() {
           rating: 5,
         }
       },
-  ];
+  ], []);
 
   const allCategories = useMemo(() => ['Todos', ...new Set(allCaseStudiesData.map(cs => cs.category))], [allCaseStudiesData]);
   const allSectors = useMemo(() => ['Todos', ...new Set(allCaseStudiesData.map(cs => cs.sector))], [allCaseStudiesData]);

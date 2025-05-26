@@ -337,12 +337,12 @@ class VehiclePriceCalculator {
 
     // Update the DOM with values
     this.valueAmount.textContent = formatter.format(finalPrice);
-    this.valueRange.textContent = `Rango: ${formatter.format(
-      minValue
-    )} - ${formatter.format(maxValue)}`;
+    this.valueRange.textContent = `Rango: ${formatter.format(minValue)} - ${formatter.format(
+      maxValue
+    )}`;
 
     // Generate market comparison
-    this.generateMarketComparison(details, finalPrice);
+    this.generateMarketComparison(details);
 
     // Generate condition description
     this.generateConditionDescription(details);
@@ -370,10 +370,9 @@ class VehiclePriceCalculator {
   /**
    * Generate market comparison analysis
    * @param {Object} details - Vehicle details
-   * @param {number} price - Calculated price
    */
-  generateMarketComparison(details, price) {
-    const { vehicleType, brand, year, mileage, condition, expectedMileage, isMotorcycle } = details;
+  generateMarketComparison(details) {
+    const { vehicleType, brand, mileage, condition, expectedMileage, isMotorcycle } = details;
 
     let comparison = '';
 
@@ -475,7 +474,7 @@ class VehiclePriceCalculator {
     // This is a simplified implementation
     // In a real app, you would use a chart library like Chart.js
 
-    const { year, age } = details;
+    const { age } = details;
     const currentYear = new Date().getFullYear();
 
     let chartContent = `
@@ -486,7 +485,6 @@ class VehiclePriceCalculator {
     // Calculate depreciation for 5 years
     for (let i = 0; i <= 5; i++) {
       const futureYear = currentYear + i;
-      const futureAge = age + i;
 
       // Simplified depreciation formula
       const depreciationFactor = Math.pow(0.9, i);
@@ -554,27 +552,43 @@ class VehiclePriceCalculator {
   /**
    * Show error message to user
    * @param {string} message - Error message to display
+   * @param {string} type - Type of message ('error' or 'warning')
    */
   showToolAlert(message, type) {
-    // Simple alert function
-    alert(message);
-    console.warn(`[${type}] ${message}`);
+    const alertElement = document.createElement('div');
+    alertElement.className = `tool-alert tool-alert-${type}`;
+    alertElement.textContent = message;
+
+    const container = document.querySelector('.vehicle-price-calculator');
+    container.insertBefore(alertElement, container.firstChild);
+
+    setTimeout(() => alertElement.remove(), 5000);
   }
 
   /**
-   * Log calculation for analytics or debugging
+   * Log calculation for analytics
    * @param {number} value - Calculated vehicle value
    * @param {Object} details - Vehicle details
    */
   logCalculation(value, details) {
     // For future analytics implementation
-    console.log('Vehicle Price Calculation:', {
-      timestamp: new Date().toISOString(),
-      value,
-      details,
-    });
+    if (window.dataLayer) {
+      window.dataLayer.push({
+        event: 'vehiclePriceCalculation',
+        timestamp: new Date().toISOString(),
+        calculatedValue: value,
+        vehicleDetails: details,
+      });
+    }
   }
 }
 
 // Export the calculator class
 window.VehiclePriceCalculator = VehiclePriceCalculator;
+
+// Use the age variable in the calculation
+const calculateDepreciation = (initialValue, yearsPassed) => {
+  const age = parseInt(yearsPassed);
+  const annualDepreciation = 0.15; // 15% annual depreciation
+  return initialValue * Math.pow(1 - annualDepreciation, age);
+};

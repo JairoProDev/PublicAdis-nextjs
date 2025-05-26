@@ -1,94 +1,18 @@
 import React, { useState, useEffect } from 'react';
 
 const MarketingBudgetCalculator = () => {
-  const [totalBudget, setTotalBudget] = useState(5000);
   const [businessType, setBusinessType] = useState('ecommerce');
   const [businessGoal, setBusinessGoal] = useState('brand');
+  const [totalBudget, setTotalBudget] = useState(5000);
   const [channels, setChannels] = useState([
-    { id: 'social', name: 'Redes Sociales', percentage: 25, allocation: 1250, color: '#4472C4' },
-    { id: 'search', name: 'Búsqueda Paga', percentage: 20, allocation: 1000, color: '#ED7D31' },
-    { id: 'email', name: 'Email Marketing', percentage: 15, allocation: 750, color: '#A5A5A5' },
-    {
-      id: 'content',
-      name: 'Marketing de Contenidos',
-      percentage: 15,
-      allocation: 750,
-      color: '#FFC000',
-    },
-    { id: 'display', name: 'Anuncios Display', percentage: 10, allocation: 500, color: '#5B9BD5' },
-    {
-      id: 'influencer',
-      name: 'Marketing de Influencers',
-      percentage: 10,
-      allocation: 500,
-      color: '#70AD47',
-    },
-    { id: 'other', name: 'Otros', percentage: 5, allocation: 250, color: '#9E480E' },
+    { id: 'content', name: 'Content Marketing', percentage: 0, allocation: 0 },
+    { id: 'social', name: 'Social Media', percentage: 0, allocation: 0 },
+    { id: 'email', name: 'Email Marketing', percentage: 0, allocation: 0 },
+    { id: 'search', name: 'Search Marketing', percentage: 0, allocation: 0 },
+    { id: 'display', name: 'Display Ads', percentage: 0, allocation: 0 },
+    { id: 'influencer', name: 'Influencer Marketing', percentage: 0, allocation: 0 },
+    { id: 'other', name: 'Other Channels', percentage: 0, allocation: 0 },
   ]);
-
-  // Presets for different business types
-  const businessTypePresets = {
-    ecommerce: {
-      brand: [
-        { id: 'social', percentage: 25 },
-        { id: 'search', percentage: 20 },
-        { id: 'email', percentage: 15 },
-        { id: 'content', percentage: 15 },
-        { id: 'display', percentage: 10 },
-        { id: 'influencer', percentage: 10 },
-        { id: 'other', percentage: 5 },
-      ],
-      sales: [
-        { id: 'search', percentage: 30 },
-        { id: 'social', percentage: 20 },
-        { id: 'email', percentage: 20 },
-        { id: 'display', percentage: 15 },
-        { id: 'content', percentage: 8 },
-        { id: 'influencer', percentage: 5 },
-        { id: 'other', percentage: 2 },
-      ],
-    },
-    local: {
-      brand: [
-        { id: 'social', percentage: 30 },
-        { id: 'search', percentage: 15 },
-        { id: 'content', percentage: 20 },
-        { id: 'email', percentage: 10 },
-        { id: 'display', percentage: 10 },
-        { id: 'influencer', percentage: 10 },
-        { id: 'other', percentage: 5 },
-      ],
-      sales: [
-        { id: 'search', percentage: 35 },
-        { id: 'social', percentage: 25 },
-        { id: 'display', percentage: 15 },
-        { id: 'email', percentage: 10 },
-        { id: 'content', percentage: 8 },
-        { id: 'influencer', percentage: 5 },
-        { id: 'other', percentage: 2 },
-      ],
-    },
-    service: {
-      brand: [
-        { id: 'content', percentage: 25 },
-        { id: 'social', percentage: 25 },
-        { id: 'email', percentage: 15 },
-        { id: 'search', percentage: 15 },
-        { id: 'display', percentage: 10 },
-        { id: 'influencer', percentage: 5 },
-        { id: 'other', percentage: 5 },
-      ],
-      sales: [
-        { id: 'content', percentage: 25 },
-        { id: 'search', percentage: 25 },
-        { id: 'social', percentage: 20 },
-        { id: 'email', percentage: 15 },
-        { id: 'display', percentage: 10 },
-        { id: 'influencer', percentage: 3 },
-        { id: 'other', percentage: 2 },
-      ],
-    },
-  };
 
   // Update allocations when total budget changes
   useEffect(() => {
@@ -101,7 +25,50 @@ const MarketingBudgetCalculator = () => {
 
   // Apply preset when business type or goal changes
   useEffect(() => {
-    if (businessTypePresets[businessType] && businessTypePresets[businessType][businessGoal]) {
+    const businessTypePresets = {
+      ecommerce: {
+        brand: [
+          { id: 'content', percentage: 20 },
+          { id: 'social', percentage: 30 },
+          { id: 'email', percentage: 15 },
+          { id: 'search', percentage: 20 },
+          { id: 'display', percentage: 10 },
+          { id: 'influencer', percentage: 3 },
+          { id: 'other', percentage: 2 },
+        ],
+        sales: [
+          { id: 'content', percentage: 15 },
+          { id: 'social', percentage: 25 },
+          { id: 'email', percentage: 20 },
+          { id: 'search', percentage: 25 },
+          { id: 'display', percentage: 10 },
+          { id: 'influencer', percentage: 3 },
+          { id: 'other', percentage: 2 },
+        ],
+      },
+      service: {
+        brand: [
+          { id: 'content', percentage: 25 },
+          { id: 'social', percentage: 25 },
+          { id: 'email', percentage: 15 },
+          { id: 'search', percentage: 15 },
+          { id: 'display', percentage: 10 },
+          { id: 'influencer', percentage: 5 },
+          { id: 'other', percentage: 5 },
+        ],
+        sales: [
+          { id: 'content', percentage: 25 },
+          { id: 'search', percentage: 25 },
+          { id: 'social', percentage: 20 },
+          { id: 'email', percentage: 15 },
+          { id: 'display', percentage: 10 },
+          { id: 'influencer', percentage: 3 },
+          { id: 'other', percentage: 2 },
+        ],
+      },
+    };
+
+    if (businessTypePresets[businessType]?.[businessGoal]) {
       const preset = businessTypePresets[businessType][businessGoal];
       const updatedChannels = channels.map(channel => {
         const presetChannel = preset.find(p => p.id === channel.id);
@@ -114,7 +81,7 @@ const MarketingBudgetCalculator = () => {
       });
       setChannels(updatedChannels);
     }
-  }, [businessType, businessGoal, channels, totalBudget, businessTypePresets]);
+  }, [businessType, businessGoal, totalBudget]);
 
   // Update percentage when allocation changes
   const handleAllocationChange = (id, value) => {
@@ -306,7 +273,9 @@ const MarketingBudgetCalculator = () => {
                     <span className={remainingBudget === 0 ? 'text-green-600' : 'text-red-600'}>
                       S/ {allocatedBudget}
                       {remainingBudget !== 0 &&
-                        ` (${remainingBudget > 0 ? 'Falta' : 'Exceso'}: S/ ${Math.abs(remainingBudget)})`}
+                        ` (${remainingBudget > 0 ? 'Falta' : 'Exceso'}: S/ ${Math.abs(
+                          remainingBudget
+                        )})`}
                     </span>
                   </td>
                 </tr>
@@ -340,10 +309,10 @@ const MarketingBudgetCalculator = () => {
                     {businessType === 'ecommerce' && businessGoal === 'sales'
                       ? 'Para e-commerce con objetivo de ventas, prioriza la búsqueda paga y el email marketing.'
                       : businessType === 'local' && businessGoal === 'brand'
-                        ? 'Los negocios locales enfocados en marca deben priorizar redes sociales y marketing de contenidos.'
-                        : businessType === 'service'
-                          ? 'Los servicios profesionales se benefician más del marketing de contenidos que genera autoridad.'
-                          : 'Ajusta tu presupuesto según los canales que mejor funcionen para tu audiencia específica.'}
+                      ? 'Los negocios locales enfocados en marca deben priorizar redes sociales y marketing de contenidos.'
+                      : businessType === 'service'
+                      ? 'Los servicios profesionales se benefician más del marketing de contenidos que genera autoridad.'
+                      : 'Ajusta tu presupuesto según los canales que mejor funcionen para tu audiencia específica.'}
                   </span>
                 </li>
                 <li className="flex items-start">

@@ -144,7 +144,6 @@ class SalaryCompareCalculator {
    */
   setupDynamicFields() {
     // Additional benefits calculation
-    const baseSalary = document.getElementById('base-salary');
     const benefitsFields = document.querySelectorAll('.benefit-field');
     const bonusFrequency = document.getElementById('bonus-frequency');
     const bonusAmount = document.getElementById('bonus-amount');
@@ -325,9 +324,8 @@ class SalaryCompareCalculator {
 
     // Display the results
     this.displayResults(
-      baseSalary,
-      totalBenefits,
       totalCompensation,
+      totalBenefits,
       industryAverage,
       locationAdjustedAverage,
       percentile,
@@ -385,27 +383,24 @@ class SalaryCompareCalculator {
 
   /**
    * Display calculated results in the UI
-   * @param {number} baseSalary - Base salary amount
-   * @param {number} totalBenefits - Total benefits value
    * @param {number} totalCompensation - Total compensation amount
+   * @param {number} totalBenefits - Total benefits value
    * @param {number} industryAverage - Industry average salary
    * @param {number} locationAdjustedAverage - Location-adjusted average
    * @param {number} percentile - Calculated percentile
    * @param {Object} details - Additional user details
    */
   displayResults(
-    baseSalary,
-    totalBenefits,
     totalCompensation,
+    totalBenefits,
     industryAverage,
     locationAdjustedAverage,
     percentile,
     details
   ) {
     // Format values as currency
-    const formattedBaseSalary = this.formatCurrency(baseSalary);
-    const formattedBenefits = this.formatCurrency(totalBenefits);
     const formattedTotal = this.formatCurrency(totalCompensation);
+    const formattedBenefits = this.formatCurrency(totalBenefits);
     const formattedIndustryAvg = this.formatCurrency(industryAverage);
     const formattedLocationAvg = this.formatCurrency(locationAdjustedAverage);
 
@@ -459,7 +454,12 @@ class SalaryCompareCalculator {
 
     // Generate salary comparison chart
     if (this.salaryChart) {
-      this.generateSalaryChart(baseSalary, totalBenefits, industryAverage, locationAdjustedAverage);
+      this.generateSalaryChart(
+        totalCompensation,
+        totalBenefits,
+        industryAverage,
+        locationAdjustedAverage
+      );
     }
 
     // Generate recommendations
@@ -480,9 +480,8 @@ class SalaryCompareCalculator {
 
     // Log the calculation for analytics
     this.logCalculation({
-      baseSalary,
-      totalBenefits,
       totalCompensation,
+      totalBenefits,
       industryAverage,
       locationAdjustedAverage,
       percentile,
@@ -492,16 +491,14 @@ class SalaryCompareCalculator {
 
   /**
    * Generate salary comparison chart
-   * @param {number} baseSalary - Base salary amount
+   * @param {number} totalCompensation - Total compensation amount
    * @param {number} totalBenefits - Total benefits value
    * @param {number} industryAverage - Industry average
    * @param {number} locationAdjustedAverage - Location adjusted average
    */
-  generateSalaryChart(baseSalary, totalBenefits, industryAverage, locationAdjustedAverage) {
+  generateSalaryChart(totalCompensation, totalBenefits, industryAverage, locationAdjustedAverage) {
     // This is a simplified visualization
     // In a real app, you would use a chart library like Chart.js
-
-    const totalCompensation = baseSalary + totalBenefits;
 
     // Calculate bar heights as percentages (max 100%)
     const maxValue = Math.max(totalCompensation, industryAverage, locationAdjustedAverage);
@@ -541,7 +538,7 @@ class SalaryCompareCalculator {
         <h4>Desglose de tu compensación:</h4>
         <div class="breakdown-item">
           <span>Salario Base:</span>
-          <span>${this.formatCurrency(baseSalary)}</span>
+          <span>${this.formatCurrency(totalCompensation - totalBenefits)}</span>
         </div>
         <div class="breakdown-item">
           <span>Beneficios:</span>
@@ -679,23 +676,32 @@ class SalaryCompareCalculator {
   /**
    * Show error message to user
    * @param {string} message - Error message to display
+   * @param {string} type - Type of message ('error' or 'warning')
    */
   showToolAlert(message, type) {
-    // Simple alert function
-    alert(message);
-    console.warn(`[${type}] ${message}`);
+    const alertElement = document.createElement('div');
+    alertElement.className = `tool-alert tool-alert-${type}`;
+    alertElement.textContent = message;
+
+    const container = document.querySelector('.salary-compare-calculator');
+    container.insertBefore(alertElement, container.firstChild);
+
+    setTimeout(() => alertElement.remove(), 5000);
   }
 
   /**
-   * Log calculation for analytics or debugging
+   * Log calculation for analytics
    * @param {Object} data - Calculation data
    */
   logCalculation(data) {
     // For future analytics implementation
-    console.log('Salary Comparison Calculation:', {
-      timestamp: new Date().toISOString(),
-      ...data,
-    });
+    if (window.dataLayer) {
+      window.dataLayer.push({
+        event: 'salaryComparison',
+        timestamp: new Date().toISOString(),
+        ...data,
+      });
+    }
   }
 }
 

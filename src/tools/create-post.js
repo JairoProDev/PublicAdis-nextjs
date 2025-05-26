@@ -15,21 +15,27 @@ const slugify = text => {
     .toLowerCase()
     .trim()
     .replace(/\s+/g, '-') // Replace spaces with -
-    .replace(/[^\w\-]+/g, '') // Remove all non-word chars
-    .replace(/\-\-+/g, '-'); // Replace multiple - with single -
+    .replace(/[^a-z0-9-]/g, '') // Remove all non-word chars except hyphens
+    .replace(/-{2,}/g, '-'); // Replace multiple - with single -
 };
 
 const createDirectories = slug => {
-  // Create content directory if it doesn't exist
-  const contentDir = path.join(process.cwd(), 'content', 'blog');
-  if (!fs.existsSync(contentDir)) {
-    fs.mkdirSync(contentDir, { recursive: true });
-  }
+  try {
+    // Create content directory if it doesn't exist
+    const contentDir = path.join(process.cwd(), 'content', 'blog');
+    if (!fs.existsSync(contentDir)) {
+      fs.mkdirSync(contentDir, { recursive: true });
+    }
 
-  // Create images directory
-  const imagesDir = path.join(process.cwd(), 'public', 'blog', slug);
-  if (!fs.existsSync(imagesDir)) {
-    fs.mkdirSync(imagesDir, { recursive: true });
+    // Create images directory
+    const imagesDir = path.join(process.cwd(), 'public', 'blog', slug);
+    if (!fs.existsSync(imagesDir)) {
+      fs.mkdirSync(imagesDir, { recursive: true });
+    }
+
+    return { contentDir, imagesDir };
+  } catch (error) {
+    throw new Error(`Failed to create directories: ${error.message}`);
   }
 };
 
@@ -41,7 +47,7 @@ coverImage: '/blog/${data.slug}/cover.jpg'
 date: '${data.date}'
 author:
   name: '${data.author}'
-  picture: '/team/${data.author.toLowerCase().replace(' ', '')}.jpg'
+  picture: '/team/${data.author.toLowerCase().replace(/\s+/g, '')}.jpg'
   social:
     twitter: 'https://twitter.com/${data.twitter}'
     linkedin: 'https://linkedin.com/in/${data.linkedin}'
@@ -84,59 +90,82 @@ const categories = [
 
 const authors = ['Shantall Zarai', 'Jairo Saul'];
 
+const logCreationSuccess = (filePath, slug) => {
+  const messages = [
+    `\n✅ Artículo creado en: ${filePath}`,
+    `\n📁 Directorio de imágenes creado en: public/blog/${slug}/`,
+    '\n⚠️ Próximos pasos:',
+    '1. Agregar la imagen de portada como "cover.jpg"',
+    '2. Agregar las imágenes del artículo',
+    '3. Escribir el contenido del artículo',
+    '4. Optimizar las imágenes antes de subirlas\n',
+  ];
+
+  messages.forEach(msg => process.stdout.write(msg + '\n'));
+};
+
+const displayOptions = (options, title) => {
+  process.stdout.write(`\n${title}:\n`);
+  options.forEach((opt, i) => process.stdout.write(`${i + 1}. ${opt}\n`));
+  return process.stdout.write('\n');
+};
+
 async function main() {
-  console.log('📝 Creador de Artículos para el Blog\n');
+  try {
+    process.stdout.write('📝 Creador de Artículos para el Blog\n\n');
 
-  // Get post information
-  const title = await question('Título del artículo: ');
-  const slug = slugify(title);
+    // Get post information
+    const title = await question('Título del artículo: ');
+    const slug = slugify(title);
 
-  console.log('\nCategorías disponibles:');
-  categories.forEach((cat, i) => console.log(`${i + 1}. ${cat}`));
-  const categoryIndex = parseInt(await question('\nSelecciona el número de la categoría: ')) - 1;
-  const category = categories[categoryIndex];
+    displayOptions(categories, 'Categorías disponibles');
+    const categoryIndex = parseInt(await question('Selecciona el número de la categoría: ')) - 1;
+    if (categoryIndex < 0 || categoryIndex >= categories.length) {
+      throw new Error('Categoría inválida');
+    }
+    const category = categories[categoryIndex];
 
-  console.log('\nAutores disponibles:');
-  authors.forEach((author, i) => console.log(`${i + 1}. ${author}`));
-  const authorIndex = parseInt(await question('\nSelecciona el número del autor: ')) - 1;
-  const author = authors[authorIndex];
+    displayOptions(authors, 'Autores disponibles');
+    const authorIndex = parseInt(await question('Selecciona el número del autor: ')) - 1;
+    if (authorIndex < 0 || authorIndex >= authors.length) {
+      throw new Error('Autor inválido');
+    }
+    const author = authors[authorIndex];
 
-  const excerpt = await question('\nResumen del artículo (150-200 caracteres): ');
-  const readTime = await question('Tiempo de lectura estimado (ej: "8 min"): ');
-  const twitter = await question('Usuario de Twitter del autor (sin @): ');
-  const linkedin = await question('Usuario de LinkedIn del autor: ');
+    const excerpt = await question('\nResumen del artículo (150-200 caracteres): ');
+    const readTime = await question('Tiempo de lectura estimado (ej: "8 min"): ');
+    const twitter = await question('Usuario de Twitter del autor (sin @): ');
+    const linkedin = await question('Usuario de LinkedIn del autor: ');
 
-  // Generate today's date in YYYY-MM-DD format
-  const date = new Date().toISOString().split('T')[0];
+    // Generate today's date in YYYY-MM-DD format
+    const date = new Date().toISOString().split('T')[0];
 
-  // Create directories
-  createDirectories(slug);
+    // Create directories
+    createDirectories(slug);
 
-  // Generate frontmatter and create file
-  const postData = {
-    title,
-    slug,
-    excerpt,
-    date,
-    author,
-    twitter,
-    linkedin,
-    category,
-    readTime,
-  };
+    // Generate frontmatter and create file
+    const postData = {
+      title,
+      slug,
+      excerpt,
+      date,
+      author,
+      twitter,
+      linkedin,
+      category,
+      readTime,
+    };
 
-  const filePath = path.join(process.cwd(), 'content', 'blog', `${slug}.mdx`);
-  fs.writeFileSync(filePath, generateFrontmatter(postData));
+    const filePath = path.join(process.cwd(), 'content', 'blog', `${slug}.mdx`);
+    fs.writeFileSync(filePath, generateFrontmatter(postData));
 
-  console.log(`\n✅ Artículo creado en: ${filePath}`);
-  console.log(`\n📁 Directorio de imágenes creado en: public/blog/${slug}/`);
-  console.log('\n⚠️ No olvides:');
-  console.log('1. Agregar la imagen de portada como "cover.jpg"');
-  console.log('2. Agregar las imágenes del artículo');
-  console.log('3. Escribir el contenido del artículo');
-  console.log('4. Optimizar las imágenes antes de subirlas');
-
-  rl.close();
+    logCreationSuccess(filePath, slug);
+  } catch (error) {
+    process.stderr.write(`\n❌ Error: ${error.message}\n`);
+    process.exit(1);
+  } finally {
+    rl.close();
+  }
 }
 
 main().catch(console.error);

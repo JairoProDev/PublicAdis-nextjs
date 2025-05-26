@@ -93,33 +93,46 @@ const Contact = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
 
     if (validateForm()) {
-      // In a real application, you would send the form data to a server
-      console.log('Form submitted with data:', formData);
+      try {
+        // In a real application, you would send the form data to a server
+        // const response = await fetch('/api/contact', {
+        //   method: 'POST',
+        //   headers: { 'Content-Type': 'application/json' },
+        //   body: JSON.stringify(formData)
+        // });
 
-      // Show success message
-      setShowSuccess(true);
+        // if (!response.ok) throw new Error('Failed to submit form');
 
-      // Reset form after submission
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        company: '',
-        sector: '',
-        service: '',
-        message: '',
-        preferredContact: '',
-        terms: false,
-      });
+        // Show success message
+        setShowSuccess(true);
 
-      // Hide success message after 5 seconds
-      setTimeout(() => {
-        setShowSuccess(false);
-      }, 5000);
+        // Reset form after submission
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          company: '',
+          sector: '',
+          service: '',
+          message: '',
+          preferredContact: '',
+          terms: false,
+        });
+
+        // Hide success message after 5 seconds
+        setTimeout(() => {
+          setShowSuccess(false);
+        }, 5000);
+      } catch (error) {
+        setErrors(prev => ({
+          ...prev,
+          submit: 'Failed to submit form. Please try again.',
+        }));
+      }
     }
   };
 
@@ -315,7 +328,9 @@ const Contact = () => {
                           value={formData.name}
                           onChange={handleChange}
                           placeholder="Nombre Completo"
-                          className={`bg-transparent w-full py-3 px-0 text-white placeholder-gray-500 focus:outline-none ${errors.name ? 'border-red-500' : ''}`}
+                          className={`bg-transparent w-full py-3 px-0 text-white placeholder-gray-500 focus:outline-none ${
+                            errors.name ? 'border-red-500' : ''
+                          }`}
                         />
                       </div>
                       {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
@@ -335,7 +350,9 @@ const Contact = () => {
                             value={formData.email}
                             onChange={handleChange}
                             placeholder="Correo Electrónico"
-                            className={`bg-transparent w-full py-3 px-0 text-white placeholder-gray-500 focus:outline-none ${errors.email ? 'border-red-500' : ''}`}
+                            className={`bg-transparent w-full py-3 px-0 text-white placeholder-gray-500 focus:outline-none ${
+                              errors.email ? 'border-red-500' : ''
+                            }`}
                           />
                         </div>
                         {errors.email && (
@@ -355,7 +372,9 @@ const Contact = () => {
                             value={formData.phone}
                             onChange={handleChange}
                             placeholder="Teléfono"
-                            className={`bg-transparent w-full py-3 px-0 text-white placeholder-gray-500 focus:outline-none ${errors.phone ? 'border-red-500' : ''}`}
+                            className={`bg-transparent w-full py-3 px-0 text-white placeholder-gray-500 focus:outline-none ${
+                              errors.phone ? 'border-red-500' : ''
+                            }`}
                           />
                         </div>
                         {errors.phone && (
@@ -394,7 +413,9 @@ const Contact = () => {
                             name="sector"
                             value={formData.sector}
                             onChange={handleChange}
-                            className={`bg-transparent w-full py-3 px-0 text-white appearance-none focus:outline-none ${!formData.sector ? 'text-gray-500' : 'text-white'} ${errors.sector ? 'border-red-500' : ''}`}
+                            className={`bg-transparent w-full py-3 px-0 text-white appearance-none focus:outline-none ${
+                              !formData.sector ? 'text-gray-500' : 'text-white'
+                            } ${errors.sector ? 'border-red-500' : ''}`}
                           >
                             <option value="" className="bg-gray-900">
                               Seleccione un sector
@@ -424,7 +445,9 @@ const Contact = () => {
                             name="service"
                             value={formData.service}
                             onChange={handleChange}
-                            className={`bg-transparent w-full py-3 px-0 appearance-none focus:outline-none ${!formData.service ? 'text-gray-500' : 'text-white'} ${errors.service ? 'border-red-500' : ''}`}
+                            className={`bg-transparent w-full py-3 px-0 appearance-none focus:outline-none ${
+                              !formData.service ? 'text-gray-500' : 'text-white'
+                            } ${errors.service ? 'border-red-500' : ''}`}
                           >
                             <option value="" className="bg-gray-900">
                               Seleccione un servicio
