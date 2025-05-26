@@ -10,12 +10,12 @@ const Hero = () => {
   const clientsScrollRef = useRef(null);
 
   const dynamicTexts = [
-    'Transforma Tu Empresa con', // Actualizado
+    'Transforma Tu Empresa con',
     'Multiplica Tus Ventas con',
-    'Potencia Tus Negocios con', // Actualizado
-    'Conquista a Tus Clientes con', // Actualizado
+    'Potencia Tus Negocios con',
+    'Conquista a Tus Clientes con',
     'Maximiza Tu Inversión con',
-    'Lidera en Tu Industria con', // Actualizado
+    'Lidera en Tu Industria con',
   ];
 
   const slides = [
@@ -57,7 +57,7 @@ const Hero = () => {
     },
   ];
 
-  const channelLogos = [ // Nombres actualizados
+  const channelLogos = [
     { name: 'Sitio Web', icon: 'globe', type: 'fas', color: 'bg-blue-100 text-blue-600' },
     { name: 'Aplicación movíl', icon: 'mobile-alt', type: 'fas', color: 'bg-indigo-100 text-indigo-600' },
     { name: 'Revista Digital', icon: 'tablet', type: 'fas', color: 'bg-purple-100 text-purple-600' },
@@ -67,11 +67,11 @@ const Hero = () => {
     { name: 'Grupos de Telegram', icon: 'telegram', type: 'fab', color: 'bg-blue-100 text-blue-600' },
   ];
 
-  const metrics = [ // 4 métricas ahora
+  const metrics = [
     { value: '+38%', label: 'ROI promedio', icon: 'chart-line', color: 'bg-gradient-to-br from-blue-600 to-blue-400' },
     { value: '+7k', label: 'Personas al mes', icon: 'users', color: 'bg-gradient-to-br from-indigo-600 to-indigo-400' },
     { value: '+60%', label: 'Incremento en ventas', icon: 'sack-dollar', color: 'bg-gradient-to-br from-emerald-600 to-emerald-400' },
-    { value: '+30%', label: 'Nuevos clientes al mes', icon: 'user-plus', color: 'bg-gradient-to-br from-pink-500 to-red-500' }, // Icono y color ajustado para la 4ta métrica
+    { value: '+30%', label: 'Nuevos clientes al mes', icon: 'user-plus', color: 'bg-gradient-to-br from-pink-500 to-red-500' },
   ];
 
   const baseClients = [
@@ -143,10 +143,10 @@ const Hero = () => {
                 <span className="block transition-all duration-700 min-h-[48px] md:min-h-[60px] xl:min-h-[72px]">
                   {dynamicTexts[currentTextIndex].split(' ').slice(0, -1).join(' ')}
                   <span className="inline-flex items-center">
-                    <span className="ml-1"> {/* Espacio antes de la última palabra */}
+                    <span className="ml-1">
                       {dynamicTexts[currentTextIndex].split(' ').slice(-1)}
                     </span>
-                    <span className="bg-clip-text text-transparent bg-gradient-to-r from-amber-500 to-amber-600 ml-2"> {/* Espacio antes de PublicAdis */}
+                    <span className="bg-clip-text text-transparent bg-gradient-to-r from-amber-500 to-amber-600 ml-2">
                       PublicAdis
                     </span>
                   </span>
@@ -181,14 +181,13 @@ const Hero = () => {
               ))}
             </div>
 
-            {/* Metrics Cards - AQUÍ ESTÁ EL CAMBIO */}
             <div
               className={`grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} transition-all duration-700 delay-600`}
             >
               {metrics.map((metric, index) => (
                 <div
                   key={index}
-                  className="bg-white p-4 sm:p-5 rounded-xl shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 flex flex-col items-center text-center sm:items-start sm:text-left" // Ajustes para centrar en móvil y alinear a la izquierda en sm+
+                  className="bg-white p-4 sm:p-5 rounded-xl shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 flex flex-col items-center text-center sm:items-start sm:text-left"
                   style={{
                     transitionDelay: `${600 + index * 100}ms`,
                     opacity: isLoaded ? 1 : 0,
@@ -198,7 +197,7 @@ const Hero = () => {
                 >
                   <div className="flex items-center gap-3 mb-2">
                     <div
-                      className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg ${metric.color} flex items-center justify-center text-white shadow-md flex-shrink-0`} // flex-shrink-0 para evitar que se encoja
+                      className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg ${metric.color} flex items-center justify-center text-white shadow-md flex-shrink-0`}
                     >
                       <i className={`fas fa-${metric.icon} text-lg sm:text-xl`}></i>
                     </div>
@@ -233,13 +232,17 @@ const Hero = () => {
             </div>
           </div>
 
-          <div className="lg:col-span-5 mt-8 lg:mt-0">
+          {/* Hero Right Content - Slider y logos de clientes */}
+          <div className="lg:col-span-5 mt-8 lg:mt-0 flex flex-col"> {/* Añadido flex flex-col */}
             <div
               className={`relative ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} transition-all duration-1000 delay-500`}
             >
-              <div className="absolute -top-10 -right-10 w-28 h-28 bg-gradient-to-br from-indigo-600/10 to-purple-600/10 rounded-full blur-2xl opacity-70"></div>
+              <div className="absolute -top-10 -right-10 w-28 h-28 bg-gradient-to-br from-indigo-600/10 to-purple-600/10 rounded-full blur-2xl opacity-70 z-0"></div>
+              
+              {/* Contenedor del slider (imagen y contenido superpuesto) */}
               <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-white/20 backdrop-blur-sm bg-white/5">
-                <div className="relative overflow-hidden h-[400px] sm:h-[450px] lg:h-[500px] w-full">
+                {/* Área de la imagen del slider (altura reducida) */}
+                <div className="relative overflow-hidden h-[280px] sm:h-[320px] md:h-[350px] lg:h-[380px] w-full"> {/* ALTURA REDUCIDA */}
                   {slides.map((slide, index) => (
                     <div
                       key={index}
@@ -250,61 +253,72 @@ const Hero = () => {
                         <img
                           src={slide.image}
                           alt={slide.title}
-                          className="absolute inset-0 w-full h-full object-cover transition-transform duration-10000 ease-in-out"
-                          style={{ transform: index === currentSlide ? 'scale(1.05)' : 'scale(1)' }}
+                          className="absolute inset-0 w-full h-full object-cover transition-transform duration-10000 ease-in-out" // Ken Burns effect
+                          style={{ transform: index === currentSlide ? 'scale(1.1)' : 'scale(1.05)' }} // Ajuste del zoom para Ken Burns
                           loading="lazy"
                         />
-                        <div className="absolute inset-0 flex flex-col justify-end p-6 sm:p-8 md:p-10 z-20">
-                          <div className={`w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br ${slide.color} flex items-center justify-center text-white shadow-lg mb-4 transform transition-all duration-700 ${index === currentSlide ? 'opacity-100 translate-y-0 rotate-0' : 'opacity-0 -translate-y-10 rotate-45'}`}>
-                            <i className={`fas fa-${slide.icon} text-xl sm:text-2xl`}></i>
+                        {/* Contenido del Slide (CTA, título, etc.) */}
+                        <div className="absolute inset-0 flex flex-col justify-end p-4 sm:p-6 md:p-8 z-20">
+                          <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br ${slide.color} flex items-center justify-center text-white shadow-lg mb-2 sm:mb-3 transform transition-all duration-700 ${index === currentSlide ? 'opacity-100 translate-y-0 rotate-0' : 'opacity-0 -translate-y-8 rotate-45'}`}>
+                            <i className={`fas fa-${slide.icon} text-lg sm:text-xl`}></i>
                           </div>
-                          <h2 className={`text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 transform transition-all duration-700 delay-100 ${index === currentSlide ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+                          <h2 className={`text-xl sm:text-2xl md:text-3xl font-bold text-white mb-1 sm:mb-2 transform transition-all duration-700 delay-100 ${index === currentSlide ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
                             {slide.title}
                           </h2>
-                          <p className={`text-base sm:text-lg text-white/90 max-w-md transform transition-all duration-700 delay-200 ${index === currentSlide ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+                          <p className={`text-sm sm:text-base text-white/80 max-w-md mb-3 sm:mb-4 transform transition-all duration-700 delay-200 ${index === currentSlide ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
                             {slide.description}
                           </p>
-                          <div className={`mt-6 transform transition-all duration-700 delay-300 ${index === currentSlide ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-                            <button className={`px-5 py-2.5 sm:px-6 sm:py-3 rounded-xl bg-gradient-to-r ${slide.color} text-white font-medium flex items-center gap-2 shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 text-sm sm:text-base`}>
+                          <div className={`transform transition-all duration-700 delay-300 ${index === currentSlide ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+                            <button className={`px-4 py-2 sm:px-5 sm:py-2.5 rounded-lg bg-gradient-to-r ${slide.color} text-white font-medium flex items-center gap-1.5 sm:gap-2 shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 text-xs sm:text-sm`}>
                               <span>Descubrir más</span>
-                              <i className="fas fa-arrow-right text-xs sm:text-sm"></i>
+                              <i className="fas fa-arrow-right text-xs"></i>
                             </button>
                           </div>
                         </div>
                       </div>
                     </div>
                   ))}
-                  <div className="absolute left-0 right-0 bottom-6 sm:bottom-8 z-30 flex justify-center items-center gap-4 sm:gap-6">
-                    <button onClick={prevSlide} className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center text-white border border-white/20 hover:bg-white/20 transition-colors" aria-label="Slide anterior">
-                      <i className="fas fa-chevron-left text-sm sm:text-base"></i>
-                    </button>
-                    <div className="flex gap-2 sm:gap-3">
-                      {slides.map((_, index) => (
-                        <button
-                          key={index}
-                          onClick={() => goToSlide(index)}
-                          className={`relative h-2.5 sm:h-3 transition-all duration-500 ${index === currentSlide ? 'w-8 sm:w-10 bg-white' : 'w-2.5 sm:w-3 bg-white/40'} rounded-full overflow-hidden`}
-                          aria-label={`Ir a slide ${index + 1}`}
-                        >
-                          {index === currentSlide && (
-                            <span className="absolute inset-0 bg-white/80 animate-progress-bar" style={{ animation: 'progress 6s linear 1', transformOrigin: 'left' }}></span>
-                          )}
-                        </button>
-                      ))}
-                    </div>
-                    <button onClick={nextSlide} className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center text-white border border-white/20 hover:bg-white/20 transition-colors" aria-label="Siguiente slide">
-                      <i className="fas fa-chevron-right text-sm sm:text-base"></i>
-                    </button>
-                  </div>
                 </div>
               </div>
-              <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-gradient-to-br from-amber-500/10 to-yellow-600/10 rounded-full blur-xl opacity-70"></div>
+              
+              {/* Navegación del Slider (AHORA DEBAJO DEL CONTENEDOR DE IMAGEN) */}
+              <div className="mt-4 flex justify-center items-center gap-3 sm:gap-4 z-30 relative"> {/* z-30 y relative por si acaso */}
+                <button 
+                  onClick={prevSlide} 
+                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-slate-700/60 backdrop-blur-sm flex items-center justify-center text-white border border-white/20 hover:bg-slate-600/80 transition-colors" 
+                  aria-label="Slide anterior"
+                >
+                  <i className="fas fa-chevron-left text-sm"></i>
+                </button>
+                <div className="flex gap-1.5 sm:gap-2">
+                  {slides.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => goToSlide(index)}
+                      className={`relative h-2.5 sm:h-3 transition-all duration-500 ${index === currentSlide ? 'w-6 sm:w-8 bg-slate-200' : 'w-2.5 sm:w-3 bg-slate-500/70 hover:bg-slate-400/70'} rounded-full overflow-hidden`}
+                      aria-label={`Ir a slide ${index + 1}`}
+                    >
+                      {index === currentSlide && (
+                        <span className="absolute inset-0 bg-slate-200/80 animate-progress-bar" style={{ animation: 'progress 6s linear 1', transformOrigin: 'left' }}></span>
+                      )}
+                    </button>
+                  ))}
+                </div>
+                <button 
+                  onClick={nextSlide} 
+                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-slate-700/60 backdrop-blur-sm flex items-center justify-center text-white border border-white/20 hover:bg-slate-600/80 transition-colors" 
+                  aria-label="Siguiente slide"
+                >
+                  <i className="fas fa-chevron-right text-sm"></i>
+                </button>
+              </div>
+              <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-gradient-to-br from-amber-500/10 to-yellow-600/10 rounded-full blur-xl opacity-70 z-0"></div>
             </div>
 
             <div
-              className={`mt-10 lg:mt-12 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} transition-all duration-700 delay-800`}
+              className={`mt-8 lg:mt-10 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} transition-all duration-700 delay-800`}
             >
-              <p className="text-gray-600 text-sm mb-4 text-center lg:text-left">
+              <p className="text-gray-600 text-sm mb-3 text-center lg:text-left">
                 Empresas que confían en nosotros:
               </p>
               <div className="relative w-full overflow-hidden group">
@@ -349,7 +363,7 @@ const Hero = () => {
           100% { transform: translateX(-${baseClients.length * (120 + 32)}px); }
         }
         .animate-infinite-scroll {
-          animation: infiniteScroll 25s linear infinite; /* Ajustada duración para el scroll */
+          animation: infiniteScroll 25s linear infinite;
         }
         .group-hover\\:pause-animation:hover .animate-infinite-scroll,
         .group-hover\\:pause-animation:focus-within .animate-infinite-scroll {
