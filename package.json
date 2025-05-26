@@ -7,14 +7,19 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "prettier --write \"src/**/*.{js,jsx,css,html}\" ./pages ./components ./styles"
+    "format": "prettier --write \"src/**/*.{js,jsx,css,html}\" ./pages ./components ./styles",
+    "new-guide": "node src/tools/create-guide.js"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.4.0",
     "@heroicons/react": "^2.2.0",
     "next": "latest",
     "react": "latest",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "gray-matter": "^4.0.3",
+    "next-mdx-remote": "^4.4.1",
+    "rehype-prism-plus": "^1.6.3",
+    "remark-gfm": "^3.0.1"
   },
   "devDependencies": {
     "@types/node": "22.14.1",
@@ -24,8 +29,8 @@
     "eslint-config-next": "latest",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
-    "postcss": "^8.4.24",
-    "prettier": "^3.1.1",
-    "tailwindcss": "^3.3.3"
+    "postcss": "^8.4.23",
+    "prettier": "^2.8.8",
+    "tailwindcss": "^3.3.2"
   }
 }
