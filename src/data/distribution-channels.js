@@ -65,7 +65,7 @@ export const distributionChannels = [
   {
     id: 'messaging-networks',
     name: 'Redes de Mensajería',
-    description: 'Comunidades exclusivas en plataformas de mensajería',
+    description: 'Comunidades y grupos exclusivos en plataformas de mensajería',
     icon: 'comments',
     color: '#059669', // Emerald
     platforms: [
@@ -92,7 +92,7 @@ export const distributionChannels = [
   {
     id: 'physical-network',
     name: 'Red Física Estratégica',
-    description: 'Presencia en ubicaciones físicas premium',
+    description: 'Presencia en con multiples locales distribuidos en todo Cusco',
     icon: 'store',
     color: '#dc2626', // Red
     platforms: [
