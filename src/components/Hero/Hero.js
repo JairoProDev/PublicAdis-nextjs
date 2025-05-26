@@ -42,7 +42,7 @@ export class Hero {
         <div class="hero-content">
           <div class="premium-badge gold-shimmer">
             <i class="fas fa-crown"></i>
-            <span>Plataforma Premium</span>
+            <span>Multi-Plataforma Publicitaria Premium</span>
           </div>
           
           <h1 class="hero-title fade-in-up">

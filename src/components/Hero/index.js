@@ -186,7 +186,9 @@ const Hero = () => {
               className={`inline-flex items-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 text-white px-5 py-2.5 rounded-full shadow-lg ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-10'} transition-all duration-700 delay-200`}
             >
               <i className="fas fa-crown"></i>
-              <span className="font-medium tracking-wide">Plataforma Premium</span>
+              <span className="font-medium tracking-wide">
+                Multi-Plataforma Publicitaria Premium
+              </span>
             </div>
 
             {/* Dynamic Heading */}

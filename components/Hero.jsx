@@ -123,7 +123,7 @@ const Hero = () => {
               <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M9.668 2.858a.75.75 0 011.664 0l.302 1.833c.113.683.69 1.19 1.385 1.19h1.94a.75.75 0 01.415 1.372l-1.568 1.068c-.604.412-.848 1.19-.545 1.868l.602 1.81a.75.75 0 01-1.15.835l-1.612-1.095c-.604-.41-1.415-.41-2.018 0l-1.612 1.095a.75.75 0 01-1.15-.835l.602-1.81c.303-.678.059-1.457-.545-1.868L3.726 7.253a.75.75 0 01.415-1.372h1.94c.695 0 1.272-.507 1.385-1.19l.302-1.833z" clipRule="evenodd" />
               </svg>
-              <span className="font-semibold">Plataforma Premium</span>
+              <span className="font-semibold">Multi-Plataforma Publicitaria Premium</span>
             </div>
 
             {/* Título Dinámico */}
