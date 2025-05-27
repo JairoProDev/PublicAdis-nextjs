@@ -70,8 +70,8 @@ export default function AboutUs() {
             </div>
             <div className="rounded-lg overflow-hidden shadow-2xl relative h-[400px]">
               <Image
-                src="/images/about-us-placeholder.jpg"
-                alt="El equipo de PublicAdis o una imagen inspiradora"
+                src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                alt="Equipo de trabajo colaborativo"
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 50vw"
