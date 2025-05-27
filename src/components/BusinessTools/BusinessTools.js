@@ -101,7 +101,9 @@ export class BusinessTools {
             ${Object.entries(this.tools)
               .map(
                 ([key, tool], index) => `
-              <div class="tool-card" data-tool="${key}" data-aos="fade-up" data-aos-delay="${index * 100}">
+              <div class="tool-card" data-tool="${key}" data-aos="fade-up" data-aos-delay="${
+                  index * 100
+                }">
                 <div class="tool-header">
                   <div class="tool-icon">
                     <i class="fas ${tool.icon}"></i>
@@ -190,10 +192,21 @@ export class BusinessTools {
         e.preventDefault();
         const href = button.getAttribute('onclick').split("'")[1];
         if (href) {
-          // Aquí se implementaría la lógica para mostrar la herramienta específica
-          console.log(`Abriendo herramienta: ${href}`);
+          const toolId = href.replace('#', '');
+          this.activeTool = toolId;
+          window.location.hash = toolId;
+          this.loadTool(toolId);
         }
       });
     });
+  }
+
+  loadTool(toolId) {
+    // Implementar la lógica para cargar la herramienta específica
+    const tool = this.tools[toolId];
+    if (tool) {
+      // Aquí se implementaría la carga de la herramienta
+      document.dispatchEvent(new CustomEvent('toolSelected', { detail: { toolId, tool } }));
+    }
   }
 }

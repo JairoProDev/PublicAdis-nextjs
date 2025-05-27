@@ -31,30 +31,35 @@ const downloadFile = async (url, outputPath) => {
 };
 
 const createDirectories = async (category, slug) => {
-  // Create content directory
-  const contentDir = path.join(process.cwd(), 'content/guias', category);
-  if (!fs.existsSync(contentDir)) {
-    fs.mkdirSync(contentDir, { recursive: true });
+  try {
+    // Create content directory
+    const contentDir = path.join(process.cwd(), 'content/guias', category);
+    if (!fs.existsSync(contentDir)) {
+      fs.mkdirSync(contentDir, { recursive: true });
+    }
+
+    // Create public directory for images and resources
+    const publicDir = path.join(process.cwd(), 'public/guias', category, slug);
+    const imageDir = path.join(publicDir, 'imagenes');
+    const resourceDir = path.join(publicDir, 'recursos');
+
+    fs.mkdirSync(imageDir, { recursive: true });
+    fs.mkdirSync(resourceDir, { recursive: true });
+
+    return {
+      contentDir,
+      publicDir,
+      imageDir,
+      resourceDir,
+    };
+  } catch (error) {
+    throw new Error(`Failed to create directories: ${error.message}`);
   }
-
-  // Create public directory for images and resources
-  const publicDir = path.join(process.cwd(), 'public/guias', category, slug);
-  const imageDir = path.join(publicDir, 'imagenes');
-  const resourceDir = path.join(publicDir, 'recursos');
-
-  fs.mkdirSync(imageDir, { recursive: true });
-  fs.mkdirSync(resourceDir, { recursive: true });
-
-  return {
-    contentDir,
-    publicDir,
-    imageDir,
-    resourceDir,
-  };
 };
 
 const createGuideFile = async (category, slug, data) => {
-  const template = `---
+  try {
+    const template = `---
 title: '${data.title}'
 description: '${data.description}'
 coverImage: '/guias/${category}/${slug}/cover.jpg'
@@ -109,53 +114,66 @@ resources:
 [Aquí irá un resumen de los puntos clave y próximos pasos]
 `;
 
-  const filePath = path.join(process.cwd(), 'content/guias', category, `${slug}.mdx`);
-  fs.writeFileSync(filePath, template, 'utf8');
+    const filePath = path.join(process.cwd(), 'content/guias', category, `${slug}.mdx`);
+    fs.writeFileSync(filePath, template, 'utf8');
+  } catch (error) {
+    throw new Error(`Failed to create guide file: ${error.message}`);
+  }
+};
+
+const logCreationSuccess = (category, slug) => {
+  const messages = [
+    '\n✅ Guía creada exitosamente!\n',
+    'Directorios creados:',
+    `📁 Contenido: content/guias/${category}/${slug}.mdx`,
+    `📁 Imágenes: public/guias/${category}/${slug}/imagenes`,
+    `📁 Recursos: public/guias/${category}/${slug}/recursos\n`,
+    '⚠️ Próximos pasos:',
+    `1. Agregar una imagen de portada (1200x630px) en /public/guias/${category}/${slug}/cover.jpg`,
+    '2. Agregar las imágenes necesarias en el directorio de imágenes',
+    '3. Agregar los recursos descargables en el directorio de recursos',
+    '4. Completar el contenido de la guía en el archivo MDX\n',
+  ];
+
+  messages.forEach(msg => process.stdout.write(msg + '\n'));
 };
 
 const main = async () => {
-  console.log('🚀 Creador de Guías PublicAdis\n');
+  try {
+    process.stdout.write('🚀 Creador de Guías PublicAdis\n\n');
 
-  // Get guide information
-  const title = await question('Título de la guía: ');
-  const description = await question('Descripción breve (150-200 caracteres): ');
-  const category = await question('Categoría (redes-sociales/seo-local/email-marketing/etc): ');
-  const level = await question('Nivel (Principiante/Intermedio/Avanzado): ');
-  const duration = await question('Duración estimada (en minutos): ');
-  const author = await question('Autor: ');
-  const date = new Date().toISOString().split('T')[0];
+    // Get guide information
+    const title = await question('Título de la guía: ');
+    const description = await question('Descripción breve (150-200 caracteres): ');
+    const category = await question('Categoría (redes-sociales/seo-local/email-marketing/etc): ');
+    const level = await question('Nivel (Principiante/Intermedio/Avanzado): ');
+    const duration = await question('Duración estimada (en minutos): ');
+    const author = await question('Autor: ');
+    const date = new Date().toISOString().split('T')[0];
 
-  const slug = slugify(title);
+    const slug = slugify(title);
 
-  // Create directory structure
-  const dirs = await createDirectories(category, slug);
+    // Create directory structure
+    await createDirectories(category, slug);
 
-  // Create guide file
-  await createGuideFile(category, slug, {
-    title,
-    description,
-    category,
-    level,
-    duration,
-    author,
-    date,
-  });
+    // Create guide file
+    await createGuideFile(category, slug, {
+      title,
+      description,
+      category,
+      level,
+      duration,
+      author,
+      date,
+    });
 
-  console.log('\n✅ Guía creada exitosamente!');
-  console.log('\nDirectorios creados:');
-  console.log(`📁 Contenido: content/guias/${category}/${slug}.mdx`);
-  console.log(`📁 Imágenes: public/guias/${category}/${slug}/imagenes`);
-  console.log(`📁 Recursos: public/guias/${category}/${slug}/recursos`);
-
-  console.log('\n⚠️ No olvides:');
-  console.log(
-    '1. Agregar una imagen de portada (1200x630px) en /public/guias/${category}/${slug}/cover.jpg'
-  );
-  console.log('2. Agregar las imágenes necesarias en el directorio de imágenes');
-  console.log('3. Agregar los recursos descargables en el directorio de recursos');
-  console.log('4. Completar el contenido de la guía en el archivo MDX');
-
-  rl.close();
+    logCreationSuccess(category, slug);
+  } catch (error) {
+    process.stderr.write(`\n❌ Error: ${error.message}\n`);
+    process.exit(1);
+  } finally {
+    rl.close();
+  }
 };
 
 main().catch(console.error);

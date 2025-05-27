@@ -2,7 +2,6 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import Layout from '../../src/components/Layout';
 import { distributionChannels } from '../../src/data/distribution-channels';
-import Image from 'next/image';
 
 const StatCard = ({ label, value, color }) => (
   <motion.div

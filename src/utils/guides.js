@@ -2,6 +2,8 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import { serialize } from 'next-mdx-remote/serialize';
+import remarkGfm from 'remark-gfm';
+import rehypePrism from 'rehype-prism-plus';
 
 // Get all guide files from a category
 export const getGuideFiles = category => {
@@ -20,8 +22,8 @@ export const getGuideBySlug = async (category, slug) => {
 
   const mdxSource = await serialize(content, {
     mdxOptions: {
-      remarkPlugins: [],
-      rehypePlugins: [],
+      remarkPlugins: [remarkGfm],
+      rehypePlugins: [rehypePrism],
     },
   });
 
@@ -44,7 +46,8 @@ export const getGuidesByCategory = async category => {
     })
   );
 
-  return guides.sort((a, b) => {
+  return guides.filter(Boolean).sort((a, b) => {
+    if (!a?.frontmatter?.updatedAt || !b?.frontmatter?.updatedAt) return 0;
     return new Date(b.frontmatter.updatedAt) - new Date(a.frontmatter.updatedAt);
   });
 };

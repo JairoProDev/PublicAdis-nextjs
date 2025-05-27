@@ -96,7 +96,6 @@ export class Benefits {
   }
 
   init() {
-    console.log('Initializing Benefits component');
     this.render();
     this.addAnimations();
     this.initTestimonialSlider();
@@ -106,7 +105,6 @@ export class Benefits {
     const container =
       document.getElementById('benefitsContainer') || document.querySelector('#benefits');
     if (!container) {
-      console.error('Benefits container not found');
       return;
     }
 
@@ -127,7 +125,9 @@ export class Benefits {
             ${this.benefits
               .map(
                 (benefit, index) => `
-              <div class="benefit-card animate-on-scroll benefit-${benefit.color}" data-aos="fade-up" data-aos-delay="${index * 100}">
+              <div class="benefit-card animate-on-scroll benefit-${
+                benefit.color
+              }" data-aos="fade-up" data-aos-delay="${index * 100}">
                 <div class="benefit-icon-container">
                   <i class="fa-solid ${benefit.icon}"></i>
                 </div>
@@ -138,7 +138,9 @@ export class Benefits {
                     .map(
                       stat => `
                     <div class="metric">
-                      <span class="metric-value" data-count="${stat.value.replace(/\D/g, '')}">${stat.value}</span>
+                      <span class="metric-value" data-count="${stat.value.replace(/\D/g, '')}">${
+                        stat.value
+                      }</span>
                       <span class="metric-label">${stat.label}</span>
                     </div>
                   `
@@ -199,10 +201,12 @@ export class Benefits {
                   </div>
                   <div class="testimonial-author">
                     <div class="testimonial-author-image">
-                      <img src="${testimonial.image}" alt="${testimonial.author}" onerror="this.src='https://ui-avatars.com/api/?name=${testimonial.author
-                        .split(' ')
-                        .map(n => n[0])
-                        .join('+')}&background=0D8ABC&color=fff'">
+                      <img src="${testimonial.image}" alt="${
+                    testimonial.author
+                  }" onerror="this.src='https://ui-avatars.com/api/?name=${testimonial.author
+                    .split(' ')
+                    .map(n => n[0])
+                    .join('+')}&background=0D8ABC&color=fff'">
                     </div>
                     <div class="testimonial-author-info">
                       <h4 class="testimonial-author-name">${testimonial.author}</h4>
@@ -280,7 +284,6 @@ export class Benefits {
   animateCounter(element) {
     const value = element.textContent || '';
     const finalValue = value.trim();
-    let startValue = 0;
     let duration = 2000;
 
     // Manejar valores con +, % o x
