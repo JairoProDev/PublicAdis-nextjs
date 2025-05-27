@@ -1,0 +1,6 @@
+<svg width="800" height="600" viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="600" fill="#1F2937"/>
+  <rect x="100" y="100" width="600" height="400" fill="#374151" rx="20"/>
+  <text x="400" y="320" text-anchor="middle" fill="#9CA3AF" font-family="Arial" font-size="32" font-weight="bold">PublicAdis Team</text>
+  <text x="400" y="360" text-anchor="middle" fill="#6B7280" font-family="Arial" font-size="18">Construyendo el futuro publicitario</text>
+</svg> 

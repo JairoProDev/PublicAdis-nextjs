@@ -364,7 +364,9 @@ const Benefits = () => {
               className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-2 relative overflow-hidden border border-gray-100"
             >
               <div
-                className={`w-16 h-16 rounded-lg ${colorMap[benefit.color]} flex items-center justify-center mb-4 relative z-10`}
+                className={`w-16 h-16 rounded-lg ${
+                  colorMap[benefit.color]
+                } flex items-center justify-center mb-4 relative z-10`}
               >
                 <i className={`fas fa-${benefit.icon} text-xl text-white`}></i>
               </div>
@@ -452,18 +454,17 @@ const Benefits = () => {
                         <div className="flex items-center justify-between flex-wrap gap-4">
                           <div className="flex items-center">
                             <div className="w-16 h-16 rounded-full overflow-hidden mr-4 shadow-md border-2 border-amber-300">
-                              <img
+                              <Image
                                 src={testimonial.image}
                                 alt={testimonial.author}
+                                width={64}
+                                height={64}
                                 className="w-full h-full object-cover"
                                 onError={e => {
-                                  // Handle image error by loading a fallback avatar
-                                  const target = e.currentTarget;
-                                  target.onerror = null;
-                                  target.src = `https://ui-avatars.com/api/?name=${testimonial.author
+                                  e.currentTarget.src = `https://ui-avatars.com/api/?name=${testimonial.author
                                     .split(' ')
                                     .map(n => n[0])
-                                    .join('+')}&background=0D8ABC&color=fff&size=200`;
+                                    .join('+')}&background=0D8ABC&color=fff&size=64`;
                                 }}
                               />
                             </div>
@@ -478,8 +479,8 @@ const Benefits = () => {
                                       i < Math.floor(testimonial.rating)
                                         ? 'fas fa-star text-amber-400'
                                         : i < testimonial.rating
-                                          ? 'fas fa-star-half-alt text-amber-400'
-                                          : 'far fa-star text-amber-400'
+                                        ? 'fas fa-star-half-alt text-amber-400'
+                                        : 'far fa-star text-amber-400'
                                     } mr-1`}
                                   ></i>
                                 ))}
@@ -587,8 +588,8 @@ const Benefits = () => {
                           idx % 3 === 0
                             ? 'bg-blue-50'
                             : idx % 3 === 1
-                              ? 'bg-amber-50'
-                              : 'bg-teal-50'
+                            ? 'bg-amber-50'
+                            : 'bg-teal-50'
                         }`}
                       >
                         <div
@@ -596,8 +597,8 @@ const Benefits = () => {
                             idx % 3 === 0
                               ? 'bg-blue-100 text-blue-700'
                               : idx % 3 === 1
-                                ? 'bg-amber-100 text-amber-700'
-                                : 'bg-teal-100 text-teal-700'
+                              ? 'bg-amber-100 text-amber-700'
+                              : 'bg-teal-100 text-teal-700'
                           }`}
                         >
                           <i className={`fas fa-${sector.icon}`}></i>
@@ -613,18 +614,17 @@ const Benefits = () => {
                         <div className="flex items-center justify-between">
                           <div className="flex items-center">
                             <div className="w-10 h-10 rounded-full overflow-hidden mr-3">
-                              <img
+                              <Image
                                 src={sector.testimonials[0].image}
                                 alt={sector.testimonials[0].author}
+                                width={64}
+                                height={64}
                                 className="w-full h-full object-cover"
                                 onError={e => {
-                                  // Handle image error by loading a fallback avatar
-                                  const target = e.currentTarget;
-                                  target.onerror = null;
-                                  target.src = `https://ui-avatars.com/api/?name=${sector.testimonials[0].author
+                                  e.currentTarget.src = `https://ui-avatars.com/api/?name=${sector.testimonials[0].author
                                     .split(' ')
                                     .map(n => n[0])
-                                    .join('+')}&background=0D8ABC&color=fff`;
+                                    .join('+')}&background=0D8ABC&color=fff&size=64`;
                                 }}
                               />
                             </div>
@@ -638,8 +638,8 @@ const Benefits = () => {
                                       i < Math.floor(sector.testimonials[0].rating)
                                         ? 'fas fa-star text-amber-400 text-xs'
                                         : i < sector.testimonials[0].rating
-                                          ? 'fas fa-star-half-alt text-amber-400 text-xs'
-                                          : 'far fa-star text-amber-400 text-xs'
+                                        ? 'fas fa-star-half-alt text-amber-400 text-xs'
+                                        : 'far fa-star text-amber-400 text-xs'
                                     } mr-0.5`}
                                   ></i>
                                 ))}
