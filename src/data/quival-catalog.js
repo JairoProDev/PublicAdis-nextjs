@@ -8,8 +8,9 @@ export const businessInfo = {
 
   contact: {
     phone: '+51 984 804 843',
-    phone2: '+51 984 989 868',
+    phone2: '+51 984 989 866',
     whatsapp: '+51 984 804 843',
+    whatsapp2: '+51 984 989 866',
     email: 'corporacionquival@gmail.com',
     website: 'https://publicadis.com/quival',
   },
@@ -651,7 +652,22 @@ export const getSubcategories = category => {
 
 // Obtener marcas únicas
 export const getBrands = () => {
-  return [...new Set(catalogProducts.map(product => product.brand).filter(brand => brand))];
+  // Obtener todas las marcas únicas
+  const brands = catalogProducts
+    .map(product => product.brand)
+    .filter(brand => brand)
+    .filter((brand, index, self) => self.indexOf(brand) === index);
+  return brands;
+};
+
+// Obtener todas las medidas únicas desde los detalles de los productos
+export const getProductMeasures = () => {
+  // Extrae y normaliza las medidas de los detalles de los productos
+  const measures = catalogProducts
+    .map(product => product.details)
+    .filter(details => details)
+    .filter((details, index, self) => self.indexOf(details) === index);
+  return measures;
 };
 
 // Buscar productos
