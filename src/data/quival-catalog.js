@@ -5,7 +5,6 @@ export const businessInfo = {
   description:
     'Distribuidora oficial de productos para Tu ferretería de confianza especializada en tuberías, pinturas, iluminación y herramientas de calidad',
   logo: 'https://via.placeholder.com/200x80/2563EB/FFFFFF?text=QUIVAL',
-
   contact: {
     phone: '+51 984 804 843',
     phone2: '+51 984 989 866',
@@ -14,7 +13,6 @@ export const businessInfo = {
     email: 'corporacionquival@gmail.com',
     website: 'https://publicadis.com/quival',
   },
-
   location: {
     address: 'Av. Fernando Tupac Amaru K-9 Via de Evitamiento - San Sebastián Cusco',
     district: 'San Sebastián',
@@ -24,13 +22,11 @@ export const businessInfo = {
       lng: -71.90999997534256,
     },
   },
-
   schedule: {
     weekdays: 'Lunes a Viernes: 8:00 AM - 6:00 PM',
     saturday: 'Sábados: 8:00 AM - 2:00 PM',
     sunday: 'Domingos: Cerrado',
   },
-
   services: [
     'Venta al por mayor y menor',
     'Asesoría técnica especializada',
@@ -38,7 +34,6 @@ export const businessInfo = {
     'Cotizaciones para proyectos',
     'Garantía en todos nuestros productos',
   ],
-
   social: {
     facebook: 'https://facebook.com/quival',
     instagram: 'https://instagram.com/quival',
@@ -46,613 +41,653 @@ export const businessInfo = {
   },
 };
 
-// Productos del catálogo
-export const catalogProducts = [
-  // TUBERÍAS Y ACCESORIOS - TUBERÍAS DE DESAGÜE
+// Estructura de categorías y productos
+export const catalog = [
   {
-    id: 1,
-    category: 'Tuberías y Accesorios',
-    subcategory: 'Tuberías de Desagüe',
-    brand: 'Gerfor',
-    name: 'Tubo de Desagüe',
-    details: '2"',
-    image:
-      'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
-    featured: true,
+    categoryName: 'Tuberías y Accesorios',
+    subcategories: [
+      {
+        subcategoryName: 'Tuberías de Desagüe',
+        brands: [
+          {
+            brandName: 'Gerfor',
+            products: [
+              {
+                id: 1,
+                name: 'Tubo de Desagüe',
+                details: '2"',
+                image: '/images/products/tuberias-accesorios/1.svg',
+              },
+              {
+                id: 2,
+                name: 'Tubo de Desagüe',
+                details: '3"',
+                image: '/images/products/tuberias-accesorios/2.svg',
+              },
+              {
+                id: 3,
+                name: 'Tubo de Desagüe',
+                details: '4"',
+                image: '/images/products/tuberias-accesorios/3.svg',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        subcategoryName: 'Tuberías de Agua',
+        brands: [
+          {
+            brandName: 'Gerfor C-10',
+            products: [
+              {
+                id: 4,
+                name: 'Tubo de Agua',
+                details: '½, ¾',
+                image: '/images/products/tuberias-accesorios/4.svg',
+              },
+              {
+                id: 5,
+                name: 'Tubo de Agua',
+                details: '1, 1 ½',
+                image: '/images/products/tuberias-accesorios/5.svg',
+              },
+              {
+                id: 6,
+                name: 'Tubo de Agua',
+                details: '2, 4',
+                image: '/images/products/tuberias-accesorios/6.svg',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        subcategoryName: 'Tuberías de Luz',
+        brands: [
+          {
+            brandName: 'Gerfor',
+            products: [
+              {
+                id: 7,
+                name: 'Tubo de Luz',
+                details: '¾',
+                image: '/images/products/tuberias-accesorios/7.svg',
+              },
+              {
+                id: 8,
+                name: 'Tubo de Luz',
+                details: '⅝',
+                image: '/images/products/tuberias-accesorios/8.svg',
+              },
+              {
+                id: 9,
+                name: 'Tubo de Luz',
+                details: '1',
+                image: '/images/products/tuberias-accesorios/9.svg',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        subcategoryName: 'Tuberías de Alcantarillado',
+        brands: [
+          {
+            brandName: 'Gerfor',
+            products: [
+              {
+                id: 10,
+                name: 'Tubo Alcantarillado',
+                details: '110mm 2.1mm S-25',
+                image: '/images/products/tuberias-accesorios/10.svg',
+              },
+              {
+                id: 11,
+                name: 'Tubo Alcantarillado',
+                details: '110mm 2.1mm SN2 S-25',
+                image: '/images/products/tuberias-accesorios/11.svg',
+              },
+              {
+                id: 12,
+                name: 'Tubo Alcantarillado',
+                details: '160mm 1.7mm S-33',
+                image: '/images/products/tuberias-accesorios/12.svg',
+              },
+              {
+                id: 13,
+                name: 'Tubo Alcantarillado',
+                details: '160mm 2.5mm S-2.5',
+                image: '/images/products/tuberias-accesorios/13.svg',
+              },
+              {
+                id: 14,
+                name: 'Tubo Alcantarillado',
+                details: '160mm S-25 SN2',
+                image: '/images/products/tuberias-accesorios/14.svg',
+              },
+              {
+                id: 15,
+                name: 'Tubo Alcantarillado',
+                details: '160mm S-20 SN4',
+                image: '/images/products/tuberias-accesorios/15.svg',
+              },
+              {
+                id: 16,
+                name: 'Tubo Alcantarillado',
+                details: '200mm 3.2mm S-25',
+                image: '/images/products/tuberias-accesorios/16.svg',
+              },
+              {
+                id: 17,
+                name: 'Tubo Alcantarillado',
+                details: '200mm SN2 S-25',
+                image: '/images/products/tuberias-accesorios/17.svg',
+              },
+              {
+                id: 18,
+                name: 'Tubo Alcantarillado',
+                details: '200mm SN4 S-20',
+                image: '/images/products/tuberias-accesorios/18.svg',
+              },
+              {
+                id: 19,
+                name: 'Tubo Alcantarillado',
+                details: '250mm S-25 SN2',
+                image: '/images/products/tuberias-accesorios/19.svg',
+              },
+              {
+                id: 20,
+                name: 'Tubo Alcantarillado',
+                details: '250mm S-20 SN4',
+                image: '/images/products/tuberias-accesorios/20.svg',
+              },
+              {
+                id: 21,
+                name: 'Tubo Alcantarillado',
+                details: '315mm S-25 SN2',
+                image: '/images/products/tuberias-accesorios/21.svg',
+              },
+              {
+                id: 22,
+                name: 'Tubo Alcantarillado',
+                details: '315mm S-20 SN4',
+                image: '/images/products/tuberias-accesorios/22.svg',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        subcategoryName: 'Accesorios de Desagüe',
+        brands: [
+          {
+            brandName: 'Gerfor',
+            products: [
+              {
+                id: 23,
+                name: 'Codo',
+                details: '2 x 90',
+                image: '/images/products/tuberias-accesorios/23.svg',
+              },
+              {
+                id: 24,
+                name: 'Codo',
+                details: '2 x 45',
+                image: '/images/products/tuberias-accesorios/24.svg',
+              },
+              {
+                id: 25,
+                name: 'Codo',
+                details: '3 x 90',
+                image: '/images/products/tuberias-accesorios/25.svg',
+              },
+              {
+                id: 26,
+                name: 'Codo',
+                details: '3 x 45',
+                image: '/images/products/tuberias-accesorios/26.svg',
+              },
+              {
+                id: 27,
+                name: 'Codo',
+                details: '4 x 90',
+                image: '/images/products/tuberias-accesorios/27.svg',
+              },
+              {
+                id: 28,
+                name: 'Codo',
+                details: '4 x 45',
+                image: '/images/products/tuberias-accesorios/28.svg',
+              },
+              {
+                id: 29,
+                name: 'Tee',
+                details: '4 x 2',
+                image: '/images/products/tuberias-accesorios/29.svg',
+              },
+              {
+                id: 30,
+                name: 'Yee',
+                details: '4 x 2',
+                image: '/images/products/tuberias-accesorios/30.svg',
+              },
+            ],
+          },
+        ],
+      },
+    ],
   },
   {
-    id: 2,
-    category: 'Tuberías y Accesorios',
-    subcategory: 'Tuberías de Desagüe',
-    brand: 'Gerfor',
-    name: 'Tubo de Desagüe',
-    details: '3"',
-    image:
-      'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
+    categoryName: 'Mangueras y Riego',
+    subcategories: [
+      {
+        subcategoryName: 'Mangueras',
+        brands: [
+          {
+            brandName: 'Varios',
+            products: [
+              {
+                id: 90,
+                name: 'Manguera Dúplex',
+                details: '⅝',
+                image: '/images/products/mangueras-riego/90.svg',
+              },
+              {
+                id: 91,
+                name: 'Manguera Dúplex',
+                details: '¾',
+                image: '/images/products/mangueras-riego/91.svg',
+              },
+              {
+                id: 92,
+                name: 'Manguera Dúplex',
+                details: '1',
+                image: '/images/products/mangueras-riego/92.svg',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        subcategoryName: 'Accesorios de Riego Aspersor',
+        brands: [
+          {
+            brandName: 'Poelsan',
+            products: [
+              {
+                id: 103,
+                name: 'Enlace Recto R/H',
+                details: '25x¾ c/fierro',
+                image: '/images/products/mangueras-riego/103.svg',
+              },
+              {
+                id: 104,
+                name: 'Enlace Recto R/H',
+                details: '32x1',
+                image: '/images/products/mangueras-riego/104.svg',
+              },
+              {
+                id: 105,
+                name: 'Enlace Recto',
+                details: '25 x 25',
+                image: '/images/products/mangueras-riego/105.svg',
+              },
+            ],
+          },
+        ],
+      },
+    ],
   },
   {
-    id: 3,
-    category: 'Tuberías y Accesorios',
-    subcategory: 'Tuberías de Desagüe',
-    brand: 'Gerfor',
-    name: 'Tubo de Desagüe',
-    details: '4"',
-    image:
-      'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
-  },
-
-  // TUBERÍAS DE AGUA
-  {
-    id: 4,
-    category: 'Tuberías y Accesorios',
-    subcategory: 'Tuberías de Agua',
-    brand: 'Gerfor C-10',
-    name: 'Tubo de Agua',
-    details: '½, ¾',
-    image:
-      'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
-    featured: true,
-  },
-  {
-    id: 5,
-    category: 'Tuberías y Accesorios',
-    subcategory: 'Tuberías de Agua',
-    brand: 'Gerfor C-10',
-    name: 'Tubo de Agua',
-    details: '1, 1 ½',
-    image:
-      'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
-  },
-  {
-    id: 6,
-    category: 'Tuberías y Accesorios',
-    subcategory: 'Tuberías de Agua',
-    brand: 'Gerfor C-10',
-    name: 'Tubo de Agua',
-    details: '2, 4',
-    image:
-      'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
-  },
-
-  // TUBERÍAS DE LUZ
-  {
-    id: 7,
-    category: 'Tuberías y Accesorios',
-    subcategory: 'Tuberías de Luz',
-    brand: 'Gerfor',
-    name: 'Tubo de Luz',
-    details: '¾',
-    image:
-      'https://images.unsplash.com/photo-1530435460869-d13625c69bbf?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
-  },
-  {
-    id: 8,
-    category: 'Tuberías y Accesorios',
-    subcategory: 'Tuberías de Luz',
-    brand: 'Gerfor',
-    name: 'Tubo de Luz',
-    details: '⅝',
-    image:
-      'https://images.unsplash.com/photo-1530435460869-d13625c69bbf?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
+    categoryName: 'Pinturas y Accesorios',
+    subcategories: [
+      {
+        subcategoryName: 'Pintura Látex',
+        brands: [
+          {
+            brandName: 'Latexcolor',
+            products: [
+              {
+                id: 113,
+                name: 'Pintura Látex Interiores & Exteriores',
+                details: 'Celeste',
+                image: '/images/products/pinturas-accesorios/113.svg',
+              },
+              {
+                id: 114,
+                name: 'Pintura Látex Interiores & Exteriores',
+                details: 'Ártico',
+                image: '/images/products/pinturas-accesorios/114.svg',
+              },
+              {
+                id: 115,
+                name: 'Pintura Látex Interiores & Exteriores',
+                details: 'Azul Calipso',
+                image: '/images/products/pinturas-accesorios/115.svg',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        subcategoryName: 'Pegamentos',
+        brands: [
+          {
+            brandName: 'Otey',
+            products: [
+              {
+                id: 143,
+                name: 'Pegamento Otey Dorado',
+                details: '1/64 sin Brocha',
+                image: '/images/products/pinturas-accesorios/143.svg',
+              },
+              {
+                id: 144,
+                name: 'Pegamento Otey Dorado',
+                details: '1/64 con Brocha',
+                image: '/images/products/pinturas-accesorios/144.svg',
+              },
+              {
+                id: 145,
+                name: 'Pegamento Otey Azul',
+                details: '1/64 con Brocha',
+                image: '/images/products/pinturas-accesorios/145.svg',
+              },
+            ],
+          },
+        ],
+      },
+    ],
   },
   {
-    id: 9,
-    category: 'Tuberías y Accesorios',
-    subcategory: 'Tuberías de Luz',
-    brand: 'Gerfor',
-    name: 'Tubo de Luz',
-    details: '1',
-    image:
-      'https://images.unsplash.com/photo-1530435460869-d13625c69bbf?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
-  },
-
-  // ACCESORIOS DE DESAGÜE
-  {
-    id: 10,
-    category: 'Tuberías y Accesorios',
-    subcategory: 'Accesorios de Desagüe',
-    brand: 'Gerfor',
-    name: 'Codo',
-    details: '2 x 90',
-    image:
-      'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
-  },
-  {
-    id: 11,
-    category: 'Tuberías y Accesorios',
-    subcategory: 'Accesorios de Desagüe',
-    brand: 'Gerfor',
-    name: 'Codo',
-    details: '2 x 45',
-    image:
-      'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
-  },
-  {
-    id: 12,
-    category: 'Tuberías y Accesorios',
-    subcategory: 'Accesorios de Desagüe',
-    brand: 'Gerfor',
-    name: 'Tee',
-    details: '4 x 2',
-    image:
-      'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
-  },
-  {
-    id: 13,
-    category: 'Tuberías y Accesorios',
-    subcategory: 'Accesorios de Desagüe',
-    brand: 'Gerfor',
-    name: 'Yee',
-    details: '4 x 2',
-    image:
-      'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
-  },
-
-  // ACCESORIOS PARA AGUA DE MEDIA
-  {
-    id: 14,
-    category: 'Tuberías y Accesorios',
-    subcategory: 'Accesorios para Agua de Media',
-    brand: 'Gerfor',
-    name: 'Codo',
-    details: 'con Rosca',
-    image:
-      'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
+    categoryName: 'Plásticos, Mallas y Arpilleras',
+    subcategories: [
+      {
+        subcategoryName: 'Plásticos',
+        brands: [
+          {
+            brandName: 'Varios',
+            products: [
+              {
+                id: 298,
+                name: 'Plástico Simple Bolillito',
+                details: 'Azul',
+                image: '/images/products/plasticos-mallas/298.svg',
+              },
+              {
+                id: 299,
+                name: 'Plástico Simple',
+                details: '2m',
+                image: '/images/products/plasticos-mallas/299.svg',
+              },
+              {
+                id: 300,
+                name: 'Plástico Simple',
+                details: 'Colores',
+                image: '/images/products/plasticos-mallas/300.svg',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        subcategoryName: 'Arpilleras',
+        brands: [
+          {
+            brandName: 'Varios',
+            products: [
+              {
+                id: 308,
+                name: 'Arpillera Estándar',
+                details: '2 x 200 (Blanco, Azul, Negro)',
+                image: '/images/products/plasticos-mallas/308.svg',
+              },
+              {
+                id: 309,
+                name: 'Arpillera Estándar',
+                details: '3 x 200 (Blanco, Azul, Negro)',
+                image: '/images/products/plasticos-mallas/309.svg',
+              },
+              {
+                id: 310,
+                name: 'Arpillera Estándar',
+                details: '4 x 200 (Blanco, Azul, Negro)',
+                image: '/images/products/plasticos-mallas/310.svg',
+              },
+            ],
+          },
+        ],
+      },
+    ],
   },
   {
-    id: 15,
-    category: 'Tuberías y Accesorios',
-    subcategory: 'Accesorios para Agua de Media',
-    brand: 'Gerfor',
-    name: 'Tee',
-    details: 'con Rosca',
-    image:
-      'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
+    categoryName: 'Iluminación',
+    subcategories: [
+      {
+        subcategoryName: 'Focos y Lámparas',
+        brands: [
+          {
+            brandName: 'Ferlux',
+            products: [
+              {
+                id: 325,
+                name: 'Foco LED',
+                details: '7 Watts',
+                image: '/images/products/iluminacion/325.svg',
+              },
+              {
+                id: 326,
+                name: 'Foco LED',
+                details: '9 Watts',
+                image: '/images/products/iluminacion/326.svg',
+              },
+              {
+                id: 327,
+                name: 'Foco LED',
+                details: '15 Watts',
+                image: '/images/products/iluminacion/327.svg',
+              },
+              {
+                id: 328,
+                name: 'Foco LED',
+                details: '24 Watts',
+                image: '/images/products/iluminacion/328.svg',
+              },
+            ],
+          },
+          {
+            brandName: 'Ashun',
+            products: [
+              {
+                id: 329,
+                name: 'Foco LED',
+                details: '3 Watts',
+                image: '/images/products/iluminacion/329.svg',
+              },
+              {
+                id: 330,
+                name: 'Foco LED',
+                details: '5 Watts',
+                image: '/images/products/iluminacion/330.svg',
+              },
+              {
+                id: 331,
+                name: 'Foco LED',
+                details: '7 Watts',
+                image: '/images/products/iluminacion/331.svg',
+              },
+            ],
+          },
+        ],
+      },
+    ],
   },
   {
-    id: 16,
-    category: 'Tuberías y Accesorios',
-    subcategory: 'Accesorios para Agua de Media',
-    brand: 'Gerfor',
-    name: 'UPR',
-    details: '½',
-    image:
-      'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
-  },
-
-  // MANGUERAS Y RIEGO
-  {
-    id: 17,
-    category: 'Mangueras y Riego',
-    subcategory: 'Mangueras',
-    brand: '',
-    name: 'Manguera Dúplex',
-    details: '⅝',
-    image:
-      'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
-  },
-  {
-    id: 18,
-    category: 'Mangueras y Riego',
-    subcategory: 'Mangueras',
-    brand: '',
-    name: 'Manguera Dúplex',
-    details: '¾',
-    image:
-      'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
-    featured: true,
+    categoryName: 'Accesorios Eléctricos',
+    subcategories: [
+      {
+        subcategoryName: 'Varios Eléctricos',
+        brands: [
+          {
+            brandName: 'Bticino (Alternativo)',
+            products: [
+              {
+                id: 356,
+                name: 'Tomacorriente Simple Sapito',
+                details: '',
+                image: '/images/products/accesorios-electricos/356.svg',
+              },
+              {
+                id: 357,
+                name: 'Interruptor Simple Sapito',
+                details: '',
+                image: '/images/products/accesorios-electricos/357.svg',
+              },
+              {
+                id: 358,
+                name: 'Tomacorriente Doble',
+                details: '',
+                image: '/images/products/accesorios-electricos/358.svg',
+              },
+            ],
+          },
+        ],
+      },
+    ],
   },
   {
-    id: 19,
-    category: 'Mangueras y Riego',
-    subcategory: 'Mangueras',
-    brand: '',
-    name: 'Manguera para Riego Aspersor',
-    details: '¾',
-    image:
-      'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
+    categoryName: 'Grifería',
+    subcategories: [
+      {
+        subcategoryName: 'Llaves y Caños',
+        brands: [
+          {
+            brandName: 'Schubert',
+            products: [
+              {
+                id: 394,
+                name: 'Llave Ganso',
+                details: '',
+                image: '/images/products/griferia/394.svg',
+              },
+              {
+                id: 395,
+                name: 'Tubo de Abasto o Chicote',
+                details: '½ x ½',
+                image: '/images/products/griferia/395.svg',
+              },
+              {
+                id: 396,
+                name: 'Llave para Ducha',
+                details: '',
+                image: '/images/products/griferia/396.svg',
+              },
+            ],
+          },
+        ],
+      },
+    ],
   },
   {
-    id: 20,
-    category: 'Mangueras y Riego',
-    subcategory: 'Accesorios de Riego Aspersor',
-    brand: 'Poelsan',
-    name: 'Enlace Recto R/H',
-    details: '25x¾ c/fierro',
-    image:
-      'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
-  },
-
-  // PINTURAS Y ACCESORIOS - PINTURA LÁTEX
-  {
-    id: 21,
-    category: 'Pinturas y Accesorios',
-    subcategory: 'Pintura Látex',
-    brand: 'Latexcolor',
-    name: 'Pintura Látex Interiores & Exteriores',
-    details: 'Blanco',
-    image:
-      'https://images.unsplash.com/photo-1562259949-e8e7689d7828?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
-    featured: true,
-  },
-  {
-    id: 22,
-    category: 'Pinturas y Accesorios',
-    subcategory: 'Pintura Látex',
-    brand: 'Latexcolor',
-    name: 'Pintura Látex Interiores & Exteriores',
-    details: 'Celeste',
-    image:
-      'https://images.unsplash.com/photo-1562259949-e8e7689d7828?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
-  },
-  {
-    id: 23,
-    category: 'Pinturas y Accesorios',
-    subcategory: 'Pintura Látex',
-    brand: 'Latexcolor',
-    name: 'Pintura Látex Interiores & Exteriores',
-    details: 'Azul Calipso',
-    image:
-      'https://images.unsplash.com/photo-1562259949-e8e7689d7828?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
-  },
-  {
-    id: 24,
-    category: 'Pinturas y Accesorios',
-    subcategory: 'Pintura Látex',
-    brand: 'Latexcolor',
-    name: 'Pintura Látex Interiores & Exteriores',
-    details: 'Verde Esmeralda',
-    image:
-      'https://images.unsplash.com/photo-1562259949-e8e7689d7828?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
-  },
-
-  // PEGAMENTOS
-  {
-    id: 25,
-    category: 'Pinturas y Accesorios',
-    subcategory: 'Pegamentos',
-    brand: 'Otey',
-    name: 'Pegamento Otey Dorado',
-    details: '1/64 con Brocha',
-    image:
-      'https://images.unsplash.com/photo-1609205807107-e8ec2120f9de?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
-  },
-  {
-    id: 26,
-    category: 'Pinturas y Accesorios',
-    subcategory: 'Pegamentos',
-    brand: 'Otey',
-    name: 'Pegamento Otey Azul',
-    details: '1/32 con Brocha',
-    image:
-      'https://images.unsplash.com/photo-1609205807107-e8ec2120f9de?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
-  },
-  {
-    id: 27,
-    category: 'Pinturas y Accesorios',
-    subcategory: 'Pegamentos',
-    brand: 'Africano',
-    name: 'Pegamento Afrigueno',
-    details: '1/32',
-    image:
-      'https://images.unsplash.com/photo-1609205807107-e8ec2120f9de?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
-  },
-
-  // ESMALTES Y BARNICES
-  {
-    id: 28,
-    category: 'Pinturas y Accesorios',
-    subcategory: 'Esmaltes',
-    brand: 'Franja Sintético',
-    name: 'Esmalte Sintético',
-    details: 'Blanco',
-    image:
-      'https://images.unsplash.com/photo-1562259949-e8e7689d7828?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
-  },
-  {
-    id: 29,
-    category: 'Pinturas y Accesorios',
-    subcategory: 'Barnices',
-    brand: 'Franja',
-    name: 'Barniz',
-    details: 'Galón - Caoba',
-    image:
-      'https://images.unsplash.com/photo-1562259949-e8e7689d7828?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
-  },
-
-  // ILUMINACIÓN - FOCOS LED
-  {
-    id: 30,
-    category: 'Iluminación',
-    subcategory: 'Focos y Lámparas',
-    brand: 'Ferlux',
-    name: 'Foco LED',
-    details: '7 Watts',
-    image:
-      'https://images.unsplash.com/photo-1565814329452-e1efa11c5b89?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
-  },
-  {
-    id: 31,
-    category: 'Iluminación',
-    subcategory: 'Focos y Lámparas',
-    brand: 'Ferlux',
-    name: 'Foco LED',
-    details: '9 Watts',
-    image:
-      'https://images.unsplash.com/photo-1565814329452-e1efa11c5b89?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
-    featured: true,
-  },
-  {
-    id: 32,
-    category: 'Iluminación',
-    subcategory: 'Focos y Lámparas',
-    brand: 'Ashun',
-    name: 'Foco LED',
-    details: '15 Watts',
-    image:
-      'https://images.unsplash.com/photo-1565814329452-e1efa11c5b89?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
-  },
-  {
-    id: 33,
-    category: 'Iluminación',
-    subcategory: 'Focos y Lámparas',
-    brand: 'Ulix',
-    name: 'Foco LED Ulix',
-    details: '50 Watts',
-    image:
-      'https://images.unsplash.com/photo-1565814329452-e1efa11c5b89?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
-  },
-  {
-    id: 34,
-    category: 'Iluminación',
-    subcategory: 'Focos y Lámparas',
-    brand: 'Schubert',
-    name: 'Lámpara de Emergencia',
-    details: 'Tecnología LED, 8:30 horas',
-    image:
-      'https://images.unsplash.com/photo-1565814329452-e1efa11c5b89?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
-  },
-
-  // ACCESORIOS ELÉCTRICOS
-  {
-    id: 35,
-    category: 'Accesorios Eléctricos',
-    subcategory: 'Varios Eléctricos',
-    brand: 'Bticino',
-    name: 'Tomacorriente Simple',
-    details: '',
-    image:
-      'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
-  },
-  {
-    id: 36,
-    category: 'Accesorios Eléctricos',
-    subcategory: 'Varios Eléctricos',
-    brand: 'Bticino',
-    name: 'Interruptor Simple',
-    details: '',
-    image:
-      'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
-  },
-  {
-    id: 37,
-    category: 'Accesorios Eléctricos',
-    subcategory: 'Varios Eléctricos',
-    brand: 'Indeco',
-    name: 'Cable Mellizo',
-    details: '2x12',
-    image:
-      'https://images.unsplash.com/photo-1530435460869-d13625c69bbf?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
-  },
-  {
-    id: 38,
-    category: 'Accesorios Eléctricos',
-    subcategory: 'Varios Eléctricos',
-    brand: '3M',
-    name: 'Cinta Aislante',
-    details: 'Grande',
-    image:
-      'https://images.unsplash.com/photo-1609205807107-e8ec2120f9de?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
-  },
-
-  // GRIFERÍA
-  {
-    id: 39,
-    category: 'Grifería',
-    subcategory: 'Llaves y Caños',
-    brand: 'Schubert',
-    name: 'Llave Ganso',
-    details: '',
-    image:
-      'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
-    featured: true,
-  },
-  {
-    id: 40,
-    category: 'Grifería',
-    subcategory: 'Llaves y Caños',
-    brand: 'Schubert',
-    name: 'Llave para Ducha',
-    details: '',
-    image:
-      'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
-  },
-  {
-    id: 41,
-    category: 'Grifería',
-    subcategory: 'Llaves y Caños',
-    brand: 'Trebol',
-    name: 'Mezcladora Lavatorio',
-    details: '',
-    image:
-      'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
-  },
-  {
-    id: 42,
-    category: 'Grifería',
-    subcategory: 'Llaves y Caños',
-    brand: 'Vainsa',
-    name: 'Mezcladora Lavatorio',
-    details: '',
-    image:
-      'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
-  },
-
-  // FERRETERÍA VARIOS
-  {
-    id: 43,
-    category: 'Ferretería Varios',
-    subcategory: 'Herramientas y Consumibles',
-    brand: 'Schubert',
-    name: 'Candado',
-    details: 'Nº50',
-    image:
-      'https://images.unsplash.com/photo-1530435460869-d13625c69bbf?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
-  },
-  {
-    id: 44,
-    category: 'Ferretería Varios',
-    subcategory: 'Herramientas y Consumibles',
-    brand: '3M',
-    name: 'Disco de Corte',
-    details: '4½',
-    image:
-      'https://images.unsplash.com/photo-1530435460869-d13625c69bbf?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
-  },
-  {
-    id: 45,
-    category: 'Ferretería Varios',
-    subcategory: 'Tapas, Cera, Anillos',
-    brand: '',
-    name: 'Tapa de Agua',
-    details: '',
-    image:
-      'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
-  },
-  {
-    id: 46,
-    category: 'Ferretería Varios',
-    subcategory: 'Tapas, Cera, Anillos',
-    brand: '',
-    name: 'Cera',
-    details: 'x Galón',
-    image:
-      'https://images.unsplash.com/photo-1609205807107-e8ec2120f9de?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
-  },
-
-  // PLÁSTICOS, MALLAS Y ARPILLERAS
-  {
-    id: 47,
-    category: 'Plásticos, Mallas y Arpilleras',
-    subcategory: 'Plásticos',
-    brand: '',
-    name: 'Plástico Simple',
-    details: '2m',
-    image:
-      'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
-  },
-  {
-    id: 48,
-    category: 'Plásticos, Mallas y Arpilleras',
-    subcategory: 'Arpilleras',
-    brand: '',
-    name: 'Arpillera Estándar',
-    details: '2 x 200 (Blanco, Azul, Negro)',
-    image:
-      'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
-  },
-  {
-    id: 49,
-    category: 'Plásticos, Mallas y Arpilleras',
-    subcategory: 'Mallas Raschel',
-    brand: '',
-    name: 'Malla Raschel Económica',
-    details: '50% Verde',
-    image:
-      'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
-  },
-  {
-    id: 50,
-    category: 'Plásticos, Mallas y Arpilleras',
-    subcategory: 'Otras Mallas',
-    brand: '',
-    name: 'Malla Mosquetero',
-    details: '90 x 30',
-    image:
-      'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=300&fit=crop&auto=format',
-    inStock: true,
+    categoryName: 'Ferretería Varios',
+    subcategories: [
+      {
+        subcategoryName: 'Tapas, Cera, Anillos',
+        brands: [
+          {
+            brandName: 'Varios',
+            products: [
+              {
+                id: 414,
+                name: 'Tapa de Agua',
+                details: '',
+                image: '/images/products/ferreteria-varios/414.svg',
+              },
+              {
+                id: 415,
+                name: 'Tapa de Desagüe',
+                details: '',
+                image: '/images/products/ferreteria-varios/415.svg',
+              },
+              {
+                id: 416,
+                name: 'Cera',
+                details: 'x Galón',
+                image: '/images/products/ferreteria-varios/416.svg',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        subcategoryName: 'Herramientas y Consumibles',
+        brands: [
+          {
+            brandName: 'Varios',
+            products: [
+              {
+                id: 422,
+                name: 'Clavo para Calamina',
+                details: 'con Empaque',
+                image: '/images/products/ferreteria-varios/422.svg',
+              },
+              {
+                id: 423,
+                name: 'Driza',
+                details: '½',
+                image: '/images/products/ferreteria-varios/423.svg',
+              },
+              {
+                id: 424,
+                name: 'Driza',
+                details: '⅞',
+                image: '/images/products/ferreteria-varios/424.svg',
+              },
+            ],
+          },
+        ],
+      },
+    ],
   },
 ];
 
-// Obtener categorías únicas
+// Lista plana de todos los productos para facilitar búsquedas
+export const catalogProducts = [];
+
+// Función para extraer todos los productos a la lista plana
+const extractProducts = () => {
+  catalog.forEach(category => {
+    category.subcategories.forEach(subcategory => {
+      subcategory.brands.forEach(brand => {
+        brand.products.forEach(product => {
+          catalogProducts.push({
+            ...product,
+            category: category.categoryName,
+            subcategory: subcategory.subcategoryName,
+            brand: brand.brandName,
+            inStock: true,
+          });
+        });
+      });
+    });
+  });
+};
+
+// Extraer productos al inicializarse el módulo
+extractProducts();
+
+// Obtener categorías únicas con conteo de productos
 export const getCategories = () => {
   const categories = [...new Set(catalogProducts.map(product => product.category))];
   return categories.map(category => ({
     name: category,
     count: catalogProducts.filter(p => p.category === category).length,
-    subcategories: [
-      ...new Set(catalogProducts.filter(p => p.category === category).map(p => p.subcategory)),
-    ],
   }));
 };
 
-// Obtener subcategorías por categoría
-export const getSubcategories = category => {
-  return [...new Set(catalogProducts.filter(p => p.category === category).map(p => p.subcategory))];
-};
-
-// Obtener marcas únicas
+// Obtener todas las marcas únicas
 export const getBrands = () => {
-  // Obtener todas las marcas únicas
   const brands = catalogProducts
     .map(product => product.brand)
     .filter(brand => brand)
@@ -662,7 +697,6 @@ export const getBrands = () => {
 
 // Obtener todas las medidas únicas desde los detalles de los productos
 export const getProductMeasures = () => {
-  // Extrae y normaliza las medidas de los detalles de los productos
   const measures = catalogProducts
     .map(product => product.details)
     .filter(details => details)
@@ -682,8 +716,8 @@ export const searchProducts = (query, filters = {}) => {
         product.name.toLowerCase().includes(searchQuery) ||
         product.category.toLowerCase().includes(searchQuery) ||
         product.subcategory.toLowerCase().includes(searchQuery) ||
-        product.brand.toLowerCase().includes(searchQuery) ||
-        product.details.toLowerCase().includes(searchQuery)
+        (product.brand && product.brand.toLowerCase().includes(searchQuery)) ||
+        (product.details && product.details.toLowerCase().includes(searchQuery))
     );
   }
 
@@ -702,14 +736,14 @@ export const searchProducts = (query, filters = {}) => {
     results = results.filter(product => product.brand === filters.brand);
   }
 
+  // Filtro por medida
+  if (filters.measure) {
+    results = results.filter(product => product.details === filters.measure);
+  }
+
   // Filtro por disponibilidad
   if (filters.inStock) {
     results = results.filter(product => product.inStock);
-  }
-
-  // Filtro por productos destacados
-  if (filters.featured) {
-    results = results.filter(product => product.featured);
   }
 
   return results;
@@ -718,9 +752,4 @@ export const searchProducts = (query, filters = {}) => {
 // Obtener productos destacados
 export const getFeaturedProducts = () => {
   return catalogProducts.filter(product => product.featured);
-};
-
-// Obtener producto por ID
-export const getProductById = id => {
-  return catalogProducts.find(product => product.id === parseInt(id));
 };
