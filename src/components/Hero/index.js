@@ -301,7 +301,7 @@ const Hero = () => {
               } transition-all duration-700 delay-700`}
             >
               <Link
-                href="https://buscadis.com/publicar"
+                href="https://adis.lat/publicar"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full sm:w-auto px-7 py-4 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-xl font-bold flex items-center justify-center gap-2 shadow-xl hover:shadow-amber-200/50 hover:-translate-y-1 transition-all duration-300 text-center"

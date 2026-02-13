@@ -60,7 +60,7 @@ export class Header {
         </nav>
         
         <div class="header-actions">
-          <a href="https://buscadis.com" class="btn btn-outline premium-link-btn" target="_blank" rel="noopener">
+          <a href="https://adis.lat" class="btn btn-outline premium-link-btn" target="_blank" rel="noopener">
             <i class="fas fa-search"></i>
             Ir a Buscadis
           </a>
