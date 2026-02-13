@@ -126,7 +126,7 @@ const Header = () => {
           {/* Action Buttons */}
           <div className="hidden md:flex items-center space-x-3">
             <a
-              href="https://adis.com"
+              href="https://adis.lat"
               className={`px-3 py-1.5 rounded-md border transition-colors ${
                 isScrolled
                   ? 'border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white'
@@ -228,7 +228,7 @@ const Header = () => {
 
           <div className="mt-8 text-center">
             <a
-              href="https://adis.com"
+              href="https://adis.lat"
               className="px-4 py-2 border border-blue-600 text-blue-600 rounded-md hover:bg-blue-600 hover:text-white transition-colors inline-block"
               target="_blank"
               rel="noopener noreferrer"
