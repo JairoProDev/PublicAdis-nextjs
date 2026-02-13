@@ -56,7 +56,7 @@ const Navbar = () => {
               <i className="fas fa-comment mr-1"></i> Testimonios
             </Link>
             <Link
-              href="https://buscadis.com"
+              href="https://adis.com"
               className="ml-2 bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors flex items-center"
               target="_blank"
               rel="noopener noreferrer"
@@ -138,7 +138,7 @@ const Navbar = () => {
               </Link>
               <div className="flex flex-col space-y-2 pt-2">
                 <Link
-                  href="https://buscadis.com"
+                  href="https://adis.com"
                   className="bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors flex items-center justify-center"
                   target="_blank"
                   rel="noopener noreferrer"
