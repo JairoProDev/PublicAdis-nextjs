@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -97,9 +98,13 @@ const Footer = () => {
         {/* Footer Top */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10 items-center">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-amber-500 rounded-full flex items-center justify-center text-white">
-              <span className="font-bold">P</span>
-            </div>
+            <Image
+              src="/Logo.svg"
+              alt="PublicAdis Logo"
+              width={40}
+              height={40}
+              className="w-10 h-10 object-contain"
+            />
             <h2 className="text-2xl font-bold text-white">PublicAdis</h2>
           </div>
 

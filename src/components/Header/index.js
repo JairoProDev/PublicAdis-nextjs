@@ -82,18 +82,21 @@ const Header = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 py-3 transition-all duration-300 ${
-        isScrolled ? 'bg-white shadow-md py-2' : 'bg-white/80 backdrop-blur-sm'
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 py-3 transition-all duration-300 ${isScrolled ? 'bg-white shadow-md py-2' : 'bg-white/80 backdrop-blur-sm'
+        }`}
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">
             <Link href="/" className="flex items-center gap-2" onClick={closeMenu}>
-              <div className="w-10 h-10 bg-amber-500 rounded-full flex items-center justify-center text-white">
-                <span className="font-bold">P</span>
-              </div>
+              <Image
+                src="/Logo.svg"
+                alt="PublicAdis Logo"
+                width={40}
+                height={40}
+                className="w-10 h-10 object-contain"
+              />
               <span
                 className={`font-bold text-xl ${isScrolled ? 'text-gray-800' : 'text-gray-800'}`}
               >
@@ -109,11 +112,10 @@ const Header = () => {
                 <li key={index}>
                   <Link
                     href={item.href}
-                    className={`flex items-center gap-1.5 px-2 py-1 rounded-md transition-colors ${
-                      isScrolled
+                    className={`flex items-center gap-1.5 px-2 py-1 rounded-md transition-colors ${isScrolled
                         ? 'text-gray-700 hover:text-blue-600'
                         : 'text-gray-700 hover:text-blue-600'
-                    }`}
+                      }`}
                   >
                     <i className={`fas ${item.icon} text-sm`}></i>
                     <span>{item.label}</span>
@@ -127,11 +129,10 @@ const Header = () => {
           <div className="hidden md:flex items-center space-x-3">
             <a
               href="https://adis.lat"
-              className={`px-3 py-1.5 rounded-md border transition-colors ${
-                isScrolled
+              className={`px-3 py-1.5 rounded-md border transition-colors ${isScrolled
                   ? 'border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white'
                   : 'border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white'
-              }`}
+                }`}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -173,9 +174,8 @@ const Header = () => {
 
       {/* Mobile Menu */}
       <div
-        className={`fixed inset-0 bg-white z-40 transform transition-transform duration-300 ease-in-out ${
-          isMenuOpen ? 'translate-x-0' : 'translate-x-full'
-        }`}
+        className={`fixed inset-0 bg-white z-40 transform transition-transform duration-300 ease-in-out ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}
         style={{ top: '60px' }}
       >
         <div className="container mx-auto px-4 py-6">
