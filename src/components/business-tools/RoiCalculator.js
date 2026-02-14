@@ -1,71 +1,50 @@
-/**
- * Calculadora de ROI para Publicidad
- * Calcula el retorno de inversión para campañas publicitarias
- */
-class RoiCalculator {
-  constructor() {
-    // Factores de conversión por canal
-    this.channelFactors = {
-      search: 0.065, // 6.5% tasa de conversión Google Ads
-      social: 0.043, // 4.3% tasa de conversión en redes sociales
-      display: 0.018, // 1.8% tasa de conversión en anuncios display
-      email: 0.073, // 7.3% tasa de conversión email marketing
-      content: 0.032, // 3.2% tasa de conversión marketing de contenidos
-    };
-  }
+import React, { useState } from 'react';
 
-  init() {
-    this.setupEventListeners();
-  }
+const RoiCalculator = () => {
+  const [formData, setFormData] = useState({
+    investment: '',
+    revenue: '',
+    channel: 'search',
+    customers: '',
+    period: '1',
+  });
 
-  setupEventListeners() {
-    const calculateButton = document.getElementById('calculate-roi');
-    if (calculateButton) {
-      calculateButton.addEventListener('click', () => this.calculateRoi());
-    }
-  }
+  const [result, setResult] = useState(null);
 
-  showToolAlert(message, type) {
-    // Simple alert function
-    alert(message);
-    console.warn(`[${type}] ${message}`);
-  }
+  const channelFactors = {
+    search: 0.065,
+    social: 0.043,
+    display: 0.018,
+    email: 0.073,
+    content: 0.032,
+  };
 
-  calculateRoi() {
-    const investment = parseFloat(document.getElementById('advertising-investment').value);
-    const revenue = parseFloat(document.getElementById('revenue-generated').value);
-    const channel = document.getElementById('advertising-channel').value;
-    const customers = parseFloat(document.getElementById('customers-acquired').value);
-    const period = parseInt(document.getElementById('period').value);
+  const handleInputChange = e => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
 
-    // Validar los valores de entrada
+  const calculateRoi = e => {
+    if (e) e.preventDefault();
+
+    const investment = parseFloat(formData.investment);
+    const revenue = parseFloat(formData.revenue);
+    const customers = parseFloat(formData.customers) || 0;
+    const period = parseInt(formData.period);
+
     if (!investment || investment <= 0) {
-      this.showToolAlert('Por favor, introduce un valor válido para la inversión.', 'error');
+      alert('Por favor, introduce un valor válido para la inversión.');
       return;
     }
 
-    if (!revenue && revenue !== 0) {
-      this.showToolAlert('Por favor, introduce un valor para los ingresos generados.', 'error');
-      return;
-    }
-
-    if (!customers && customers !== 0) {
-      this.showToolAlert('Por favor, introduce el número de clientes adquiridos.', 'error');
-      return;
-    }
-
-    // Calcular ROI
     const roi = ((revenue - investment) / investment) * 100;
-
-    // Calcular métricas adicionales
     const costPerCustomer = customers > 0 ? investment / customers : 0;
     const revenuePerCustomer = customers > 0 ? revenue / customers : 0;
-
-    // Estimar valor de por vida del cliente (LTV)
-    // Asumiendo que un cliente típico genera 3 veces su valor inicial a lo largo de su vida
     const customerLifetimeValue = revenuePerCustomer * 3;
 
-    // Determinar si el ROI es bueno o no
     let roiRating;
     let roiMessage;
 
@@ -86,141 +65,146 @@ class RoiCalculator {
       roiMessage = '¡Felicidades! Tu campaña tiene un excelente rendimiento.';
     }
 
-    // Mostrar resultados
-    this.displayResults(
+    setResult({
       roi,
       investment,
       revenue,
       costPerCustomer,
       revenuePerCustomer,
       customerLifetimeValue,
-      channel,
-      period,
       roiRating,
-      roiMessage
-    );
-  }
+      roiMessage,
+      channel: formData.channel,
+      period,
+    });
+  };
 
-  displayResults(
-    roi,
-    investment,
-    revenue,
-    costPerCustomer,
-    revenuePerCustomer,
-    customerLifetimeValue,
-    channel,
-    period,
-    roiRating,
-    roiMessage
-  ) {
-    const resultsContainer = document.getElementById('roi-results');
+  const formatCurrency = value => {
+    return 'S/. ' + value.toLocaleString('es-PE', {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    });
+  };
 
-    // Formatear moneda
-    const formatCurrency = value => {
-      return (
-        'S/. ' +
-        value.toLocaleString('es-PE', {
-          minimumFractionDigits: 0,
-          maximumFractionDigits: 0,
-        })
-      );
-    };
+  const formatPercent = value => {
+    return value.toLocaleString('es-PE', {
+      minimumFractionDigits: 1,
+      maximumFractionDigits: 1,
+    }) + '%';
+  };
 
-    // Formatear porcentaje
-    const formatPercent = value => {
-      return (
-        value.toLocaleString('es-PE', {
-          minimumFractionDigits: 1,
-          maximumFractionDigits: 1,
-        }) + '%'
-      );
-    };
+  const channelNames = {
+    search: 'Google Ads / Búsqueda',
+    social: 'Redes Sociales',
+    display: 'Anuncios Display',
+    email: 'Email Marketing',
+    content: 'Marketing de Contenidos',
+  };
 
-    // Nombres legibles para los canales
-    const channelNames = {
-      search: 'Google Ads / Búsqueda',
-      social: 'Redes Sociales',
-      display: 'Anuncios Display',
-      email: 'Email Marketing',
-      content: 'Marketing de Contenidos',
-    };
+  const periodText = {
+    1: '1 mes',
+    3: '3 meses',
+    6: '6 meses',
+    12: '12 meses',
+  };
 
-    // Periodos en texto
-    const periodText = {
-      1: '1 mes',
-      3: '3 meses',
-      6: '6 meses',
-      12: '12 meses',
-    };
-
-    // HTML para los resultados
-    resultsContainer.innerHTML = `
-      <div class="result-summary">
-        <h4>ROI de tu Campaña Publicitaria</h4>
-        <div class="value-amount">${formatPercent(roi)}</div>
-        <div class="value-range">
-          Calificación: <strong>${roiRating}</strong>
-        </div>
-      </div>
-      
-      <div class="chart-container">
-        <div class="chart-bar">
-          <div class="chart-value investment-bar" style="height: ${Math.min(100, investment / 100)}px;">
-            ${formatCurrency(investment)}
+  return (
+    <div className="roi-calculator">
+      {!result ? (
+        <form onSubmit={calculateRoi} className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Inversión Publicitaria (S/.)</label>
+              <input
+                type="number"
+                name="investment"
+                value={formData.investment}
+                onChange={handleInputChange}
+                className="w-full p-2 border border-gray-300 rounded-md"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Ingresos Generados (S/.)</label>
+              <input
+                type="number"
+                name="revenue"
+                value={formData.revenue}
+                onChange={handleInputChange}
+                className="w-full p-2 border border-gray-300 rounded-md"
+                required
+              />
+            </div>
           </div>
-          <div class="chart-label">Inversión</div>
-        </div>
-        
-        <div class="chart-bar">
-          <div class="chart-value revenue-bar" style="height: ${Math.min(100, revenue / 100)}px;">
-            ${formatCurrency(revenue)}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Canal</label>
+              <select name="channel" value={formData.channel} onChange={handleInputChange} className="w-full p-2 border border-gray-300 rounded-md">
+                <option value="search">Google Ads</option>
+                <option value="social">Redes Sociales</option>
+                <option value="display">Anuncios Display</option>
+                <option value="email">Email Marketing</option>
+                <option value="content">Marketing de Contenidos</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Clientes Adquiridos</label>
+              <input
+                type="number"
+                name="customers"
+                value={formData.customers}
+                onChange={handleInputChange}
+                className="w-full p-2 border border-gray-300 rounded-md"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Periodo</label>
+              <select name="period" value={formData.period} onChange={handleInputChange} className="w-full p-2 border border-gray-300 rounded-md">
+                <option value="1">1 mes</option>
+                <option value="3">3 meses</option>
+                <option value="6">6 meses</option>
+                <option value="12">12 meses</option>
+              </select>
+            </div>
           </div>
-          <div class="chart-label">Ingresos</div>
-        </div>
-      </div>
-      
-      <div class="metrics">
-        <div class="metric">
-          <div class="metric-label">Costo por Cliente</div>
-          <div class="metric-value">
-            <i class="fa-solid fa-user-tag metric-icon"></i>
-            ${formatCurrency(costPerCustomer)}
+          <button type="submit" className="w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Calcular ROI</button>
+        </form>
+      ) : (
+        <div className="bg-blue-50 p-6 rounded-lg">
+          <div className="text-center mb-6">
+            <h4 className="text-lg font-bold mb-2">ROI de tu Campaña</h4>
+            <div className="text-4xl font-bold text-blue-700">{formatPercent(result.roi)}</div>
+            <div className="text-sm text-gray-600 mt-1">Calificación: <strong>{result.roiRating}</strong></div>
           </div>
-        </div>
-        
-        <div class="metric">
-          <div class="metric-label">Ingreso por Cliente</div>
-          <div class="metric-value">
-            <i class="fa-solid fa-coins metric-icon"></i>
-            ${formatCurrency(revenuePerCustomer)}
-          </div>
-        </div>
-        
-        <div class="metric">
-          <div class="metric-label">Valor del Cliente</div>
-          <div class="metric-value">
-            <i class="fa-solid fa-star metric-icon"></i>
-            ${formatCurrency(customerLifetimeValue)}
-          </div>
-        </div>
-      </div>
-      
-      <div class="result-analysis">
-        <h4><i class="fa-solid fa-chart-pie"></i> Análisis de Resultados</h4>
-        <p>
-          ${roiMessage} Tu campaña en <strong>${channelNames[channel]}</strong> durante <strong>${periodText[period]}</strong> 
-          ha generado un retorno de inversión del <strong>${formatPercent(roi)}</strong>. 
-          Cada cliente te ha costado <strong>${formatCurrency(costPerCustomer)}</strong> y ha generado 
-          <strong>${formatCurrency(revenuePerCustomer)}</strong> en ingresos.
-        </p>
-      </div>
-    `;
 
-    resultsContainer.classList.add('show');
-  }
-}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <div className="bg-white p-3 rounded-md shadow-sm text-center">
+              <div className="text-xs text-gray-500">Costo por Cliente</div>
+              <div className="font-bold">{formatCurrency(result.costPerCustomer)}</div>
+            </div>
+            <div className="bg-white p-3 rounded-md shadow-sm text-center">
+              <div className="text-xs text-gray-500">Ingreso por Cliente</div>
+              <div className="font-bold">{formatCurrency(result.revenuePerCustomer)}</div>
+            </div>
+            <div className="bg-white p-3 rounded-md shadow-sm text-center">
+              <div className="text-xs text-gray-500">Valor de Vida (LTV)</div>
+              <div className="font-bold">{formatCurrency(result.customerLifetimeValue)}</div>
+            </div>
+          </div>
 
-// Si está en un entorno global, exponer la clase
-if (typeof window !== 'undefined') {
-  window.RoiCalculator = RoiCalculator;
-}
+          <div className="bg-white p-4 rounded-md mb-6">
+            <h5 className="font-bold mb-2">Análisis:</h5>
+            <p className="text-sm text-gray-700">
+              {result.roiMessage} Tu campaña en <strong>{channelNames[result.channel]}</strong> durante <strong>{periodText[result.period]}</strong> ha generado un retorno de inversión del <strong>{formatPercent(result.roi)}</strong>.
+            </p>
+          </div>
+
+          <button onClick={() => setResult(null)} className="w-full py-2 border border-blue-600 text-blue-600 rounded-md hover:bg-blue-100">Nueva Calculación</button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default RoiCalculator;
+

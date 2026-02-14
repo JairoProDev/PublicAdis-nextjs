@@ -1,393 +1,176 @@
-/**
- * Calculadora de Precio de Vehículos
- * Estima el valor de mercado de vehículos usados
- */
-class VehiclePriceCalculator {
-  constructor() {
-    this.baseValues = {
-      sedan: 25000,
-      suv: 40000,
-      pickup: 35000,
-      hatchback: 22000,
-      van: 30000,
-    };
+import React, { useState } from 'react';
 
-    this.yearDepreciation = {
-      0: 1.0, // nuevo
-      1: 0.85, // 1 año
-      2: 0.75, // 2 años
-      3: 0.68, // 3 años
-      4: 0.62, // 4 años
-      5: 0.56, // 5 años
-      6: 0.51, // 6 años
-      7: 0.47, // 7 años
-      8: 0.43, // 8 años
-      9: 0.39, // 9 años
-      10: 0.36, // 10 años
-      15: 0.25, // 15 años
-      20: 0.18, // 20+ años
-    };
+const VehiclePriceCalculator = () => {
+  const [formData, setFormData] = useState({
+    vehicleType: 'sedan',
+    brand: 'toyota',
+    year: new Date().getFullYear().toString(),
+    condition: 'good',
+    mileage: 'medium',
+    extras: [],
+  });
 
-    this.brandFactors = {
-      toyota: 1.15,
-      nissan: 1.05,
-      hyundai: 1.0,
-      kia: 0.98,
-      volkswagen: 1.05,
-      chevrolet: 0.95,
-      ford: 1.0,
-      honda: 1.12,
-      mazda: 1.08,
-      suzuki: 0.92,
-      other: 0.85,
-    };
+  const [result, setResult] = useState(null);
 
-    this.conditionFactors = {
-      excellent: 1.15,
-      good: 1.0,
-      fair: 0.85,
-      poor: 0.7,
-    };
+  const baseValues = {
+    sedan: 25000,
+    suv: 40000,
+    pickup: 35000,
+    hatchback: 22000,
+    van: 30000,
+  };
 
-    this.mileageFactors = {
-      low: 1.1, // < 40,000 km
-      medium: 1.0, // 40,000 - 100,000 km
-      high: 0.85, // 100,000 - 180,000 km
-      veryhigh: 0.7, // > 180,000 km
-    };
-  }
+  const yearDepreciation = {
+    0: 1.0, 1: 0.85, 2: 0.75, 3: 0.68, 4: 0.62, 5: 0.56, 6: 0.51, 7: 0.47, 8: 0.43, 9: 0.39, 10: 0.36, 15: 0.25, 20: 0.18,
+  };
 
-  init() {
-    this.setupEventListeners();
-  }
+  const brandFactors = {
+    toyota: 1.15, nissan: 1.05, hyundai: 1.0, kia: 0.98, volkswagen: 1.05, chevrolet: 0.95, ford: 1.0, honda: 1.12, mazda: 1.08, suzuki: 0.92, other: 0.85,
+  };
 
-  setupEventListeners() {
-    const calculateButton = document.getElementById('calculate-vehicle-price');
-    if (calculateButton) {
-      calculateButton.addEventListener('click', () => this.calculatePrice());
-    }
+  const conditionFactors = {
+    excellent: 1.15, good: 1.0, fair: 0.85, poor: 0.7,
+  };
 
-    // Actualizamos los rangos cuando se seleccionan
-    const yearSelect = document.getElementById('vehicle-year');
-    if (yearSelect) {
-      yearSelect.addEventListener('change', () => this.updateYearRange(yearSelect.value));
-    }
+  const mileageFactors = {
+    low: 1.1, medium: 1.0, high: 0.85, veryhigh: 0.7,
+  };
 
-    const mileageSelect = document.getElementById('vehicle-mileage');
-    if (mileageSelect) {
-      mileageSelect.addEventListener('change', () => this.updateMileageRange(mileageSelect.value));
-    }
-  }
+  const handleInputChange = e => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
-  updateYearRange(yearValue) {
-    const yearRangeElement = document.getElementById('year-range');
-    if (!yearRangeElement) return;
-
-    const currentYear = new Date().getFullYear();
-    const age = currentYear - parseInt(yearValue);
-
-    if (age === 0) {
-      yearRangeElement.textContent = 'Nuevo';
-    } else if (age === 1) {
-      yearRangeElement.textContent = '1 año';
+  const handleExtraChange = e => {
+    const { value, checked } = e.target;
+    if (checked) {
+      setFormData({ ...formData, extras: [...formData.extras, value] });
     } else {
-      yearRangeElement.textContent = `${age} años`;
+      setFormData({ ...formData, extras: formData.extras.filter(x => x !== value) });
     }
-  }
+  };
 
-  updateMileageRange(mileageValue) {
-    const mileageRangeElement = document.getElementById('mileage-range');
-    if (!mileageRangeElement) return;
-
-    const mileageRanges = {
-      low: 'Menos de 40,000 km',
-      medium: 'Entre 40,000 y 100,000 km',
-      high: 'Entre 100,000 y 180,000 km',
-      veryhigh: 'Más de 180,000 km',
-    };
-
-    mileageRangeElement.textContent = mileageRanges[mileageValue];
-  }
-
-  calculatePrice() {
-    // Recoger valores del formulario
-    const vehicleType = document.getElementById('vehicle-type').value;
-    const brand = document.getElementById('vehicle-brand').value;
-    const year = parseInt(document.getElementById('vehicle-year').value);
-    const condition = document.getElementById('vehicle-condition').value;
-    const mileage = document.getElementById('vehicle-mileage').value;
-    const extras = Array.from(document.querySelectorAll('input[name="extra"]:checked')).map(
-      el => el.value
-    );
-
-    // Validar entrada
-    if (!vehicleType || !brand || !year || !condition || !mileage) {
-      this.showToolAlert('Por favor, completa todos los campos del formulario.', 'error');
-      return;
-    }
-
-    // Obtener valor base por tipo de vehículo
-    let basePrice = this.baseValues[vehicleType];
-
-    // Ajustar por año (depreciación)
-    const currentYear = new Date().getFullYear();
-    const age = currentYear - year;
-
-    // Calcular factor de depreciación
-    let depreciationFactor = this.getDepreciationFactor(age);
-
-    // Ajustar por marca
-    const brandFactor = this.brandFactors[brand] || this.brandFactors.other;
-
-    // Ajustar por condición
-    const conditionFactor = this.conditionFactors[condition];
-
-    // Ajustar por kilometraje
-    const mileageFactor = this.mileageFactors[mileage];
-
-    // Calcular precio base ajustado
-    let adjustedPrice =
-      basePrice * depreciationFactor * brandFactor * conditionFactor * mileageFactor;
-
-    // Añadir extras
-    let extrasValue = 0;
-    extras.forEach(extra => {
-      switch (extra) {
-        case 'leather':
-          extrasValue += 1500;
-          break;
-        case 'sunroof':
-          extrasValue += 2000;
-          break;
-        case 'alloy':
-          extrasValue += 1000;
-          break;
-        case 'navigation':
-          extrasValue += 1200;
-          break;
-        case 'camera':
-          extrasValue += 800;
-          break;
-      }
-    });
-
-    // Precio final
-    const finalPrice = adjustedPrice + extrasValue;
-
-    // Calcular rango de precio
-    const lowerRange = finalPrice * 0.9;
-    const upperRange = finalPrice * 1.1;
-
-    // Mostrar resultados
-    this.displayResults(
-      finalPrice,
-      lowerRange,
-      upperRange,
-      vehicleType,
-      brand,
-      year,
-      condition,
-      mileage,
-      extras,
-      extrasValue
-    );
-  }
-
-  getDepreciationFactor(age) {
-    // Si el año exacto existe en la tabla, lo usamos
-    if (this.yearDepreciation[age] !== undefined) {
-      return this.yearDepreciation[age];
-    }
-
-    // Si no, buscamos los años más cercanos para interpolación
-    const years = Object.keys(this.yearDepreciation)
-      .map(Number)
-      .sort((a, b) => a - b);
-
-    // Si es más antiguo que el último valor de la tabla
-    if (age > years[years.length - 1]) {
-      return this.yearDepreciation[years[years.length - 1]];
-    }
-
-    // Encontrar los años entre los que cae la edad
-    let lowerYear = years[0];
-    let upperYear = years[years.length - 1];
-
+  const getDepreciationFactor = age => {
+    if (yearDepreciation[age] !== undefined) return yearDepreciation[age];
+    const years = Object.keys(yearDepreciation).map(Number).sort((a, b) => a - b);
+    if (age > years[years.length - 1]) return yearDepreciation[years[years.length - 1]];
+    let lowerYear = years[0], upperYear = years[years.length - 1];
     for (let i = 0; i < years.length - 1; i++) {
       if (age >= years[i] && age < years[i + 1]) {
-        lowerYear = years[i];
-        upperYear = years[i + 1];
-        break;
+        lowerYear = years[i]; upperYear = years[i + 1]; break;
       }
     }
-
-    // Interpolar linealmente entre los dos valores
-    const lowerFactor = this.yearDepreciation[lowerYear];
-    const upperFactor = this.yearDepreciation[upperYear];
+    const lowerFactor = yearDepreciation[lowerYear], upperFactor = yearDepreciation[upperYear];
     const ratio = (age - lowerYear) / (upperYear - lowerYear);
-
     return lowerFactor - ratio * (lowerFactor - upperFactor);
-  }
+  };
 
-  displayResults(
-    price,
-    lowerRange,
-    upperRange,
-    vehicleType,
-    brand,
-    year,
-    condition,
-    mileage,
-    extras,
-    extrasValue
-  ) {
-    const resultsContainer = document.getElementById('vehicle-price-results');
+  const calculatePrice = e => {
+    if (e) e.preventDefault();
+    let basePrice = baseValues[formData.vehicleType];
+    const age = new Date().getFullYear() - parseInt(formData.year);
+    const depreciationFactor = getDepreciationFactor(age);
+    const brandFactor = brandFactors[formData.brand] || brandFactors.other;
+    const conditionFactor = conditionFactors[formData.condition];
+    const mileageFactor = mileageFactors[formData.mileage];
 
-    // Formatear moneda
-    const formatCurrency = value => {
-      return (
-        'S/. ' +
-        value.toLocaleString('es-PE', {
-          minimumFractionDigits: 0,
-          maximumFractionDigits: 0,
-        })
-      );
-    };
+    let adjustedPrice = basePrice * depreciationFactor * brandFactor * conditionFactor * mileageFactor;
 
-    // Mapear valores a nombres legibles
-    const vehicleTypes = {
-      sedan: 'Sedán',
-      suv: 'SUV',
-      pickup: 'Pickup',
-      hatchback: 'Hatchback',
-      van: 'Van/Minivan',
-    };
+    let extrasValue = 0;
+    formData.extras.forEach(extra => {
+      if (extra === 'leather') extrasValue += 1500;
+      if (extra === 'sunroof') extrasValue += 2000;
+      if (extra === 'alloy') extrasValue += 1000;
+      if (extra === 'navigation') extrasValue += 1200;
+      if (extra === 'camera') extrasValue += 800;
+    });
 
-    const brandNames = {
-      toyota: 'Toyota',
-      nissan: 'Nissan',
-      hyundai: 'Hyundai',
-      kia: 'Kia',
-      volkswagen: 'Volkswagen',
-      chevrolet: 'Chevrolet',
-      ford: 'Ford',
-      honda: 'Honda',
-      mazda: 'Mazda',
-      suzuki: 'Suzuki',
-      other: 'Otra marca',
-    };
+    const finalPrice = adjustedPrice + extrasValue;
+    setResult({
+      price: finalPrice,
+      lowerRange: finalPrice * 0.9,
+      upperRange: finalPrice * 1.1,
+      extrasValue,
+    });
+  };
 
-    const conditionNames = {
-      excellent: 'Excelente',
-      good: 'Bueno',
-      fair: 'Regular',
-      poor: 'Pobre',
-    };
+  const formatCurrency = value => 'S/. ' + Math.round(value).toLocaleString('es-PE');
 
-    const mileageRanges = {
-      low: 'Menos de 40,000 km',
-      medium: 'Entre 40,000 y 100,000 km',
-      high: 'Entre 100,000 y 180,000 km',
-      veryhigh: 'Más de 180,000 km',
-    };
+  const years = [];
+  const currentYear = new Date().getFullYear();
+  for (let y = currentYear; y >= currentYear - 25; y--) years.push(y);
 
-    const extraNames = {
-      leather: 'Asientos de cuero',
-      sunroof: 'Techo solar',
-      alloy: 'Aros de aleación',
-      navigation: 'Sistema de navegación',
-      camera: 'Cámara de retroceso',
-    };
-
-    // Convertir extras a lista legible
-    const extrasList = extras.map(e => extraNames[e]).join(', ');
-
-    // HTML para los resultados
-    resultsContainer.innerHTML = `
-      <div class="result-summary">
-        <h4>Precio Estimado de Mercado</h4>
-        <div class="value-amount">${formatCurrency(price)}</div>
-        <div class="value-range">
-          Rango: ${formatCurrency(lowerRange)} - ${formatCurrency(upperRange)}
-        </div>
-      </div>
-      
-      <div class="vehicle-features">
-        <div class="feature">
-          <i class="fa-solid fa-car"></i>
-          <span>${vehicleTypes[vehicleType]} ${brandNames[brand]} (${year})</span>
-        </div>
-        <div class="feature">
-          <i class="fa-solid fa-gauge"></i>
-          <span>${mileageRanges[mileage]}</span>
-        </div>
-        <div class="feature">
-          <i class="fa-solid fa-star"></i>
-          <span>Estado: ${conditionNames[condition]}</span>
-        </div>
-      </div>
-      
-      <div class="price-breakdown">
-        <h4><i class="fa-solid fa-calculator"></i> Desglose del Precio</h4>
-        <div class="breakdown-item">
-          <div class="breakdown-label">Valor base</div>
-          <div class="breakdown-value">${formatCurrency(this.baseValues[vehicleType])}</div>
-        </div>
-        <div class="breakdown-item">
-          <div class="breakdown-label">Ajuste por año (${year})</div>
-          <div class="breakdown-value">-${Math.round(
-            (1 - this.getDepreciationFactor(new Date().getFullYear() - year)) * 100
-          )}%</div>
-        </div>
-        <div class="breakdown-item">
-          <div class="breakdown-label">Ajuste por marca</div>
-          <div class="breakdown-value">${
-            this.brandFactors[brand] > 1 ? '+' : ''
-          }${Math.round((this.brandFactors[brand] - 1) * 100)}%</div>
-        </div>
-        <div class="breakdown-item">
-          <div class="breakdown-label">Ajuste por condición</div>
-          <div class="breakdown-value">${
-            this.conditionFactors[condition] > 1 ? '+' : ''
-          }${Math.round((this.conditionFactors[condition] - 1) * 100)}%</div>
-        </div>
-        <div class="breakdown-item">
-          <div class="breakdown-label">Ajuste por kilometraje</div>
-          <div class="breakdown-value">${
-            this.mileageFactors[mileage] > 1 ? '+' : ''
-          }${Math.round((this.mileageFactors[mileage] - 1) * 100)}%</div>
-        </div>
-        ${
-          extrasValue > 0
-            ? `
-          <div class="breakdown-item">
-            <div class="breakdown-label">Extras (${extrasList})</div>
-            <div class="breakdown-value">+${formatCurrency(extrasValue)}</div>
+  return (
+    <div className="vehicle-price-calculator">
+      {!result ? (
+        <form onSubmit={calculatePrice} className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Tipo de Vehículo</label>
+              <select name="vehicleType" value={formData.vehicleType} onChange={handleInputChange} className="w-full p-2 border border-gray-300 rounded-md">
+                <option value="sedan">Sedán</option>
+                <option value="suv">SUV</option>
+                <option value="pickup">Pickup</option>
+                <option value="hatchback">Hatchback</option>
+                <option value="van">Van</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Marca</label>
+              <select name="brand" value={formData.brand} onChange={handleInputChange} className="w-full p-2 border border-gray-300 rounded-md">
+                <option value="toyota">Toyota</option>
+                <option value="nissan">Nissan</option>
+                <option value="hyundai">Hyundai</option>
+                <option value="kia">Kia</option>
+                <option value="volkswagen">Volkswagen</option>
+                <option value="other">Otra</option>
+              </select>
+            </div>
           </div>
-        `
-            : ''
-        }
-      </div>
-      
-      <div class="result-analysis">
-        <p>
-          Este precio estimado se basa en las condiciones actuales del mercado peruano. 
-          Para una valoración más precisa, te recomendamos contactar a un concesionario oficial o un tasador profesional.
-        </p>
-      </div>
-    `;
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Año</label>
+              <select name="year" value={formData.year} onChange={handleInputChange} className="w-full p-2 border border-gray-300 rounded-md">
+                {years.map(y => <option key={y} value={y}>{y}</option>)}
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Condición</label>
+              <select name="condition" value={formData.condition} onChange={handleInputChange} className="w-full p-2 border border-gray-300 rounded-md">
+                <option value="excellent">Excelente</option>
+                <option value="good">Bueno</option>
+                <option value="fair">Regular</option>
+                <option value="poor">Malo</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Kilometraje</label>
+              <select name="mileage" value={formData.mileage} onChange={handleInputChange} className="w-full p-2 border border-gray-300 rounded-md">
+                <option value="low">Bajo (&lt;40k km)</option>
+                <option value="medium">Medio (40k-100k km)</option>
+                <option value="high">Alto (100k-180k km)</option>
+                <option value="veryhigh">Muy Alto (&gt;180k km)</option>
+              </select>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+            <label className="flex items-center text-sm"><input type="checkbox" value="leather" onChange={handleExtraChange} className="mr-2" /> Cuero</label>
+            <label className="flex items-center text-sm"><input type="checkbox" value="sunroof" onChange={handleExtraChange} className="mr-2" /> Techo Solar</label>
+            <label className="flex items-center text-sm"><input type="checkbox" value="alloy" onChange={handleExtraChange} className="mr-2" /> Aros Aleación</label>
+          </div>
+          <button type="submit" className="w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Calcular Precio</button>
+        </form>
+      ) : (
+        <div className="bg-blue-50 p-6 rounded-lg text-center">
+          <h4 className="font-bold mb-2">Precio Estimado</h4>
+          <div className="text-4xl font-bold text-blue-700">{formatCurrency(result.price)}</div>
+          <div className="text-sm text-gray-600 mt-1">Rango: {formatCurrency(result.lowerRange)} - {formatCurrency(result.upperRange)}</div>
+          <button onClick={() => setResult(null)} className="mt-6 w-full py-2 border border-blue-600 text-blue-600 rounded-md hover:bg-blue-100">Nueva Calculación</button>
+        </div>
+      )}
+    </div>
+  );
+};
 
-    resultsContainer.classList.add('show');
-  }
+export default VehiclePriceCalculator;
 
-  showToolAlert(message, type) {
-    // Simple alert function
-    alert(message);
-    console.warn(`[${type}] ${message}`);
-  }
-}
-
-// Si está en un entorno global, exponer la clase
-if (typeof window !== 'undefined') {
-  window.VehiclePriceCalculator = VehiclePriceCalculator;
-}
