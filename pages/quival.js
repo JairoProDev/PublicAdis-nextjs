@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { supabase } from '../src/utils/supabase';
 import { businessInfo } from '../src/data/quival-catalog';
 
-const ProductCard = ({ product, view }) => {
+const ProductCard = ({ product, view, isAdminMode, onEdit }) => {
   // Handle variants if they exist in the data structure, otherwise treat as single product
   // For the flat Supabase structure, we might not have 'variants' array immediately unless we group them.
   // The 'groupedProducts' logic below creates variants.
@@ -20,10 +20,21 @@ const ProductCard = ({ product, view }) => {
     <div
       className={
         view === 'grid'
-          ? 'bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden flex flex-col'
-          : 'bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden flex'
+          ? 'bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden flex flex-col relative'
+          : 'bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden flex relative'
       }
     >
+      {/* Admin Edit Button */}
+      {isAdminMode && (
+        <button
+          onClick={() => onEdit(selectedVariant)}
+          className="absolute top-2 right-2 z-10 bg-blue-600 text-white p-2 rounded-full shadow-lg hover:bg-blue-700 transition-colors"
+          title="Editar producto"
+        >
+          <i className="fas fa-edit"></i>
+        </button>
+      )}
+
       <div
         className={
           view === 'grid'
@@ -119,6 +130,26 @@ const ProductCard = ({ product, view }) => {
 export default function QuivalCatalog() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const fileInputRef = useRef(null);
+
+  // Admin Mode
+  const [isAdminMode, setIsAdminMode] = useState(false);
+  const [showAdminLogin, setShowAdminLogin] = useState(false);
+  const [adminPassword, setAdminPassword] = useState('');
+
+  // Edit Modal
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [editingProduct, setEditingProduct] = useState(null);
+  const [productForm, setProductForm] = useState({
+    name: '',
+    category: '',
+    subcategory: '',
+    brand: '',
+    details: '',
+    image_url: '',
+    in_stock: true,
+  });
+  const [uploading, setUploading] = useState(false);
 
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -148,6 +179,125 @@ export default function QuivalCatalog() {
     }
     setLoading(false);
   };
+
+  // Admin Mode Handlers
+  const handleAdminLogin = (e) => {
+    e.preventDefault();
+    if (adminPassword === 'admin123') {
+      setIsAdminMode(true);
+      setShowAdminLogin(false);
+      setAdminPassword('');
+      localStorage.setItem('quival_catalog_admin', 'true');
+    } else {
+      alert('Contraseña incorrecta');
+    }
+  };
+
+  const handleAdminLogout = () => {
+    setIsAdminMode(false);
+    localStorage.removeItem('quival_catalog_admin');
+  };
+
+  // Check for cached admin session
+  useEffect(() => {
+    const cachedAdmin = localStorage.getItem('quival_catalog_admin');
+    if (cachedAdmin === 'true') {
+      setIsAdminMode(true);
+    }
+  }, []);
+
+  // Edit Product Handlers
+  const handleEditProduct = (product) => {
+    setEditingProduct(product);
+    setProductForm({
+      name: product.name,
+      category: product.category,
+      subcategory: product.subcategory || '',
+      brand: product.brand || '',
+      details: product.details || '',
+      image_url: product.image_url || '',
+      in_stock: product.in_stock,
+    });
+    setShowEditModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowEditModal(false);
+    setEditingProduct(null);
+    setProductForm({
+      name: '',
+      category: '',
+      subcategory: '',
+      brand: '',
+      details: '',
+      image_url: '',
+      in_stock: true,
+    });
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setProductForm(prev => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value
+    }));
+  };
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setUploading(true);
+    try {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Math.random()}.${fileExt}`;
+      const filePath = `${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from('products')
+        .upload(filePath, file);
+
+      if (uploadError) {
+        throw uploadError;
+      }
+
+      const { data } = supabase.storage.from('products').getPublicUrl(filePath);
+
+      setProductForm(prev => ({
+        ...prev,
+        image_url: data.publicUrl
+      }));
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      alert('Error subiendo imagen. Asegúrate de haber creado el bucket "products" en Supabase.');
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const handleUpdateProduct = async (e) => {
+    e.preventDefault();
+    setUploading(true);
+
+    try {
+      const { error } = await supabase
+        .from('products')
+        .update(productForm)
+        .eq('id', editingProduct.id);
+
+      if (error) throw error;
+
+      alert('Producto actualizado correctamente');
+      handleCloseModal();
+      fetchProducts();
+    } catch (error) {
+      console.error('Error updating:', error);
+      alert('Error actualizando el producto: ' + error.message);
+    } finally {
+      setUploading(false);
+    }
+  };
+
 
   // 2. Filter Products based on search and filters
   const filteredProducts = useMemo(() => {
@@ -311,6 +461,23 @@ export default function QuivalCatalog() {
 
               {/* Contacto Rápido */}
               <div className="flex items-center gap-2">
+                {isAdminMode ? (
+                  <button
+                    onClick={handleAdminLogout}
+                    className="flex items-center gap-1 bg-red-500 text-white px-3 py-1.5 rounded-lg hover:bg-red-600 transition-colors text-sm"
+                  >
+                    <i className="fas fa-sign-out-alt"></i>
+                    <span className="hidden sm:inline">Salir Admin</span>
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => setShowAdminLogin(true)}
+                    className="flex items-center gap-1 bg-gray-700 text-white px-3 py-1.5 rounded-lg hover:bg-gray-600 transition-colors text-sm"
+                  >
+                    <i className="fas fa-lock"></i>
+                    <span className="hidden sm:inline">Admin</span>
+                  </button>
+                )}
                 <a
                   href={`https://wa.me/${businessInfo.contact.whatsapp.replace(/[^0-9]/g, '')}`}
                   target="_blank"
@@ -331,6 +498,7 @@ export default function QuivalCatalog() {
             </div>
           </div>
         </header>
+
 
         {/* Barra de Búsqueda y Filtros */}
         <section className="bg-white border-b sticky top-0 z-40">
@@ -510,7 +678,13 @@ export default function QuivalCatalog() {
                 }
               >
                 {currentProducts.map(product => (
-                  <ProductCard key={product.id} product={product} view={view} />
+                  <ProductCard
+                    key={product.id}
+                    product={product}
+                    view={view}
+                    isAdminMode={isAdminMode}
+                    onEdit={handleEditProduct}
+                  />
                 ))}
               </div>
             ) : (
@@ -690,6 +864,184 @@ export default function QuivalCatalog() {
             </div>
           </div>
         </footer>
+
+        {/* Admin Login Modal */}
+        {showAdminLogin && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-lg p-6 w-full max-w-sm">
+              <h2 className="text-xl font-bold mb-4">Acceso Administrativo</h2>
+              <form onSubmit={handleAdminLogin}>
+                <div className="mb-4">
+                  <label className="block text-gray-700 text-sm font-bold mb-2">Contraseña</label>
+                  <input
+                    type="password"
+                    value={adminPassword}
+                    onChange={(e) => setAdminPassword(e.target.value)}
+                    className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Ingrese contraseña..."
+                    autoFocus
+                  />
+                </div>
+                <div className="flex gap-2">
+                  <button
+                    type="submit"
+                    className="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                  >
+                    Ingresar
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowAdminLogin(false);
+                      setAdminPassword('');
+                    }}
+                    className="px-4 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+                  >
+                    Cancelar
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+
+        {/* Edit Product Modal */}
+        {showEditModal && editingProduct && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 overflow-y-auto">
+            <div className="bg-white rounded-lg p-6 w-full max-w-2xl my-8">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-xl font-bold">Editar Producto</h2>
+                <button
+                  onClick={handleCloseModal}
+                  className="text-gray-500 hover:text-gray-700 text-2xl"
+                >
+                  <i className="fas fa-times"></i>
+                </button>
+              </div>
+
+              <form onSubmit={handleUpdateProduct} className="space-y-4">
+                {/* Image Upload */}
+                <div
+                  onClick={() => fileInputRef.current?.click()}
+                  className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:bg-gray-50 transition-colors cursor-pointer"
+                >
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                    className="hidden"
+                  />
+                  {productForm.image_url ? (
+                    <div className="relative h-48 w-full">
+                      <img
+                        src={productForm.image_url}
+                        alt="Preview"
+                        className="h-full w-full object-contain rounded-md"
+                      />
+                      <p className="text-xs text-blue-500 mt-2">Click para cambiar imagen</p>
+                    </div>
+                  ) : (
+                    <div className="py-8">
+                      {uploading ? (
+                        <i className="fas fa-spinner fa-spin text-3xl text-blue-500 mb-2"></i>
+                      ) : (
+                        <i className="fas fa-camera text-3xl text-gray-400 mb-2"></i>
+                      )}
+                      <p className="text-sm text-gray-500">Toca para subir foto</p>
+                    </div>
+                  )}
+                </div>
+
+                {/* Product Name */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Nombre del Producto</label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={productForm.name}
+                    onChange={handleInputChange}
+                    className="w-full px-3 py-2 border rounded-md focus:ring-1 focus:ring-blue-500"
+                    required
+                  />
+                </div>
+
+                {/* Category and Brand */}
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Categoría</label>
+                    <input
+                      type="text"
+                      name="category"
+                      value={productForm.category}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border rounded-md focus:ring-1 focus:ring-blue-500"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Marca</label>
+                    <input
+                      type="text"
+                      name="brand"
+                      value={productForm.brand}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border rounded-md focus:ring-1 focus:ring-blue-500"
+                    />
+                  </div>
+                </div>
+
+                {/* Details */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Detalles (Medida/Color)</label>
+                  <input
+                    type="text"
+                    name="details"
+                    value={productForm.details}
+                    onChange={handleInputChange}
+                    className="w-full px-3 py-2 border rounded-md focus:ring-1 focus:ring-blue-500"
+                    placeholder="Ej. 1/2 pulgada"
+                  />
+                </div>
+
+                {/* In Stock */}
+                <div className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    name="in_stock"
+                    id="inStockEdit"
+                    checked={productForm.in_stock}
+                    onChange={handleInputChange}
+                    className="rounded text-blue-600 focus:ring-blue-500"
+                  />
+                  <label htmlFor="inStockEdit" className="text-sm text-gray-700">Disponible en stock</label>
+                </div>
+
+                {/* Buttons */}
+                <div className="flex gap-2 pt-4">
+                  <button
+                    type="submit"
+                    disabled={uploading}
+                    className="flex-1 bg-blue-600 text-white py-2.5 rounded-lg hover:bg-blue-700 transition-colors font-medium"
+                  >
+                    {uploading ? (
+                      <><i className="fas fa-spinner fa-spin mr-2"></i> Guardando...</>
+                    ) : (
+                      <><i className="fas fa-save mr-2"></i> Actualizar Producto</>
+                    )}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleCloseModal}
+                    className="px-6 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+                  >
+                    Cancelar
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
