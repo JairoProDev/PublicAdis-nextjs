@@ -65,6 +65,11 @@ export default function AdminDashboard() {
     }, [searchQuery, products]);
 
     const fetchProducts = async () => {
+        if (!supabase) {
+            console.error('Supabase client not initialized.');
+            setLoading(false);
+            return;
+        }
         setLoading(true);
         const { data, error } = await supabase
             .from('products')
@@ -108,6 +113,11 @@ export default function AdminDashboard() {
         const file = e.target.files[0];
         if (!file) return;
 
+        if (!supabase) {
+            alert('Error: Supabase no está configurado.');
+            return;
+        }
+
         setUploading(true);
         try {
             const fileExt = file.name.split('.').pop();
@@ -138,6 +148,10 @@ export default function AdminDashboard() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!supabase) {
+            alert('Error: Supabase no está configurado.');
+            return;
+        }
         setUploading(true);
 
         try {
@@ -211,6 +225,11 @@ export default function AdminDashboard() {
     const handleDelete = async (id) => {
         if (!window.confirm('¿Estás seguro de eliminar este producto?')) return;
 
+        if (!supabase) {
+            alert('Error: Supabase no está configurado.');
+            return;
+        }
+
         try {
             const { error } = await supabase
                 .from('products')
@@ -232,6 +251,11 @@ export default function AdminDashboard() {
 
     const seedDatabase = async () => {
         if (!window.confirm('¿Migrar datos locales a Supabase? Esto agregará todos los productos del catálogo estático.')) return;
+
+        if (!supabase) {
+            alert('Error: Supabase no está configurado.');
+            return;
+        }
 
         setLoading(true);
         try {

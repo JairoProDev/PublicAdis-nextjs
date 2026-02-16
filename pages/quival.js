@@ -169,6 +169,11 @@ export default function QuivalCatalog() {
   }, []);
 
   const fetchProducts = async () => {
+    if (!supabase) {
+      console.error('Supabase client not initialized. Check NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY.');
+      setLoading(false);
+      return;
+    }
     setLoading(true);
     const { data, error } = await supabase
       .from('products')
@@ -250,6 +255,11 @@ export default function QuivalCatalog() {
     const file = e.target.files[0];
     if (!file) return;
 
+    if (!supabase) {
+      alert('Error: Supabase no está configurado correctament.');
+      return;
+    }
+
     setUploading(true);
     try {
       const fileExt = file.name.split('.').pop();
@@ -280,6 +290,10 @@ export default function QuivalCatalog() {
 
   const handleUpdateProduct = async (e) => {
     e.preventDefault();
+    if (!supabase) {
+      alert('Error: Supabase no está configurado.');
+      return;
+    }
     setUploading(true);
 
     try {
