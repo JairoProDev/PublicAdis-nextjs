@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { supabase } from '../../src/utils/supabase';
@@ -10,6 +10,7 @@ import {
 export default function AdminDashboard() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [password, setPassword] = useState('');
+    const fileInputRef = useRef(null);
 
     // Form State
     const [editingId, setEditingId] = useState(null); // Track if we're editing
@@ -339,15 +340,20 @@ export default function AdminDashboard() {
                                 {editingId ? 'Editar Producto' : 'Agregar Nuevo Producto'}
                             </h2>
 
+
                             <form onSubmit={handleSubmit} className="space-y-4">
 
                                 {/* Imagen Upload */}
-                                <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:bg-gray-50 transition-colors cursor-pointer relative">
+                                <div
+                                    onClick={() => fileInputRef.current?.click()}
+                                    className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:bg-gray-50 transition-colors cursor-pointer"
+                                >
                                     <input
+                                        ref={fileInputRef}
                                         type="file"
                                         accept="image/*"
                                         onChange={handleImageUpload}
-                                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                                        className="hidden"
                                     />
                                     {productForm.image_url ? (
                                         <div className="relative h-48 w-full">
@@ -369,6 +375,7 @@ export default function AdminDashboard() {
                                         </div>
                                     )}
                                 </div>
+
 
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-1">Nombre del Producto</label>
