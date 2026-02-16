@@ -2,19 +2,19 @@ import React, { useState, useEffect, useMemo } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import {
-  businessInfo,
-  searchProducts,
-  getCategories,
-  getBrands,
-  getProductMeasures,
-  getFeaturedProducts,
-} from '../src/data/quival-catalog';
-
+import { supabase } from '../src/utils/supabase';
+import { businessInfo } from '../src/data/quival-catalog';
 
 const ProductCard = ({ product, view }) => {
-  const [selectedVariantId, setSelectedVariantId] = useState(product.variants[0].id);
-  const selectedVariant = product.variants.find(v => v.id == selectedVariantId) || product.variants[0];
+  // Handle variants if they exist in the data structure, otherwise treat as single product
+  // For the flat Supabase structure, we might not have 'variants' array immediately unless we group them.
+  // The 'groupedProducts' logic below creates variants.
+
+  const [selectedVariantId, setSelectedVariantId] = useState(product.variants && product.variants.length > 0 ? product.variants[0].id : product.id);
+
+  const selectedVariant = product.variants
+    ? (product.variants.find(v => v.id == selectedVariantId) || product.variants[0])
+    : product;
 
   return (
     <div
@@ -31,13 +31,21 @@ const ProductCard = ({ product, view }) => {
             : 'w-28 h-28 relative flex-shrink-0'
         }
       >
-        <Image
-          src={selectedVariant.image || '/product-placeholder.svg'}
-          alt={product.name}
-          fill
-          className="object-cover"
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 20vw"
-        />
+        <div className="relative w-full h-full">
+          {/* Using standard img for simplicity with external Supabase URLs or fallbacks */}
+          {selectedVariant.image_url ? (
+            <img
+              src={selectedVariant.image_url}
+              alt={product.name}
+              className="w-full h-full object-cover absolute inset-0"
+            />
+          ) : (
+            <div className="w-full h-full bg-gray-100 flex items-center justify-center text-gray-400">
+              <i className="fas fa-image text-3xl"></i>
+            </div>
+          )}
+        </div>
+
         {product.featured && (
           <span className="absolute top-1 right-1 bg-orange-500 text-white text-xs px-1.5 py-0.5 rounded-full">
             Destacado
@@ -65,7 +73,7 @@ const ProductCard = ({ product, view }) => {
           <div className="text-xs text-gray-600 mb-2">
             {product.brand && <span className="font-medium mr-1">{product.brand}</span>}
 
-            {product.variants.length > 1 ? (
+            {product.variants && product.variants.length > 1 ? (
               <select
                 value={selectedVariantId}
                 onChange={(e) => setSelectedVariantId(Number(e.target.value))}
@@ -73,7 +81,7 @@ const ProductCard = ({ product, view }) => {
                 onClick={(e) => e.stopPropagation()}
               >
                 {product.variants.map(v => (
-                  <option key={v.id} value={v.id}>{v.details}</option>
+                  <option key={v.id} value={v.id}>{v.details || 'Estándar'}</option>
                 ))}
               </select>
             ) : (
@@ -109,56 +117,76 @@ const ProductCard = ({ product, view }) => {
 };
 
 export default function QuivalCatalog() {
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedBrand, setSelectedBrand] = useState('');
   const [selectedMeasure, setSelectedMeasure] = useState('');
-  const [showFilters, setShowFilters] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [view, setView] = useState('grid'); // 'grid' or 'list'
+  const [view, setView] = useState('grid');
 
   const itemsPerPage = 12;
 
-  const categories = getCategories();
-  const allBrands = getBrands();
-  const allMeasures = getProductMeasures();
-  const featuredProducts = getFeaturedProducts();
+  // 1. Fetch Products from Supabase on Load
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
-  // Get filtered brands based on category
-  const availableBrands = useMemo(() => {
-    if (!selectedCategory) return allBrands;
-    return allBrands.filter(
-      brand => searchProducts('', { category: selectedCategory, brand }).length > 0
-    );
-  }, [selectedCategory, allBrands]);
+  const fetchProducts = async () => {
+    setLoading(true);
+    const { data, error } = await supabase
+      .from('products')
+      .select('*')
+      .eq('in_stock', true); // Only fetch in-stock items
 
-  // Get filtered measures based on category and brand
-  const availableMeasures = useMemo(() => {
-    if (!selectedCategory) return allMeasures;
-    return allMeasures.filter(
-      measure =>
-        searchProducts('', {
-          category: selectedCategory,
-          brand: selectedBrand || undefined,
-          measure,
-        }).length > 0
-    );
-  }, [selectedCategory, selectedBrand, allMeasures]);
+    if (error) {
+      console.error('Error fetching products:', error);
+    } else {
+      setProducts(data || []);
+    }
+    setLoading(false);
+  };
 
-  // Agrupar productos
+  // 2. Filter Products based on search and filters
+  const filteredProducts = useMemo(() => {
+    let results = products;
+
+    // Text Search
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
+      results = results.filter(p =>
+        p.name.toLowerCase().includes(query) ||
+        p.category.toLowerCase().includes(query) ||
+        (p.brand && p.brand.toLowerCase().includes(query)) ||
+        (p.details && p.details.toLowerCase().includes(query))
+      );
+    }
+
+    // Category Filter
+    if (selectedCategory) {
+      results = results.filter(p => p.category === selectedCategory);
+    }
+
+    // Brand Filter
+    if (selectedBrand) {
+      results = results.filter(p => p.brand === selectedBrand);
+    }
+
+    // Measure/Details Filter
+    if (selectedMeasure) {
+      results = results.filter(p => p.details === selectedMeasure);
+    }
+
+    return results;
+  }, [products, searchQuery, selectedCategory, selectedBrand, selectedMeasure]);
+
+  // 3. Group variants
   const groupedProducts = useMemo(() => {
-    const products = searchProducts(searchQuery, {
-      category: selectedCategory,
-      brand: selectedBrand,
-      measure: selectedMeasure,
-      inStock: true,
-    });
-
     const groups = {};
-    products.forEach(product => {
-      // Create a unique key for grouping. 
-      // If products have the same name and category/brand, they are variants.
-      // Adjust this key based on strictness of grouping desired.
+    filteredProducts.forEach(product => {
+      // Group by Name + Category + Brand
       const key = `${product.name}-${product.category}-${product.brand || ''}`;
 
       if (!groups[key]) {
@@ -172,32 +200,61 @@ export default function QuivalCatalog() {
     });
 
     return Object.values(groups);
-  }, [searchQuery, selectedCategory, selectedBrand, selectedMeasure]);
+  }, [filteredProducts]);
 
-  // Paginación
+  // 4. Derived Data for Filters (Categories, Brands, Measures)
+  const categories = useMemo(() => {
+    const cats = [...new Set(products.map(p => p.category))];
+    return cats.map(c => ({
+      name: c,
+      count: products.filter(p => p.category === c).length
+    })).sort((a, b) => b.count - a.count);
+  }, [products]);
+
+  // Dynamic Brands (based on current filtered category if selected)
+  const availableBrands = useMemo(() => {
+    let subset = products;
+    if (selectedCategory) {
+      subset = subset.filter(p => p.category === selectedCategory);
+    }
+    return [...new Set(subset.map(p => p.brand).filter(Boolean))].sort();
+  }, [products, selectedCategory]);
+
+  // Dynamic Measures
+  const availableMeasures = useMemo(() => {
+    let subset = products;
+    if (selectedCategory) {
+      subset = subset.filter(p => p.category === selectedCategory);
+    }
+    if (selectedBrand) {
+      subset = subset.filter(p => p.brand === selectedBrand);
+    }
+    return [...new Set(subset.map(p => p.details).filter(Boolean))].sort();
+  }, [products, selectedCategory, selectedBrand]);
+
+
+  // Pagination
   const totalPages = Math.ceil(groupedProducts.length / itemsPerPage);
   const currentProducts = groupedProducts.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
 
-  // Reset página al cambiar filtros
+  // Reset pagination on filter change
   useEffect(() => {
     setCurrentPage(1);
   }, [searchQuery, selectedCategory, selectedBrand, selectedMeasure]);
 
-  // Reset dependent filters when parent filter changes
+  // Reset dependent filters
   useEffect(() => {
     if (selectedCategory === '') {
       setSelectedBrand('');
       setSelectedMeasure('');
-    } else if (availableBrands.indexOf(selectedBrand) === -1) {
+    } else if (!availableBrands.includes(selectedBrand)) {
       setSelectedBrand('');
-      setSelectedMeasure('');
-    } else if (availableMeasures.indexOf(selectedMeasure) === -1) {
-      setSelectedMeasure('');
     }
-  }, [selectedCategory, selectedBrand, availableBrands, availableMeasures]);
+  }, [selectedCategory, availableBrands]);
+
 
   const clearFilters = () => {
     setSearchQuery('');
@@ -206,19 +263,22 @@ export default function QuivalCatalog() {
     setSelectedMeasure('');
   };
 
-  // Map category names to Font Awesome icons
   const getCategoryIcon = category => {
     const iconMap = {
       'Tuberías y Accesorios': 'fas fa-pipe',
       'Mangueras y Riego': 'fas fa-water',
-      Herramientas: 'fas fa-tools',
-      Ferretería: 'fas fa-hammer',
-      Plásticos: 'fas fa-spray-can',
-      Electricidad: 'fas fa-bolt',
-      Accesorios: 'fas fa-cogs',
+      'Herramientas': 'fas fa-tools',
+      'Ferretería': 'fas fa-hammer',
+      'Plásticos': 'fas fa-spray-can',
+      'Electricidad': 'fas fa-bolt',
+      'Accesorios': 'fas fa-cogs',
+      'Grifería': 'fas fa-faucet',
+      'Iluminación': 'fas fa-lightbulb',
+      'Plásticos, Mallas y Arpilleras': 'fas fa-layer-group',
+      'Pinturas y Accesorios': 'fas fa-paint-roller',
+      'Accesorios Eléctricos': 'fas fa-plug',
+      'Ferretería Varios': 'fas fa-box-open',
     };
-
-    // Default icon if category not found in map
     return iconMap[category] || 'fas fa-box';
   };
 
@@ -239,13 +299,13 @@ export default function QuivalCatalog() {
             <div className="flex items-center justify-between">
               {/* Logo y Título */}
               <div className="flex items-center gap-3">
-                <Image
-                  src={businessInfo.logo}
-                  alt={businessInfo.name}
-                  width={100}
-                  height={40}
-                  className="h-10 w-auto"
-                />
+                <div className="h-10 w-auto bg-white rounded p-1">
+                  <img
+                    src={businessInfo.logo}
+                    alt={businessInfo.name}
+                    className="h-full w-auto object-contain"
+                  />
+                </div>
                 <h1 className="text-xl font-bold text-white">{businessInfo.name}</h1>
               </div>
 
@@ -389,7 +449,7 @@ export default function QuivalCatalog() {
             <div className="container mx-auto px-4">
               <h2 className="text-lg font-semibold mb-3 text-gray-800 px-1">Categorías</h2>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
-                {categories.map(category => (
+                {categories.slice(0, 12).map(category => (
                   <button
                     key={category.name}
                     onClick={() => {
@@ -437,7 +497,11 @@ export default function QuivalCatalog() {
             </div>
 
             {/* Grid de Productos */}
-            {currentProducts.length > 0 ? (
+            {loading ? (
+              <div className="flex justify-center py-20">
+                <i className="fas fa-spinner fa-spin text-4xl text-orange-500"></i>
+              </div>
+            ) : currentProducts.length > 0 ? (
               <div
                 className={
                   view === 'grid'
@@ -456,14 +520,23 @@ export default function QuivalCatalog() {
                   No se encontraron productos
                 </h3>
                 <p className="text-gray-500 mb-4">
-                  Intenta con otros términos de búsqueda o ajusta los filtros
+                  {products.length === 0
+                    ? 'El catálogo está vacío. Utiliza el panel de administración para agregar productos.'
+                    : 'Intenta con otros términos de búsqueda o ajusta los filtros'}
                 </p>
-                <button
-                  onClick={clearFilters}
-                  className="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 transition-colors"
-                >
-                  Ver todos los productos
-                </button>
+                <div className="flex justify-center gap-2">
+                  <button
+                    onClick={clearFilters}
+                    className="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 transition-colors"
+                  >
+                    Ver todos los productos
+                  </button>
+
+                  {/* Link Temporal al Admin para facilitar tu prueba */}
+                  <Link href="/quival/admin" className="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-300 transition-colors">
+                    Ir al Admin
+                  </Link>
+                </div>
               </div>
             )}
 
