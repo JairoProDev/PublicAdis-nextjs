@@ -479,13 +479,22 @@ export default function QuivalCatalog() {
               {/* Contacto Rápido */}
               <div className="flex items-center gap-2">
                 {isAdminMode ? (
-                  <button
-                    onClick={handleAdminLogout}
-                    className="flex items-center gap-1 bg-red-500 text-white px-3 py-1.5 rounded-lg hover:bg-red-600 transition-colors text-sm"
-                  >
-                    <i className="fas fa-sign-out-alt"></i>
-                    <span className="hidden sm:inline">Salir Admin</span>
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <Link
+                      href="/quival/admin"
+                      className="flex items-center gap-1 bg-blue-600 text-white px-3 py-1.5 rounded-lg hover:bg-blue-700 transition-colors text-sm"
+                    >
+                      <i className="fas fa-cog"></i>
+                      <span className="hidden sm:inline">Panel Admin</span>
+                    </Link>
+                    <button
+                      onClick={handleAdminLogout}
+                      className="flex items-center gap-1 bg-red-500 text-white px-3 py-1.5 rounded-lg hover:bg-red-600 transition-colors text-sm"
+                    >
+                      <i className="fas fa-sign-out-alt"></i>
+                      <span className="hidden sm:inline">Salir</span>
+                    </button>
+                  </div>
                 ) : (
                   <button
                     onClick={() => setShowAdminLogin(true)}
@@ -515,6 +524,17 @@ export default function QuivalCatalog() {
             </div>
           </div>
         </header>
+
+        {/* Floating Admin Button */}
+        {isAdminMode && (
+          <Link
+            href="/quival/admin"
+            className="fixed bottom-6 right-6 z-50 bg-blue-600 text-white w-14 h-14 rounded-full shadow-lg flex items-center justify-center hover:bg-blue-700 transition-all transform hover:scale-110"
+            title="Ir al Panel de Administración para Agregar Productos"
+          >
+            <i className="fas fa-plus text-2xl"></i>
+          </Link>
+        )}
 
 
         {/* Barra de Búsqueda y Filtros */}
