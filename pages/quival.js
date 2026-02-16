@@ -452,7 +452,7 @@ export default function QuivalCatalog() {
   return (
     <>
       <Head>
-        <title>{businessInfo.fullName} - Catálogo Digital | PublicAdis</title>
+        <title>{`${businessInfo.fullName} - Catálogo Digital | PublicAdis`}</title>
         <meta name="description" content={businessInfo.description} />
 
         <link rel="icon" href="/logo-quival.png" />

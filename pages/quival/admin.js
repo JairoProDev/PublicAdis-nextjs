@@ -292,7 +292,7 @@ export default function AdminDashboard() {
         return (
             <div className="min-h-screen flex items-center justify-center bg-gray-100">
                 <Head>
-                    <title>Admin - {businessInfo.name}</title>
+                    <title>{`Admin - ${businessInfo.name}`}</title>
                 </Head>
                 <div className="bg-white p-8 rounded-lg shadow-md w-96">
                     <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">Acceso Administrativo</h1>
@@ -322,7 +322,7 @@ export default function AdminDashboard() {
     return (
         <div className="min-h-screen bg-gray-50">
             <Head>
-                <title>Panel de Administración - {businessInfo.name}</title>
+                <title>{`Panel de Administración - ${businessInfo.name}`}</title>
             </Head>
 
             <nav className="bg-white shadow-sm border-b px-6 py-4 flex justify-between items-center">
