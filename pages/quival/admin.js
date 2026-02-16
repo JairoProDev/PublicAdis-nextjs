@@ -12,6 +12,7 @@ export default function AdminDashboard() {
     const [password, setPassword] = useState('');
 
     // Form State
+    const [editingId, setEditingId] = useState(null); // Track if we're editing
     const [productForm, setProductForm] = useState({
         name: '',
         category: '',
@@ -23,6 +24,8 @@ export default function AdminDashboard() {
     });
 
     const [products, setProducts] = useState([]);
+    const [filteredProducts, setFilteredProducts] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
     const [loading, setLoading] = useState(true);
     const [uploading, setUploading] = useState(false);
 
@@ -44,6 +47,22 @@ export default function AdminDashboard() {
         }
     }, [isAuthenticated]);
 
+    // Search filter effect
+    useEffect(() => {
+        if (searchQuery.trim() === '') {
+            setFilteredProducts(products);
+        } else {
+            const query = searchQuery.toLowerCase();
+            const filtered = products.filter(p =>
+                p.name.toLowerCase().includes(query) ||
+                p.category.toLowerCase().includes(query) ||
+                (p.brand && p.brand.toLowerCase().includes(query)) ||
+                (p.details && p.details.toLowerCase().includes(query))
+            );
+            setFilteredProducts(filtered);
+        }
+    }, [searchQuery, products]);
+
     const fetchProducts = async () => {
         setLoading(true);
         const { data, error } = await supabase
@@ -56,6 +75,7 @@ export default function AdminDashboard() {
             alert('Error cargando productos');
         } else {
             setProducts(data || []);
+            setFilteredProducts(data || []);
         }
         setLoading(false);
     };
@@ -108,7 +128,7 @@ export default function AdminDashboard() {
                 image_url: data.publicUrl
             }));
         } catch (error) {
-            console.error('Error uploding image:', error);
+            console.error('Error uploading image:', error);
             alert('Error subiendo imagen. Asegúrate de haber creado el bucket "products" en Supabase.');
         } finally {
             setUploading(false);
@@ -120,13 +140,26 @@ export default function AdminDashboard() {
         setUploading(true);
 
         try {
-            const { error } = await supabase
-                .from('products')
-                .insert([productForm]);
+            if (editingId) {
+                // Update existing product
+                const { error } = await supabase
+                    .from('products')
+                    .update(productForm)
+                    .eq('id', editingId);
 
-            if (error) throw error;
+                if (error) throw error;
+                alert('Producto actualizado correctamente');
+            } else {
+                // Create new product
+                const { error } = await supabase
+                    .from('products')
+                    .insert([productForm]);
 
-            alert('Producto guardado correctamente');
+                if (error) throw error;
+                alert('Producto guardado correctamente');
+            }
+
+            // Reset form
             setProductForm({
                 name: '',
                 category: '',
@@ -136,6 +169,7 @@ export default function AdminDashboard() {
                 image_url: '',
                 in_stock: true,
             });
+            setEditingId(null);
             fetchProducts();
         } catch (error) {
             console.error('Error saving:', error);
@@ -143,6 +177,34 @@ export default function AdminDashboard() {
         } finally {
             setUploading(false);
         }
+    };
+
+    const handleEdit = (product) => {
+        setEditingId(product.id);
+        setProductForm({
+            name: product.name,
+            category: product.category,
+            subcategory: product.subcategory || '',
+            brand: product.brand || '',
+            details: product.details || '',
+            image_url: product.image_url || '',
+            in_stock: product.in_stock,
+        });
+        // Scroll to form
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    const handleCancelEdit = () => {
+        setEditingId(null);
+        setProductForm({
+            name: '',
+            category: '',
+            subcategory: '',
+            brand: '',
+            details: '',
+            image_url: '',
+            in_stock: true,
+        });
     };
 
     const handleDelete = async (id) => {
@@ -155,6 +217,12 @@ export default function AdminDashboard() {
                 .eq('id', id);
 
             if (error) throw error;
+
+            // If we were editing this product, cancel edit mode
+            if (editingId === id) {
+                handleCancelEdit();
+            }
+
             fetchProducts();
         } catch (error) {
             alert('Error eliminando: ' + error.message);
@@ -267,8 +335,8 @@ export default function AdminDashboard() {
                     <div className="lg:col-span-1">
                         <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200 sticky top-4">
                             <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                                <i className="fas fa-plus-circle text-blue-500"></i>
-                                Agregar Nuevo Producto
+                                <i className={`fas ${editingId ? 'fa-edit text-orange-500' : 'fa-plus-circle text-blue-500'}`}></i>
+                                {editingId ? 'Editar Producto' : 'Agregar Nuevo Producto'}
                             </h2>
 
                             <form onSubmit={handleSubmit} className="space-y-4">
@@ -383,17 +451,29 @@ export default function AdminDashboard() {
                                     <label htmlFor="inStock" className="text-sm text-gray-700">Disponible en stock</label>
                                 </div>
 
-                                <button
-                                    type="submit"
-                                    disabled={uploading}
-                                    className="w-full flex items-center justify-center gap-2 bg-blue-600 text-white py-2.5 rounded-lg hover:bg-blue-700 transition-colors font-medium mt-4 shadow-sm"
-                                >
-                                    {uploading ? (
-                                        <><i className="fas fa-spinner fa-spin"></i> Guardando...</>
-                                    ) : (
-                                        <><i className="fas fa-save"></i> Guardar Producto</>
+                                <div className="flex gap-2">
+                                    <button
+                                        type="submit"
+                                        disabled={uploading}
+                                        className="flex-1 flex items-center justify-center gap-2 bg-blue-600 text-white py-2.5 rounded-lg hover:bg-blue-700 transition-colors font-medium shadow-sm"
+                                    >
+                                        {uploading ? (
+                                            <><i className="fas fa-spinner fa-spin"></i> Guardando...</>
+                                        ) : (
+                                            <><i className="fas fa-save"></i> {editingId ? 'Actualizar' : 'Guardar'}</>
+                                        )}
+                                    </button>
+
+                                    {editingId && (
+                                        <button
+                                            type="button"
+                                            onClick={handleCancelEdit}
+                                            className="px-4 py-2.5 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+                                        >
+                                            <i className="fas fa-times"></i>
+                                        </button>
                                     )}
-                                </button>
+                                </div>
 
                             </form>
                         </div>
@@ -403,11 +483,13 @@ export default function AdminDashboard() {
                     <div className="lg:col-span-2">
                         <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
                             <div className="p-4 border-b flex justify-between items-center bg-gray-50">
-                                <h2 className="font-semibold text-gray-700">Inventario Actual ({products.length})</h2>
+                                <h2 className="font-semibold text-gray-700">Inventario Actual ({filteredProducts.length})</h2>
                                 <div className="relative">
                                     <input
                                         type="text"
-                                        placeholder="Buscar (no funcional aún)..."
+                                        placeholder="Buscar..."
+                                        value={searchQuery}
+                                        onChange={(e) => setSearchQuery(e.target.value)}
                                         className="pl-8 pr-3 py-1.5 border rounded-md text-sm focus:ring-1 focus:ring-blue-500 w-48"
                                     />
                                     <i className="fas fa-search absolute left-2.5 top-1/2 transform -translate-y-1/2 text-gray-400 text-xs"></i>
@@ -431,19 +513,19 @@ export default function AdminDashboard() {
                                                     <i className="fas fa-spinner fa-spin text-2xl text-blue-500"></i>
                                                 </td>
                                             </tr>
-                                        ) : products.length === 0 ? (
+                                        ) : filteredProducts.length === 0 ? (
                                             <tr>
                                                 <td colSpan="4" className="text-center py-8 text-gray-500">
-                                                    No hay productos. Usa "Migrar Datos Locales" para importar el catálogo.
+                                                    {searchQuery ? 'No se encontraron productos con ese término.' : 'No hay productos. Usa "Migrar Datos Locales" para importar el catálogo.'}
                                                 </td>
                                             </tr>
                                         ) : (
-                                            products.map(product => (
-                                                <tr key={product.id} className="bg-white border-b hover:bg-gray-50">
+                                            filteredProducts.map(product => (
+                                                <tr key={product.id} className={`bg-white border-b hover:bg-gray-50 ${editingId === product.id ? 'bg-blue-50' : ''}`}>
                                                     <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap flex items-center gap-3">
                                                         <div className="w-8 h-8 bg-gray-100 rounded-full flex-shrink-0 border overflow-hidden">
                                                             {product.image_url ? (
-                                                                <img src={product.image_url} className="w-full h-full object-cover" />
+                                                                <img src={product.image_url} className="w-full h-full object-cover" alt={product.name} />
                                                             ) : null}
                                                         </div>
                                                         {product.name}
@@ -452,8 +534,16 @@ export default function AdminDashboard() {
                                                     <td className="px-6 py-4">{product.details}</td>
                                                     <td className="px-6 py-4 flex gap-3">
                                                         <button
+                                                            onClick={() => handleEdit(product)}
+                                                            className="text-blue-600 hover:text-blue-800"
+                                                            title="Editar producto"
+                                                        >
+                                                            <i className="fas fa-edit"></i>
+                                                        </button>
+                                                        <button
                                                             onClick={() => handleDelete(product.id)}
                                                             className="text-red-600 hover:text-red-800"
+                                                            title="Eliminar producto"
                                                         >
                                                             <i className="fas fa-trash"></i>
                                                         </button>
