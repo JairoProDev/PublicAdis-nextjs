@@ -11,6 +11,103 @@ import {
   getFeaturedProducts,
 } from '../src/data/quival-catalog';
 
+
+const ProductCard = ({ product, view }) => {
+  const [selectedVariantId, setSelectedVariantId] = useState(product.variants[0].id);
+  const selectedVariant = product.variants.find(v => v.id == selectedVariantId) || product.variants[0];
+
+  return (
+    <div
+      className={
+        view === 'grid'
+          ? 'bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden flex flex-col'
+          : 'bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden flex'
+      }
+    >
+      <div
+        className={
+          view === 'grid'
+            ? 'aspect-square relative'
+            : 'w-28 h-28 relative flex-shrink-0'
+        }
+      >
+        <Image
+          src={selectedVariant.image || '/product-placeholder.svg'}
+          alt={product.name}
+          fill
+          className="object-cover"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 20vw"
+        />
+        {product.featured && (
+          <span className="absolute top-1 right-1 bg-orange-500 text-white text-xs px-1.5 py-0.5 rounded-full">
+            Destacado
+          </span>
+        )}
+      </div>
+
+      <div className="p-2 flex-1 flex flex-col justify-between">
+        <div>
+          <div className="mb-1">
+            <span className="text-xs text-orange-600 font-medium">
+              {product.category}
+            </span>
+            {product.subcategory && (
+              <span className="text-xs text-gray-500 ml-1">
+                • {product.subcategory}
+              </span>
+            )}
+          </div>
+
+          <h3 className="font-semibold text-gray-800 mb-0.5 text-xs md:text-sm">
+            {product.name}
+          </h3>
+
+          <div className="text-xs text-gray-600 mb-2">
+            {product.brand && <span className="font-medium mr-1">{product.brand}</span>}
+
+            {product.variants.length > 1 ? (
+              <select
+                value={selectedVariantId}
+                onChange={(e) => setSelectedVariantId(Number(e.target.value))}
+                className="mt-1 block w-full text-xs py-1 px-2 border border-gray-300 rounded focus:ring-orange-500 focus:border-orange-500"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {product.variants.map(v => (
+                  <option key={v.id} value={v.id}>{v.details}</option>
+                ))}
+              </select>
+            ) : (
+              product.details && <span>• {product.details}</span>
+            )}
+          </div>
+        </div>
+
+        <div className="flex items-center justify-between mt-1">
+          <span className="flex items-center text-green-600 text-xs">
+            <i className="fas fa-check-circle mr-1"></i>
+            <span className="hidden md:inline">Disponible</span>
+          </span>
+
+          <a
+            href={`https://wa.me/${businessInfo.contact.whatsapp.replace(
+              /[^0-9]/g,
+              ''
+            )}?text=Hola, estoy interesado en el producto: ${encodeURIComponent(
+              product.name
+            )}${selectedVariant.details ? encodeURIComponent(' - ' + selectedVariant.details) : ''}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 transition-colors text-xs flex items-center"
+          >
+            <i className="fab fa-whatsapp mr-1"></i>
+            Pedir
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export default function QuivalCatalog() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -48,19 +145,38 @@ export default function QuivalCatalog() {
     );
   }, [selectedCategory, selectedBrand, allMeasures]);
 
-  // Filtrar productos
-  const filteredProducts = useMemo(() => {
-    return searchProducts(searchQuery, {
+  // Agrupar productos
+  const groupedProducts = useMemo(() => {
+    const products = searchProducts(searchQuery, {
       category: selectedCategory,
       brand: selectedBrand,
       measure: selectedMeasure,
       inStock: true,
     });
+
+    const groups = {};
+    products.forEach(product => {
+      // Create a unique key for grouping. 
+      // If products have the same name and category/brand, they are variants.
+      // Adjust this key based on strictness of grouping desired.
+      const key = `${product.name}-${product.category}-${product.brand || ''}`;
+
+      if (!groups[key]) {
+        groups[key] = {
+          ...product,
+          variants: [product]
+        };
+      } else {
+        groups[key].variants.push(product);
+      }
+    });
+
+    return Object.values(groups);
   }, [searchQuery, selectedCategory, selectedBrand, selectedMeasure]);
 
   // Paginación
-  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
-  const currentProducts = filteredProducts.slice(
+  const totalPages = Math.ceil(groupedProducts.length / itemsPerPage);
+  const currentProducts = groupedProducts.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -111,10 +227,7 @@ export default function QuivalCatalog() {
       <Head>
         <title>{businessInfo.fullName} - Catálogo Digital | PublicAdis</title>
         <meta name="description" content={businessInfo.description} />
-        <link
-          rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-        />
+
         <link rel="icon" href="/favicon.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
@@ -218,9 +331,8 @@ export default function QuivalCatalog() {
                     value={selectedBrand}
                     onChange={e => setSelectedBrand(e.target.value)}
                     disabled={!selectedCategory}
-                    className={`px-3 py-2 border border-gray-300 rounded-lg w-full focus:ring-2 focus:ring-orange-500 ${
-                      !selectedCategory ? 'bg-gray-100 cursor-not-allowed' : 'bg-white'
-                    }`}
+                    className={`px-3 py-2 border border-gray-300 rounded-lg w-full focus:ring-2 focus:ring-orange-500 ${!selectedCategory ? 'bg-gray-100 cursor-not-allowed' : 'bg-white'
+                      }`}
                   >
                     <option value="">Todas las marcas</option>
                     {availableBrands.map(brand => (
@@ -237,9 +349,8 @@ export default function QuivalCatalog() {
                     value={selectedMeasure}
                     onChange={e => setSelectedMeasure(e.target.value)}
                     disabled={!selectedCategory}
-                    className={`px-3 py-2 border border-gray-300 rounded-lg w-full focus:ring-2 focus:ring-orange-500 ${
-                      !selectedCategory ? 'bg-gray-100 cursor-not-allowed' : 'bg-white'
-                    }`}
+                    className={`px-3 py-2 border border-gray-300 rounded-lg w-full focus:ring-2 focus:ring-orange-500 ${!selectedCategory ? 'bg-gray-100 cursor-not-allowed' : 'bg-white'
+                      }`}
                   >
                     <option value="">Todas las medidas</option>
                     {availableMeasures.map(measure => (
@@ -254,17 +365,15 @@ export default function QuivalCatalog() {
                 <div className="flex items-center gap-2 ml-auto">
                   <button
                     onClick={() => setView('grid')}
-                    className={`p-2 rounded ${
-                      view === 'grid' ? 'bg-orange-500 text-white' : 'bg-gray-200 text-gray-600'
-                    }`}
+                    className={`p-2 rounded ${view === 'grid' ? 'bg-orange-500 text-white' : 'bg-gray-200 text-gray-600'
+                      }`}
                   >
                     <i className="fas fa-th-large"></i>
                   </button>
                   <button
                     onClick={() => setView('list')}
-                    className={`p-2 rounded ${
-                      view === 'list' ? 'bg-orange-500 text-white' : 'bg-gray-200 text-gray-600'
-                    }`}
+                    className={`p-2 rounded ${view === 'list' ? 'bg-orange-500 text-white' : 'bg-gray-200 text-gray-600'
+                      }`}
                   >
                     <i className="fas fa-list"></i>
                   </button>
@@ -310,8 +419,8 @@ export default function QuivalCatalog() {
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-4">
                 <h2 className="text-lg font-semibold text-gray-800">
-                  {filteredProducts.length}{' '}
-                  {filteredProducts.length === 1 ? 'producto' : 'productos'}
+                  {groupedProducts.length}{' '}
+                  {groupedProducts.length === 1 ? 'producto' : 'productos'}
                   {selectedCategory && ` en ${selectedCategory}`}
                 </h2>
                 {selectedBrand && (
@@ -337,81 +446,7 @@ export default function QuivalCatalog() {
                 }
               >
                 {currentProducts.map(product => (
-                  <div
-                    key={product.id}
-                    className={
-                      view === 'grid'
-                        ? 'bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden flex flex-col'
-                        : 'bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden flex'
-                    }
-                  >
-                    <div
-                      className={
-                        view === 'grid'
-                          ? 'aspect-square relative'
-                          : 'w-28 h-28 relative flex-shrink-0'
-                      }
-                    >
-                      <Image
-                        src={product.image}
-                        alt={product.name}
-                        fill
-                        className="object-cover"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 20vw"
-                      />
-                      {product.featured && (
-                        <span className="absolute top-1 right-1 bg-orange-500 text-white text-xs px-1.5 py-0.5 rounded-full">
-                          Destacado
-                        </span>
-                      )}
-                    </div>
-
-                    <div className="p-2 flex-1 flex flex-col justify-between">
-                      <div>
-                        <div className="mb-1">
-                          <span className="text-xs text-orange-600 font-medium">
-                            {product.category}
-                          </span>
-                          {product.subcategory && (
-                            <span className="text-xs text-gray-500 ml-1">
-                              • {product.subcategory}
-                            </span>
-                          )}
-                        </div>
-
-                        <h3 className="font-semibold text-gray-800 mb-0.5 text-xs md:text-sm">
-                          {product.name}
-                        </h3>
-
-                        <div className="text-xs text-gray-600 mb-2">
-                          {product.brand && <span className="font-medium">{product.brand}</span>}
-                          {product.details && <span className="ml-1">• {product.details}</span>}
-                        </div>
-                      </div>
-
-                      <div className="flex items-center justify-between mt-1">
-                        <span className="flex items-center text-green-600 text-xs">
-                          <i className="fas fa-check-circle mr-1"></i>
-                          <span className="hidden md:inline">Disponible</span>
-                        </span>
-
-                        <a
-                          href={`https://wa.me/${businessInfo.contact.whatsapp.replace(
-                            /[^0-9]/g,
-                            ''
-                          )}?text=Hola, estoy interesado en el producto: ${encodeURIComponent(
-                            product.name
-                          )}${product.details ? encodeURIComponent(' - ' + product.details) : ''}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 transition-colors text-xs flex items-center"
-                        >
-                          <i className="fab fa-whatsapp mr-1"></i>
-                          Hacer Pedido
-                        </a>
-                      </div>
-                    </div>
-                  </div>
+                  <ProductCard key={product.id} product={product} view={view} />
                 ))}
               </div>
             ) : (
@@ -448,11 +483,10 @@ export default function QuivalCatalog() {
                     <button
                       key={index + 1}
                       onClick={() => setCurrentPage(index + 1)}
-                      className={`px-3 py-1 border rounded-lg ${
-                        currentPage === index + 1
-                          ? 'bg-orange-500 text-white border-orange-500'
-                          : 'border-gray-300 hover:bg-gray-50'
-                      }`}
+                      className={`px-3 py-1 border rounded-lg ${currentPage === index + 1
+                        ? 'bg-orange-500 text-white border-orange-500'
+                        : 'border-gray-300 hover:bg-gray-50'
+                        }`}
                     >
                       {index + 1}
                     </button>
