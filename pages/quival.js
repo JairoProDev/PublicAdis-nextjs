@@ -228,7 +228,7 @@ export default function QuivalCatalog() {
         <title>{businessInfo.fullName} - Catálogo Digital | PublicAdis</title>
         <meta name="description" content={businessInfo.description} />
 
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/logo-quival.png" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 

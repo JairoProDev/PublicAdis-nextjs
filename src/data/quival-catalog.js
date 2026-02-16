@@ -4,7 +4,7 @@ export const businessInfo = {
   fullName: 'QUIVAL - Distribuidora Oficial de productos para Ferreterías en Cusco',
   description:
     'Distribuidora oficial de productos para Tu ferretería de confianza especializada en tuberías, pinturas, iluminación y herramientas de calidad',
-  logo: '/product-placeholder.svg',
+  logo: '/logo-quival.png',
   contact: {
     phone: '+51 984 804 843',
     phone2: '+51 984 989 866',

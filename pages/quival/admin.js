@@ -1,18 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
-import Image from 'next/image';
 import Link from 'next/link';
-
-// NOTE: In a real implementation, this should come from a database.
-// Initially importing to show structure, but this page will eventually write to a DB.
+import { supabase } from '../../src/utils/supabase';
 import {
     businessInfo,
-    getCategories,
-    getBrands,
+    catalogProducts, // Import the flat list
 } from '../../src/data/quival-catalog';
 
 export default function AdminDashboard() {
-    const [isAuthenticated, setIsAuthenticated] = useState(false); // Simple protection for now
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [password, setPassword] = useState('');
 
     // Form State
@@ -22,24 +18,61 @@ export default function AdminDashboard() {
         subcategory: '',
         brand: '',
         details: '', // for measure/color
-        image: null,
-        inStock: true,
+        image_url: '',
+        in_stock: true,
     });
 
-    const [products, setProducts] = useState([]); // Will fetch from DB
-    const [loading, setLoading] = useState(false);
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [uploading, setUploading] = useState(false);
 
-    // Mock Categories and Brands for dropdowns
-    const categories = getCategories();
-    const brands = getBrands();
+    // Derived lists for dropdowns from current DB data
+    const categories = [...new Set(products.map(p => p.category))];
+    const brands = [...new Set(products.map(p => p.brand).filter(Boolean))];
+
+    useEffect(() => {
+        // Check if previously authenticated (optional)
+        const cachedAuth = localStorage.getItem('quival_admin_auth');
+        if (cachedAuth === 'true') {
+            setIsAuthenticated(true);
+        }
+    }, []);
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            fetchProducts();
+        }
+    }, [isAuthenticated]);
+
+    const fetchProducts = async () => {
+        setLoading(true);
+        const { data, error } = await supabase
+            .from('products')
+            .select('*')
+            .order('created_at', { ascending: false });
+
+        if (error) {
+            console.error('Error fetching products:', error);
+            alert('Error cargando productos');
+        } else {
+            setProducts(data || []);
+        }
+        setLoading(false);
+    };
 
     const handleLogin = (e) => {
         e.preventDefault();
-        if (password === 'admin123') { // Temporary hardcoded password
+        if (password === 'admin123') {
             setIsAuthenticated(true);
+            localStorage.setItem('quival_admin_auth', 'true');
         } else {
             alert('Contraseña incorrecta');
         }
+    };
+
+    const handleLogout = () => {
+        setIsAuthenticated(false);
+        localStorage.removeItem('quival_admin_auth');
     };
 
     const handleInputChange = (e) => {
@@ -50,28 +83,116 @@ export default function AdminDashboard() {
         }));
     };
 
-    const handleImageChange = (e) => {
+    const handleImageUpload = async (e) => {
         const file = e.target.files[0];
-        if (file) {
-            // In real app: Upload to Supabase Storage and get URL
-            // Here: Create local URL for preview
-            const url = URL.createObjectURL(file);
-            setProductForm(prev => ({ ...prev, image: url, imageFile: file }));
+        if (!file) return;
+
+        setUploading(true);
+        try {
+            const fileExt = file.name.split('.').pop();
+            const fileName = `${Math.random()}.${fileExt}`;
+            const filePath = `${fileName}`;
+
+            const { error: uploadError } = await supabase.storage
+                .from('products')
+                .upload(filePath, file);
+
+            if (uploadError) {
+                throw uploadError;
+            }
+
+            const { data } = supabase.storage.from('products').getPublicUrl(filePath);
+
+            setProductForm(prev => ({
+                ...prev,
+                image_url: data.publicUrl
+            }));
+        } catch (error) {
+            console.error('Error uploding image:', error);
+            alert('Error subiendo imagen. Asegúrate de haber creado el bucket "products" en Supabase.');
+        } finally {
+            setUploading(false);
         }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setUploading(true);
+
+        try {
+            const { error } = await supabase
+                .from('products')
+                .insert([productForm]);
+
+            if (error) throw error;
+
+            alert('Producto guardado correctamente');
+            setProductForm({
+                name: '',
+                category: '',
+                subcategory: '',
+                brand: '',
+                details: '',
+                image_url: '',
+                in_stock: true,
+            });
+            fetchProducts();
+        } catch (error) {
+            console.error('Error saving:', error);
+            alert('Error guardando el producto: ' + error.message);
+        } finally {
+            setUploading(false);
+        }
+    };
+
+    const handleDelete = async (id) => {
+        if (!window.confirm('¿Estás seguro de eliminar este producto?')) return;
+
+        try {
+            const { error } = await supabase
+                .from('products')
+                .delete()
+                .eq('id', id);
+
+            if (error) throw error;
+            fetchProducts();
+        } catch (error) {
+            alert('Error eliminando: ' + error.message);
+        }
+    };
+
+    const seedDatabase = async () => {
+        if (!window.confirm('¿Migrar datos locales a Supabase? Esto agregará todos los productos del catálogo estático.')) return;
+
         setLoading(true);
+        try {
+            const dataToInsert = catalogProducts.map(p => ({
+                name: p.name,
+                category: p.category,
+                subcategory: p.subcategory,
+                brand: p.brand,
+                details: p.details,
+                image_url: p.image || '/product-placeholder.svg',
+                in_stock: p.inStock,
+                featured: p.featured || false
+            }));
 
-        // TODO: Implement Database Upload (Supabase)
-        console.log('Product to save:', productForm);
+            // Insert in chunks to avoid payload limits
+            const chunkSize = 50;
+            for (let i = 0; i < dataToInsert.length; i += chunkSize) {
+                const chunk = dataToInsert.slice(i, i + chunkSize);
+                const { error } = await supabase.from('products').insert(chunk);
+                if (error) throw error;
+            }
 
-        // Simulating API call
-        setTimeout(() => {
-            alert('Funcionalidad de base de datos pendiente de configuración. Se requiren credenciales de Supabase.');
+            alert('¡Migración completada con éxito!');
+            fetchProducts();
+        } catch (error) {
+            console.error('Error seeding:', error);
+            alert('Error en la migración: ' + error.message);
+        } finally {
             setLoading(false);
-        }, 1000);
+        }
     };
 
     if (!isAuthenticated) {
@@ -109,7 +230,6 @@ export default function AdminDashboard() {
         <div className="min-h-screen bg-gray-50">
             <Head>
                 <title>Panel de Administración - {businessInfo.name}</title>
-
             </Head>
 
             <nav className="bg-white shadow-sm border-b px-6 py-4 flex justify-between items-center">
@@ -120,9 +240,19 @@ export default function AdminDashboard() {
                     <h1 className="text-xl font-bold text-gray-800">Panel de Administración</h1>
                 </div>
                 <div className="flex items-center gap-4">
+                    {/* Seed Button */}
+                    {products.length === 0 && (
+                        <button
+                            onClick={seedDatabase}
+                            className="text-sm bg-green-100 text-green-700 px-3 py-1 rounded-full hover:bg-green-200 border border-green-300"
+                        >
+                            <i className="fas fa-database mr-1"></i> Migrar Datos Locales
+                        </button>
+                    )}
+
                     <span className="text-sm text-gray-600">Admin</span>
                     <button
-                        onClick={() => setIsAuthenticated(false)}
+                        onClick={handleLogout}
                         className="text-red-500 hover:text-red-700 text-sm font-medium"
                     >
                         Cerrar Sesión
@@ -148,13 +278,13 @@ export default function AdminDashboard() {
                                     <input
                                         type="file"
                                         accept="image/*"
-                                        onChange={handleImageChange}
+                                        onChange={handleImageUpload}
                                         className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                                     />
-                                    {productForm.image ? (
+                                    {productForm.image_url ? (
                                         <div className="relative h-48 w-full">
                                             <img
-                                                src={productForm.image}
+                                                src={productForm.image_url}
                                                 alt="Preview"
                                                 className="h-full w-full object-contain rounded-md"
                                             />
@@ -162,9 +292,12 @@ export default function AdminDashboard() {
                                         </div>
                                     ) : (
                                         <div className="py-8">
-                                            <i className="fas fa-camera text-3xl text-gray-400 mb-2"></i>
+                                            {uploading ? (
+                                                <i className="fas fa-spinner fa-spin text-3xl text-blue-500 mb-2"></i>
+                                            ) : (
+                                                <i className="fas fa-camera text-3xl text-gray-400 mb-2"></i>
+                                            )}
                                             <p className="text-sm text-gray-500">Toca para subir foto o tomar foto</p>
-                                            <p className="text-xs text-gray-400 mt-1">Soporta JPG, PNG, WEBP</p>
                                         </div>
                                     )}
                                 </div>
@@ -176,7 +309,7 @@ export default function AdminDashboard() {
                                         name="name"
                                         value={productForm.name}
                                         onChange={handleInputChange}
-                                        className="w-full px-3 py-2 border rounded-md focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                                        className="w-full px-3 py-2 border rounded-md focus:ring-1 focus:ring-blue-500"
                                         placeholder="Ej. Tubo de Agua"
                                         required
                                     />
@@ -190,11 +323,20 @@ export default function AdminDashboard() {
                                             value={productForm.category}
                                             onChange={handleInputChange}
                                             className="w-full px-3 py-2 border rounded-md focus:ring-1 focus:ring-blue-500"
+                                            required
                                         >
                                             <option value="">Seleccionar...</option>
-                                            {categories.map(c => <option key={c.name} value={c.name}>{c.name}</option>)}
-                                            <option value="new">+ Nueva Categoría</option>
+                                            {categories.map(c => <option key={c} value={c}>{c}</option>)}
+                                            <option value="Tuberías y Accesorios">Tuberías y Accesorios</option>
+                                            <option value="Ferretería">Ferretería</option>
                                         </select>
+                                        <input
+                                            type="text"
+                                            name="category"
+                                            placeholder="O escribe nueva..."
+                                            className="mt-2 w-full px-2 py-1 text-xs border rounded"
+                                            onChange={handleInputChange}
+                                        />
                                     </div>
                                     <div>
                                         <label className="block text-sm font-medium text-gray-700 mb-1">Marca</label>
@@ -206,8 +348,14 @@ export default function AdminDashboard() {
                                         >
                                             <option value="">Seleccionar...</option>
                                             {brands.map(b => <option key={b} value={b}>{b}</option>)}
-                                            <option value="new">+ Nueva Marca</option>
                                         </select>
+                                        <input
+                                            type="text"
+                                            name="brand"
+                                            placeholder="O nueva marca..."
+                                            className="mt-2 w-full px-2 py-1 text-xs border rounded"
+                                            onChange={handleInputChange}
+                                        />
                                     </div>
                                 </div>
 
@@ -218,18 +366,17 @@ export default function AdminDashboard() {
                                         name="details"
                                         value={productForm.details}
                                         onChange={handleInputChange}
-                                        className="w-full px-3 py-2 border rounded-md focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
-                                        placeholder="Ej. 1/2 pulgada, Rojo, 50ml"
+                                        className="w-full px-3 py-2 border rounded-md focus:ring-1 focus:ring-blue-500"
+                                        placeholder="Ej. 1/2 pulgada"
                                     />
-                                    <p className="text-xs text-gray-500 mt-1">Este campo ayuda a crear variantes del mismo producto.</p>
                                 </div>
 
                                 <div className="flex items-center gap-2 pt-2">
                                     <input
                                         type="checkbox"
-                                        name="inStock"
+                                        name="in_stock"
                                         id="inStock"
-                                        checked={productForm.inStock}
+                                        checked={productForm.in_stock}
                                         onChange={handleInputChange}
                                         className="rounded text-blue-600 focus:ring-blue-500"
                                     />
@@ -238,10 +385,10 @@ export default function AdminDashboard() {
 
                                 <button
                                     type="submit"
-                                    disabled={loading}
+                                    disabled={uploading}
                                     className="w-full flex items-center justify-center gap-2 bg-blue-600 text-white py-2.5 rounded-lg hover:bg-blue-700 transition-colors font-medium mt-4 shadow-sm"
                                 >
-                                    {loading ? (
+                                    {uploading ? (
                                         <><i className="fas fa-spinner fa-spin"></i> Guardando...</>
                                     ) : (
                                         <><i className="fas fa-save"></i> Guardar Producto</>
@@ -256,20 +403,20 @@ export default function AdminDashboard() {
                     <div className="lg:col-span-2">
                         <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
                             <div className="p-4 border-b flex justify-between items-center bg-gray-50">
-                                <h2 className="font-semibold text-gray-700">Inventario Actual</h2>
+                                <h2 className="font-semibold text-gray-700">Inventario Actual ({products.length})</h2>
                                 <div className="relative">
                                     <input
                                         type="text"
-                                        placeholder="Buscar..."
+                                        placeholder="Buscar (no funcional aún)..."
                                         className="pl-8 pr-3 py-1.5 border rounded-md text-sm focus:ring-1 focus:ring-blue-500 w-48"
                                     />
                                     <i className="fas fa-search absolute left-2.5 top-1/2 transform -translate-y-1/2 text-gray-400 text-xs"></i>
                                 </div>
                             </div>
 
-                            <div className="overflow-x-auto">
+                            <div className="overflow-x-auto max-h-[600px] overflow-y-auto">
                                 <table className="w-full text-sm text-left text-gray-600">
-                                    <thead className="text-xs text-gray-700 uppercase bg-gray-50">
+                                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 sticky top-0">
                                         <tr>
                                             <th className="px-6 py-3">Producto</th>
                                             <th className="px-6 py-3">Categoría</th>
@@ -278,36 +425,44 @@ export default function AdminDashboard() {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {/* Placeholder content - will be replaced by API data */}
-                                        <tr className="bg-white border-b hover:bg-gray-50">
-                                            <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap flex items-center gap-3">
-                                                <div className="w-8 h-8 bg-gray-200 rounded-full flex-shrink-0"></div>
-                                                Tubo de Desagüe
-                                            </td>
-                                            <td className="px-6 py-4">Tuberías</td>
-                                            <td className="px-6 py-4">2"</td>
-                                            <td className="px-6 py-4 flex gap-3">
-                                                <button className="text-blue-600 hover:text-blue-800"><i className="fas fa-edit"></i></button>
-                                                <button className="text-red-600 hover:text-red-800"><i className="fas fa-trash"></i></button>
-                                            </td>
-                                        </tr>
-                                        <tr className="bg-white border-b hover:bg-gray-50">
-                                            <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap flex items-center gap-3">
-                                                <div className="w-8 h-8 bg-gray-200 rounded-full flex-shrink-0"></div>
-                                                Tubo de Agua
-                                            </td>
-                                            <td className="px-6 py-4">Tuberías</td>
-                                            <td className="px-6 py-4">1/2"</td>
-                                            <td className="px-6 py-4 flex gap-3">
-                                                <button className="text-blue-600 hover:text-blue-800"><i className="fas fa-edit"></i></button>
-                                                <button className="text-red-600 hover:text-red-800"><i className="fas fa-trash"></i></button>
-                                            </td>
-                                        </tr>
+                                        {loading ? (
+                                            <tr>
+                                                <td colSpan="4" className="text-center py-8">
+                                                    <i className="fas fa-spinner fa-spin text-2xl text-blue-500"></i>
+                                                </td>
+                                            </tr>
+                                        ) : products.length === 0 ? (
+                                            <tr>
+                                                <td colSpan="4" className="text-center py-8 text-gray-500">
+                                                    No hay productos. Usa "Migrar Datos Locales" para importar el catálogo.
+                                                </td>
+                                            </tr>
+                                        ) : (
+                                            products.map(product => (
+                                                <tr key={product.id} className="bg-white border-b hover:bg-gray-50">
+                                                    <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap flex items-center gap-3">
+                                                        <div className="w-8 h-8 bg-gray-100 rounded-full flex-shrink-0 border overflow-hidden">
+                                                            {product.image_url ? (
+                                                                <img src={product.image_url} className="w-full h-full object-cover" />
+                                                            ) : null}
+                                                        </div>
+                                                        {product.name}
+                                                    </td>
+                                                    <td className="px-6 py-4">{product.category}</td>
+                                                    <td className="px-6 py-4">{product.details}</td>
+                                                    <td className="px-6 py-4 flex gap-3">
+                                                        <button
+                                                            onClick={() => handleDelete(product.id)}
+                                                            className="text-red-600 hover:text-red-800"
+                                                        >
+                                                            <i className="fas fa-trash"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        )}
                                     </tbody>
                                 </table>
-                                <div className="p-8 text-center text-gray-500">
-                                    <p>Conecte Supabase para cargar el inventario real.</p>
-                                </div>
                             </div>
                         </div>
                     </div>
