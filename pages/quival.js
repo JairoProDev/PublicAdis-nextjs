@@ -16,6 +16,9 @@ const ProductCard = ({ product, view, isAdminMode, onEdit }) => {
     ? (product.variants.find(v => v.id == selectedVariantId) || product.variants[0])
     : product;
 
+  // Use the selected variant's image if it has one, otherwise fall back to the first variant's image
+  const displayImage = selectedVariant.image_url || (product.variants && product.variants[0]?.image_url) || product.image_url;
+
   return (
     <div
       className={
@@ -44,9 +47,9 @@ const ProductCard = ({ product, view, isAdminMode, onEdit }) => {
       >
         <div className="relative w-full h-full">
           {/* Using standard img for simplicity with external Supabase URLs or fallbacks */}
-          {selectedVariant.image_url ? (
+          {displayImage ? (
             <img
-              src={selectedVariant.image_url}
+              src={displayImage}
               alt={product.name}
               className="w-full h-full object-cover absolute inset-0"
             />
