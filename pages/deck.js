@@ -31,9 +31,23 @@ const DeckPage = () => {
                             <span>EXCLUSIVO: UTEC VENTURES PITCH</span>
                         </div>
 
-                        <h1 className="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight bg-gradient-to-r from-white via-gray-200 to-gray-500 bg-clip-text text-transparent">
+                        <h1 className="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight bg-gradient-to-r from-white via-gray-200 to-gray-500 bg-clip-text text-transparent leading-[1.1]">
                             Democratizamos la Publicidad <br className="hidden md:block" /> con Inteligencia Artificial
                         </h1>
+
+                        <div className="flex flex-wrap justify-center gap-3 mb-8">
+                            <div className="px-4 py-2 rounded-lg bg-green-500/10 border border-green-500/20 text-green-400 text-[10px] md:text-xs font-bold flex flex-col items-center gap-1">
+                                <div className="flex items-center gap-2">
+                                    <i className="fas fa-check-circle"></i>
+                                    <span>STARTUP PERÚ 13G (PROINNOVATE)</span>
+                                </div>
+                                <span className="opacity-80 font-medium">Aprobado en Evaluación Externa, Comité Técnico y Acreditación Legal</span>
+                            </div>
+                            <div className="px-4 py-2 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] md:text-xs font-bold flex items-center gap-2">
+                                <i className="fas fa-award"></i>
+                                <span>TOP 5% STARTUPS REGIONALES</span>
+                            </div>
+                        </div>
 
                         <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto mb-12 leading-relaxed">
                             Digitalizamos lo tradicional para evitar 25 millones de páginas impresas en 2026.
@@ -51,8 +65,44 @@ const DeckPage = () => {
                     </div>
                 </section>
 
+                {/* Recognition Icons Grid */}
+                <section className="py-12 bg-white/[0.03] border-b border-white/5">
+                    <div className="max-w-6xl mx-auto px-4">
+                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+                            <div className="flex flex-col items-center text-center p-4 rounded-2xl bg-white/5 border border-white/10">
+                                <div className="w-12 h-12 rounded-full bg-yellow-500/20 flex items-center justify-center mb-3">
+                                    <i className="fas fa-medal text-yellow-500 text-xl"></i>
+                                </div>
+                                <h4 className="font-bold text-sm mb-1 uppercase tracking-tighter">1er Lugar</h4>
+                                <p className="text-[10px] text-gray-400">Hackathon Paqarina Wasi (Cusco)</p>
+                            </div>
+                            <div className="flex flex-col items-center text-center p-4 rounded-2xl bg-white/5 border border-white/10">
+                                <div className="w-12 h-12 rounded-full bg-gray-300/20 flex items-center justify-center mb-3">
+                                    <i className="fas fa-trophy text-gray-300 text-xl"></i>
+                                </div>
+                                <h4 className="font-bold text-sm mb-1 uppercase tracking-tighter">2do Lugar</h4>
+                                <p className="text-[10px] text-gray-400">Incubación Paqarina Wasi & Idealab (Cusco)</p>
+                            </div>
+                            <div className="flex flex-col items-center text-center p-4 rounded-2xl bg-white/5 border border-white/10">
+                                <div className="w-12 h-12 rounded-full bg-orange-500/20 flex items-center justify-center mb-3">
+                                    <i className="fas fa-star text-orange-500 text-xl"></i>
+                                </div>
+                                <h4 className="font-bold text-sm mb-1 uppercase tracking-tighter">3er Lugar (E)</h4>
+                                <p className="text-[10px] text-gray-400">Incubadora Kaman UCSP (Arequipa)</p>
+                            </div>
+                            <div className="flex flex-col items-center text-center p-4 rounded-2xl bg-white/5 border border-white/10 border-green-500/30">
+                                <div className="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center mb-3">
+                                    <i className="fas fa-rocket text-green-500 text-xl"></i>
+                                </div>
+                                <h4 className="font-bold text-sm mb-1 uppercase tracking-tighter">Acreditados</h4>
+                                <p className="text-[10px] text-gray-400">Startup Perú 13G ProInnovate</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
                 {/* Metrics Bar */}
-                <section className="py-12 border-y border-white/5 bg-white/[0.02]">
+                <section className="py-12 border-b border-white/5 bg-white/[0.02]">
                     <div className="max-w-6xl mx-auto px-4">
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
                             {metrics.map((m, i) => (
@@ -157,13 +207,18 @@ const DeckPage = () => {
 
                         {/* PDF Viewer */}
                         <div id="deck-pdf" className="space-y-6 flex flex-col h-full scroll-mt-32">
-                            <div className="bg-[#0d1b2e] rounded-3xl overflow-hidden border border-white/10 shadow-2xl flex-grow relative group min-h-[500px]">
+                            <div className="bg-[#0d1b2e] rounded-3xl overflow-hidden border border-white/10 shadow-2xl relative w-full aspect-[1.41/1] group">
                                 <iframe
-                                    src="/deck/pitch-deck.pdf#toolbar=0&navpanes=0"
-                                    className="w-full h-full border-none"
+                                    src="/deck/pitch-deck.pdf#view=FitH&toolbar=0&navpanes=0"
+                                    className="absolute inset-0 w-full h-full border-none"
                                     title="Pitch Deck PDF"
+                                    style={{
+                                        width: '100%',
+                                        height: '100%',
+                                        overflow: 'hidden'
+                                    }}
                                 ></iframe>
-                                <div className="absolute top-4 right-4 group-hover:opacity-100 opacity-0 transition-opacity">
+                                <div className="absolute top-4 right-4 group-hover:opacity-100 opacity-0 transition-opacity z-10">
                                     <a href="/deck/pitch-deck.pdf" target="_blank" className="p-3 bg-white/10 backdrop-blur-md rounded-full text-white hover:bg-[#d4af37]">
                                         <i className="fas fa-expand"></i>
                                     </a>
@@ -249,7 +304,7 @@ const DeckPage = () => {
 
                 {/* Footer info */}
                 <footer className="py-12 text-center text-gray-600 text-sm border-t border-white/5">
-                    <p>© 2026 PublicAdis S.A.C. | Cusco, Perú | Built for UTEC Ventures</p>
+                    <p>© 2026 ADIS TECHNOLOGICAL PLATFORMS S.A.C. | Cusco, Perú | Built for UTEC Ventures</p>
                 </footer>
 
             </div>

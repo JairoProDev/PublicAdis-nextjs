@@ -46,7 +46,7 @@ const ChannelIcon = ({ channel, index, isMobile, showTooltip }) => {
         )}
       </AnimatePresence>
 
-      <Link href={`/plataformas#${channel.id}`} passHref>
+      <Link href={`/plataformas#${channel.id}`} passHref legacyBehavior>
         <motion.a
           className="w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center shadow-lg cursor-pointer relative z-10"
           style={{ backgroundColor: channel.color }}
