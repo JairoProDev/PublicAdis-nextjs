@@ -207,17 +207,15 @@ const DeckPage = () => {
 
                         {/* PDF Viewer */}
                         <div id="deck-pdf" className="space-y-6 flex flex-col h-full scroll-mt-32">
-                            <div className="bg-[#0d1b2e] rounded-3xl overflow-hidden border border-white/10 shadow-2xl relative w-full aspect-[1.41/1] group">
-                                <iframe
-                                    src="/deck/pitch-deck.pdf#view=FitH&toolbar=0&navpanes=0"
-                                    className="absolute inset-0 w-full h-full border-none"
-                                    title="Pitch Deck PDF"
-                                    style={{
-                                        width: '100%',
-                                        height: '100%',
-                                        overflow: 'hidden'
-                                    }}
-                                ></iframe>
+                            <div className="bg-[#0d1b2e] rounded-3xl overflow-hidden border border-white/10 shadow-2xl relative w-full h-full flex-grow group">
+                                <div className="w-full h-full overflow-x-auto overflow-y-hidden custom-scrollbar">
+                                    <iframe
+                                        src="/deck/pitch-deck.pdf#view=FitH&toolbar=0&navpanes=0"
+                                        className="w-[200%] md:w-full h-full min-h-[500px] md:min-h-[600px] border-none"
+                                        title="Pitch Deck PDF"
+                                        style={{ border: 'none' }}
+                                    ></iframe>
+                                </div>
                                 <div className="absolute top-4 right-4 group-hover:opacity-100 opacity-0 transition-opacity z-10">
                                     <a href="/deck/pitch-deck.pdf" target="_blank" className="p-3 bg-white/10 backdrop-blur-md rounded-full text-white hover:bg-[#d4af37]">
                                         <i className="fas fa-expand"></i>
