@@ -1,153 +1,261 @@
 import React from 'react';
 import Layout from '@/components/Layout';
+import Head from 'next/head';
 
 const DeckPage = () => {
+    const metrics = [
+        { label: 'Gasto Papel Cusco', value: 'S/ 165K', sub: 'semanales', icon: 'fa-file-invoice-dollar' },
+        { label: 'Ventas (6 meses)', value: '+S/ 10K', sub: 'tracción inicial', icon: 'fa-chart-line' },
+        { label: 'Clientes de Pago', value: '+330', sub: 'pymes activas', icon: 'fa-users' },
+        { label: 'Retención (LTV)', value: '18x', sub: 'recompras anuales', icon: 'fa-sync' },
+    ];
+
     return (
         <Layout
-            title="Investment Pitch Deck | PublicAdis"
-            description="Presentación de PublicAdis para UTEC Ventures. Visión, tracción y futuro de la plataforma publicitaria líder en Cusco."
+            title="Investment Pitch | PublicAdis - Democratizando la Publicidad"
+            description="Oportunidad de inversión en PublicAdis para UTEC Ventures. Escalando la tecnología publicitaria hiperlocal en el Perú."
         >
-            <div className="bg-[#0a1626] text-white min-h-screen py-20 px-4">
-                <div className="max-w-6xl mx-auto">
-                    {/* Header Section */}
-                    <div className="text-center mb-16 animate-fade-in-up">
-                        <h1 className="text-4xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
-                            Investment Pitch Deck
+            <Head>
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+            </Head>
+
+            <div className="bg-[#0a1626] text-white min-h-screen font-sans selection:bg-[#d4af37] selection:text-[#0a1626]">
+
+                {/* Hero Section - High Impact */}
+                <section className="relative pt-32 pb-20 overflow-hidden">
+                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-900/20 via-transparent to-transparent -z-10"></div>
+
+                    <div className="max-w-6xl mx-auto px-4 text-center">
+                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#d4af37]/10 border border-[#d4af37]/20 text-[#d4af37] text-sm font-bold mb-8 animate-fade-in-up">
+                            <i className="fas fa-crown"></i>
+                            <span>EXCLUSIVO: UTEC VENTURES PITCH</span>
+                        </div>
+
+                        <h1 className="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight bg-gradient-to-r from-white via-gray-200 to-gray-500 bg-clip-text text-transparent">
+                            Democratizamos la Publicidad <br className="hidden md:block" /> con Inteligencia Artificial
                         </h1>
-                        <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-                            Transformando la presencia digital de los negocios en Cusco y el Perú.
-                            Una oportunidad de inversión en tecnología y publicidad.
+
+                        <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto mb-12 leading-relaxed">
+                            Digitalizamos lo tradicional para evitar 25 millones de páginas impresas en 2026.
+                            Tecnología publicitaria de élite, simplificada para la PYME.
                         </p>
-                        <div className="mt-8 flex justify-center gap-4">
-                            <span className="px-4 py-1.5 rounded-full bg-[#d4af37]/20 text-[#d4af37] border border-[#d4af37]/30 text-sm font-semibold uppercase tracking-wider">
-                                Exclusivo para UTEC Ventures
-                            </span>
+
+                        <div className="flex flex-wrap justify-center gap-4 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+                            <a href="#deck-video" className="px-8 py-4 bg-[#1a56db] hover:bg-[#2563eb] text-white font-bold rounded-xl transition-all shadow-lg shadow-blue-900/20 flex items-center gap-2">
+                                <i className="fas fa-play"></i> Ver Video Pitch
+                            </a>
+                            <a href="#deck-pdf" className="px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold rounded-xl transition-all flex items-center gap-2">
+                                <i className="fas fa-file-pdf"></i> Revisar Pitch Deck
+                            </a>
                         </div>
                     </div>
+                </section>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-                        {/* Video Pitch Column */}
-                        <div className="space-y-6">
-                            <div className="relative group">
-                                <div className="absolute -inset-1 bg-gradient-to-r from-[#1a56db] to-[#d4af37] rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
-                                <div className="relative bg-black rounded-2xl overflow-hidden shadow-2xl">
-                                    <div className="aspect-[9/16] w-full max-w-[320px] mx-auto">
-                                        <iframe
-                                            className="w-full h-full"
-                                            src="https://www.youtube.com/embed/ji2Eo2d40Zs"
-                                            title="Pitch Video"
-                                            frameBorder="0"
-                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                            allowFullScreen
-                                        ></iframe>
+                {/* Metrics Bar */}
+                <section className="py-12 border-y border-white/5 bg-white/[0.02]">
+                    <div className="max-w-6xl mx-auto px-4">
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+                            {metrics.map((m, i) => (
+                                <div key={i} className="text-center group">
+                                    <i className={`fas ${m.icon} text-[#d4af37] text-2xl mb-4 opacity-50 group-hover:opacity-100 transition-opacity`}></i>
+                                    <div className="text-3xl font-bold text-white mb-1">{m.value}</div>
+                                    <div className="text-xs uppercase tracking-widest text-[#d4af37] font-semibold">{m.label}</div>
+                                    <div className="text-gray-500 text-xs mt-1">{m.sub}</div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
+                {/* The Problem & Solution Grid */}
+                <section className="py-24 max-w-6xl mx-auto px-4">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                        <div className="space-y-8">
+                            <h2 className="text-3xl font-bold text-[#f59e0b] flex items-center gap-3">
+                                <span className="w-12 h-[2px] bg-[#f59e0b]"></span>
+                                EL PROBLEMA
+                            </h2>
+                            <h3 className="text-4xl font-bold leading-tight">
+                                El 85% de las pymes tiene miedo de perder dinero en Google o Meta Ads.
+                            </h3>
+                            <p className="text-gray-400 text-lg leading-relaxed">
+                                Siguen gastando S/ 165,000 semanales en papel porque lo gratis (FB Marketplace/WhatsApp) solo le funciona al 3%.
+                                El modelo impreso muere, pero no tienen una alternativa que les dé confianza.
+                            </p>
+                            <ul className="space-y-4">
+                                <li className="flex items-start gap-3">
+                                    <i className="fas fa-times-circle text-red-500 mt-1"></i>
+                                    <span>700,000 páginas mensuales terminan en la basura.</span>
+                                </li>
+                                <li className="flex items-start gap-3">
+                                    <i className="fas fa-times-circle text-red-500 mt-1"></i>
+                                    <span>Big Tech: Demasiado complejas y no personalizables regionalmente.</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div className="relative group">
+                            <div className="absolute -inset-4 bg-[#d4af37]/10 rounded-3xl blur-2xl group-hover:bg-[#d4af37]/20 transition-all"></div>
+                            <div className="relative bg-white/5 border border-white/10 p-10 rounded-3xl backdrop-blur-xl">
+                                <h2 className="text-3xl font-bold text-[#1a56db] mb-6 flex items-center gap-3">
+                                    NUESTRA IA (ADIS)
+                                </h2>
+                                <p className="text-xl font-medium mb-6">
+                                    Publicidad físico-digital hiperlocalizada y personalizada.
+                                </p>
+                                <div className="space-y-6 text-gray-300">
+                                    <div className="flex gap-4">
+                                        <div className="w-12 h-12 rounded-lg bg-[#1a56db]/20 flex items-center justify-center shrink-0">
+                                            <i className="fas fa-robot text-[#1a56db]"></i>
+                                        </div>
+                                        <div>
+                                            <h4 className="font-bold text-white">No es solo ChatGPT</h4>
+                                            <p className="text-sm">Redes neuronales propias entrenadas con ofertas locales reales.</p>
+                                        </div>
+                                    </div>
+                                    <div className="flex gap-4">
+                                        <div className="w-12 h-12 rounded-lg bg-green-500/20 flex items-center justify-center shrink-0">
+                                            <i className="fas fa-bolt text-green-500"></i>
+                                        </div>
+                                        <div>
+                                            <h4 className="font-bold text-white">3 Clics</h4>
+                                            <p className="text-sm">Nuestra IA crea, edita y publica avisos en segundos.</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div className="bg-white/5 backdrop-blur-md p-6 rounded-xl border border-white/10">
-                                <h3 className="text-xl font-bold mb-2 flex items-center gap-2 text-[#d4af37]">
-                                    <i className="fas fa-play-circle text-[#d4af37]"></i> Video Pitch
-                                </h3>
-                                <p className="text-gray-400 text-sm leading-relaxed">
-                                    Una breve introducción a nuestra visión y cómo estamos resolviendo los problemas de visibilidad digital para las PyMEs en regiones.
-                                </p>
-                            </div>
                         </div>
+                    </div>
+                </section>
 
-                        {/* Deck Column */}
-                        <div className="space-y-6">
-                            <div className="relative group h-full">
-                                <div className="absolute -inset-1 bg-gradient-to-r from-[#d4af37] to-[#f59e0b] rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
-                                <div className="relative bg-[#0d1b2e] rounded-2xl overflow-hidden shadow-2xl flex flex-col items-center justify-center min-h-[500px] lg:h-[570px] border border-white/10">
+                {/* Video & Deck Section - The "Evidence" */}
+                <section id="pitch-files" className="py-24 bg-black/40">
+                    <div className="max-w-6xl mx-auto px-4 text-center mb-16">
+                        <h2 className="text-4xl font-bold mb-4">El Pitch en Acción</h2>
+                        <div className="w-24 h-1 bg-[#d4af37] mx-auto"></div>
+                    </div>
+
+                    <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-12">
+                        {/* Video */}
+                        <div id="deck-video" className="space-y-6 scroll-mt-32">
+                            <div className="bg-[#0d1b2e] rounded-3xl overflow-hidden border border-white/10 shadow-2xl relative group">
+                                <div className="aspect-[9/16] max-w-[340px] mx-auto">
                                     <iframe
-                                        src="/deck/pitch-deck.pdf#toolbar=0&navpanes=0"
-                                        className="w-full h-full border-none"
-                                        title="Pitch Deck PDF"
+                                        className="w-full h-full"
+                                        src="https://www.youtube.com/embed/ji2Eo2d40Zs"
+                                        title="Pitch Video"
+                                        frameBorder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                        allowFullScreen
                                     ></iframe>
-
-                                    {/* Fallback component - will show if file is missing */}
-                                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#0a1626]/95 p-8 text-center pointer-events-none group-data-[pdf-loaded=true]:hidden" id="pdf-fallback">
-                                        <div className="w-20 h-20 bg-[#d4af37]/10 rounded-full flex items-center justify-center mb-6">
-                                            <i className="fas fa-file-pdf text-4xl text-[#d4af37]"></i>
-                                        </div>
-                                        <h3 className="text-2xl font-bold mb-2">Pitch Deck Completo</h3>
-                                        <p className="text-gray-300 mb-8 max-w-sm">Para una mejor experiencia, asegúrese de que el archivo 'pitch-deck.pdf' esté en su carpeta '/public/deck/'.</p>
-                                        <div className="pointer-events-auto">
-                                            <a
-                                                href="/deck/pitch-deck.pdf"
-                                                target="_blank"
-                                                className="px-8 py-3 bg-[#d4af37] text-[#0a1626] font-bold rounded-lg hover:bg-white transition-all transform hover:scale-105 inline-block"
-                                            >
-                                                Ver PDF en pantalla completa
-                                            </a>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
+                            <div className="p-4 text-center">
+                                <h4 className="font-bold text-xl mb-1">Video Pitch (60s)</h4>
+                                <p className="text-gray-500 text-sm">Visión rápida del problema y tracción actual.</p>
+                            </div>
+                        </div>
 
-                            <div className="bg-white/5 backdrop-blur-md p-6 rounded-xl border border-white/10">
-                                <h3 className="text-xl font-bold mb-2 flex items-center gap-2 text-[#f59e0b]">
-                                    <i className="fas fa-chart-line text-[#f59e0b]"></i> Deck de Inversión
-                                </h3>
-                                <p className="text-gray-400 text-sm leading-relaxed">
-                                    Contiene nuestra propuesta de valor, análisis de mercado, modelo de negocio y el roadmap de PublicAdis para los próximos 2026-2027.
-                                </p>
+                        {/* PDF Viewer */}
+                        <div id="deck-pdf" className="space-y-6 flex flex-col h-full scroll-mt-32">
+                            <div className="bg-[#0d1b2e] rounded-3xl overflow-hidden border border-white/10 shadow-2xl flex-grow relative group min-h-[500px]">
+                                <iframe
+                                    src="/deck/pitch-deck.pdf#toolbar=0&navpanes=0"
+                                    className="w-full h-full border-none"
+                                    title="Pitch Deck PDF"
+                                ></iframe>
+                                <div className="absolute top-4 right-4 group-hover:opacity-100 opacity-0 transition-opacity">
+                                    <a href="/deck/pitch-deck.pdf" target="_blank" className="p-3 bg-white/10 backdrop-blur-md rounded-full text-white hover:bg-[#d4af37]">
+                                        <i className="fas fa-expand"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div className="p-4 text-center">
+                                <h4 className="font-bold text-xl mb-1">Pitch Deck Completo</h4>
+                                <p className="text-gray-500 text-sm">Full roadmap, unit economics y estrategia comercial.</p>
+                                <a href="/deck/pitch-deck.pdf" download className="mt-4 inline-flex items-center gap-2 text-[#d4af37] font-bold hover:underline">
+                                    <i className="fas fa-file-pdf"></i> Descargar copia para revisión offline
+                                </a>
                             </div>
                         </div>
                     </div>
+                </section>
 
-                    {/* Footer CTA */}
-                    <div className="mt-24 text-center bg-white/5 backdrop-blur-sm p-12 rounded-3xl border border-white/10">
-                        <h2 className="text-3xl font-bold mb-4">¿Preparado para el siguiente paso?</h2>
-                        <p className="text-gray-400 mb-10 max-w-xl mx-auto text-lg">
-                            Estamos listos para escalar PublicAdis y transformar la publicidad digital en el Perú.
+                {/* Team Section */}
+                <section className="py-24 max-w-6xl mx-auto px-4">
+                    <div className="text-center mb-16">
+                        <h2 className="text-4xl font-bold mb-4">El Equipo Ejecutor</h2>
+                        <p className="text-gray-400">Trabajando juntos por 4 años, ganadores de 3 hackathones.</p>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                        {/* Shantall */}
+                        <div className="bg-white/5 p-8 rounded-3xl border border-white/10 hover:border-[#f59e0b]/30 transition-all group">
+                            <div className="flex gap-6 items-center mb-6">
+                                <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-[#f59e0b] to-[#d4af37] flex items-center justify-center text-3xl font-bold">SZ</div>
+                                <div>
+                                    <h3 className="text-2xl font-bold">Shantall Zarai Ascue Valdez</h3>
+                                    <p className="text-[#f59e0b] font-bold">CEO & CMO</p>
+                                </div>
+                            </div>
+                            <p className="text-gray-400 leading-relaxed mb-6">
+                                Comunicadora y especialista en SEO/Growth. Seleccionada **Femlab de UTEC Ventures**.
+                                Captó más de 300 clientes en solo 6 meses. Experiencia en TV, Radio y Sector Público.
+                            </p>
+                            <div className="flex gap-4 opacity-50">
+                                <i className="fab fa-linkedin text-xl"></i>
+                                <i className="fas fa-envelope text-xl"></i>
+                            </div>
+                        </div>
+
+                        {/* Jairo */}
+                        <div className="bg-white/5 p-8 rounded-3xl border border-white/10 hover:border-[#1a56db]/30 transition-all group">
+                            <div className="flex gap-6 items-center mb-6">
+                                <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-[#1a56db] to-[#2563eb] flex items-center justify-center text-3xl font-bold">JS</div>
+                                <div>
+                                    <h3 className="text-2xl font-bold">Jairo Saul Salas Quiñones</h3>
+                                    <p className="text-[#1a56db] font-bold">CTO & COO</p>
+                                </div>
+                            </div>
+                            <p className="text-gray-400 leading-relaxed mb-6">
+                                Sénior Full Stack con 5 años como CTO en 3 startups (EdTech/Logística).
+                                Diseñó toda la arquitectura de IA y redes neuronales de personalización de PublicAdis.
+                            </p>
+                            <div className="flex gap-4 opacity-50">
+                                <i className="fab fa-github text-xl"></i>
+                                <i className="fab fa-linkedin text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* CTA Section */}
+                <section className="py-24 px-4">
+                    <div className="max-w-4xl mx-auto bg-gradient-to-br from-[#1a56db] to-[#0a1626] rounded-[3rem] p-12 md:p-20 text-center relative overflow-hidden shadow-2xl shadow-blue-900/40">
+                        <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl"></div>
+                        <h2 className="text-4xl md:text-5xl font-bold mb-8">¿Escalamos PublicAdis?</h2>
+                        <p className="text-xl text-blue-100 mb-12 opacity-80">
+                            Estamos listos para replicar este modelo en todo el Perú y LATAM.
+                            Nuestra plataforma ya es multi-idioma.
                         </p>
                         <div className="flex flex-col sm:flex-row justify-center gap-6">
-                            <a href="mailto:jairo@publicadis.com" className="px-10 py-4 bg-white text-[#0a1626] font-bold rounded-xl hover:bg-[#d4af37] transition-all transform hover:scale-105 shadow-xl flex items-center justify-center gap-2">
+                            <a href="mailto:publicadiss@gmail.com" className="px-10 py-5 bg-white text-[#0a1626] font-bold rounded-2xl hover:scale-105 transition-all shadow-xl flex items-center justify-center gap-3">
                                 <i className="fas fa-calendar-check"></i> Agendar reunión
                             </a>
-                            <a href="https://wa.me/51937054328" target="_blank" rel="noopener noreferrer" className="px-10 py-4 border border-white/20 text-white font-bold rounded-xl hover:bg-white/10 transition-all flex items-center justify-center gap-2">
-                                <i className="fab fa-whatsapp text-green-500"></i> Contacto Directo
+                            <a href="https://wa.me/51937054328" className="px-10 py-5 bg-transparent border-2 border-white/30 text-white font-bold rounded-2xl hover:bg-white/10 transition-all flex items-center justify-center gap-3">
+                                <i className="fab fa-whatsapp"></i> WhatsApp Directo
                             </a>
                         </div>
                     </div>
-                </div>
-            </div>
+                </section>
 
-            {/* Script to handle PDF loading state */}
-            <script dangerouslySetInnerHTML={{
-                __html: `
-        // Simple script to hide the fallback if the PDF loads successfully
-        // Note: Due to security restrictions (CORS/Frame-busting), this is a best-effort approach.
-        // For local files in /public, it usually works within the same domain.
-        window.addEventListener('DOMContentLoaded', () => {
-          const iframe = document.querySelector('iframe[title="Pitch Deck PDF"]');
-          const fallback = document.getElementById('pdf-fallback');
-          
-          if (iframe) {
-            iframe.addEventListener('load', () => {
-              try {
-                // If we can access the content, verify it's not a 404
-                if (iframe.contentDocument && iframe.contentDocument.body.innerHTML.length > 0) {
-                  fallback.style.opacity = '0';
-                  setTimeout(() => fallback.style.display = 'none', 500);
-                }
-              } catch (e) {
-                // If cross-origin prevented access, we assume it loaded (PDFs often are cross-origin or restricted)
-                // But since it's local /public path, we can also try a fetch check
-                fetch('/deck/pitch-deck.pdf', { method: 'HEAD' })
-                  .then(res => {
-                    if(res.ok) {
-                      fallback.style.opacity = '0';
-                      setTimeout(() => fallback.style.display = 'none', 500);
-                    }
-                  });
-              }
-            });
-          }
-        });
-      `}} />
+                {/* Footer info */}
+                <footer className="py-12 text-center text-gray-600 text-sm border-t border-white/5">
+                    <p>© 2026 PublicAdis S.A.C. | Cusco, Perú | Built for UTEC Ventures</p>
+                </footer>
+
+            </div>
         </Layout>
     );
 };
 
 export default DeckPage;
+
