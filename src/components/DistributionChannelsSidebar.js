@@ -1,104 +1,121 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
-// Suponiendo que distributionChannels viene de props o context en el componente padre.
-// Por ahora, para que este componente funcione aislado, lo comentaré aquí y lo pasarías como prop.
-// import { distributionChannels } from '../data/distribution-channels';
+import { motion, AnimatePresence } from 'framer-motion';
 
-const ChannelIcon = ({ channel, index }) => {
+const ChannelIcon = ({ channel, index, isMobile, showTooltip }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <Link href={`/plataformas#${channel.id}`}>
-      <motion.div
-        className="group relative flex items-center justify-center"
-        onHoverStart={() => setIsHovered(true)}
-        onHoverEnd={() => setIsHovered(false)}
-        initial={{ opacity: 0, x: 100 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.5, delay: index * 0.1 }}
-      >
-        {/* Icon container */}
-        <motion.div
-          className="w-14 h-14 rounded-full flex items-center justify-center relative overflow-hidden shadow-lg"
-          style={{
-            backgroundColor: channel.color,
-          }}
-          whileHover={{
-            scale: 1.2,
-            boxShadow: `0 0 20px ${channel.color}66`,
-          }}
-          transition={{ duration: 0.3 }}
-        >
-          {/* Icon */}
-          <motion.i
-            className={`fas fa-${channel.icon} text-2xl relative z-10`}
-            style={{ color: '#ffffff' }}
-            animate={{
-              scale: isHovered ? 1.2 : 1,
-            }}
-            transition={{ duration: 0.3 }}
-          />
-        </motion.div>
+    <div className="relative flex items-center justify-end">
+      {/* Tooltip - Solo en desktop o si está activado */}
+      <AnimatePresence>
+        {(isHovered || (isMobile && showTooltip)) && (
+          <motion.div
+            className="absolute right-full top-1/2 -translate-y-1/2 mr-4 pointer-events-none z-50"
+            initial={{ opacity: 0, x: -20, scale: 0.95 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            exit={{ opacity: 0, x: -20, scale: 0.95 }}
+            transition={{ duration: 0.2 }}
+          >
+            <div className="relative">
+              <div
+                className="px-5 py-3 rounded-xl shadow-2xl min-w-[200px]"
+                style={{ backgroundColor: channel.color }}
+              >
+                <p className="text-white font-bold whitespace-nowrap text-base">{channel.name}</p>
+                <p className="text-white/80 text-xs mt-1 leading-tight">{channel.description}</p>
 
-        {/* Tooltip */}
-        <motion.div
-          className="absolute right-full top-1/2 transform -translate-y-1/2 mr-4 pointer-events-none"
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: isHovered ? 1 : 0, x: isHovered ? 0 : -20 }}
-          transition={{ duration: 0.3 }}
-        >
-          <div className="relative">
-            {/* Tooltip background */}
-            <div
-              className="px-6 py-3 rounded-lg shadow-xl"
-              style={{
-                backgroundColor: channel.color,
-              }}
-            >
-              {/* Channel name */}
-              <p className="text-white font-medium whitespace-nowrap text-lg">{channel.name}</p>
-
-              {/* Description */}
-              <p className="text-white/90 text-sm mt-1 max-w-xs">{channel.description}</p>
-
-              {/* Stats preview */}
-              <div className="mt-2 flex gap-3">
-                {channel.platforms.map(platform => (
-                  <div
-                    key={platform.name}
-                    className="px-2 py-1 rounded-full text-xs bg-white/20 text-white"
-                  >
-                    {platform.name}
-                  </div>
-                ))}
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {channel.platforms.map(platform => (
+                    <span
+                      key={platform.name}
+                      className="px-2 py-0.5 rounded-full text-[10px] bg-white/20 text-white font-medium shadow-sm"
+                    >
+                      {platform.name}
+                    </span>
+                  ))}
+                </div>
               </div>
+              {/* Arrow */}
+              <div
+                className="absolute top-1/2 -right-1.5 w-3 h-3 rotate-45 -translate-y-1/2"
+                style={{ backgroundColor: channel.color }}
+              />
             </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-            {/* Arrow */}
-            <div
-              className="absolute top-1/2 -right-2 w-4 h-4 transform -translate-y-1/2 rotate-45"
-              style={{
-                backgroundColor: channel.color,
-              }}
-            />
-          </div>
-        </motion.div>
-      </motion.div>
-    </Link>
+      <Link href={`/plataformas#${channel.id}`} passHref>
+        <motion.a
+          className="w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center shadow-lg cursor-pointer relative z-10"
+          style={{ backgroundColor: channel.color }}
+          onMouseEnter={() => !isMobile && setIsHovered(true)}
+          onMouseLeave={() => !isMobile && setIsHovered(false)}
+          whileHover={{ scale: 1.1, rotate: 5 }}
+          whileTap={{ scale: 0.9 }}
+          initial={isMobile ? { opacity: 0, y: 20 } : { opacity: 0, x: 50 }}
+          animate={{ opacity: 1, y: 0, x: 0 }}
+          transition={{ delay: index * 0.05 }}
+        >
+          <i className={`fas fa-${channel.icon} text-xl md:text-2xl text-white`} />
+        </motion.a>
+      </Link>
+    </div>
   );
 };
 
-// El componente DistributionChannelsSidebar se mantiene igual,
-// solo asegúrate de que `distributionChannels` esté disponible.
 const DistributionChannelsSidebar = ({ distributionChannels }) => {
-  // Añadido props
+  const [isOpen, setIsOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  if (!distributionChannels) return null;
+
   return (
-    <div className="fixed right-8 top-1/2 transform -translate-y-1/2 z-50">
-      <div className="flex flex-col space-y-6">
-        {distributionChannels.map((channel, index) => (
-          <ChannelIcon key={channel.id} channel={channel} index={index} />
-        ))}
+    <div className={`fixed z-[100] ${isMobile ? 'right-6 bottom-6' : 'right-6 top-1/2 -translate-y-1/2'}`}>
+      <div className="flex flex-col items-end space-y-4">
+        {/* Desktop View & Mobile Expanded View */}
+        <AnimatePresence>
+          {(!isMobile || isOpen) && (
+            <motion.div
+              className="flex flex-col space-y-4 items-end"
+              initial={isMobile ? { opacity: 0, height: 0 } : { opacity: 1 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+            >
+              {[...distributionChannels].reverse().map((channel, index) => (
+                <ChannelIcon
+                  key={channel.id}
+                  channel={channel}
+                  index={index}
+                  isMobile={isMobile}
+                  showTooltip={false}
+                />
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Mobile Toggle Button */}
+        {isMobile && (
+          <motion.button
+            onClick={() => setIsOpen(!isOpen)}
+            className="w-14 h-14 rounded-full bg-gradient-to-tr from-[#1a56db] to-[#d4af37] text-white shadow-2xl flex items-center justify-center relative z-[110]"
+            whileTap={{ scale: 0.9 }}
+            animate={{ rotate: isOpen ? 135 : 0 }}
+          >
+            <i className={`fas ${isOpen ? 'fa-plus' : 'fa-th-large'} text-2xl`} />
+          </motion.button>
+        )}
       </div>
     </div>
   );
