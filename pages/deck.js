@@ -13,7 +13,7 @@ const DeckPage = () => {
     return (
         <Layout
             title="Investment Pitch | PublicAdis - Democratizando la Publicidad"
-            description="Oportunidad de inversión en PublicAdis para UTEC Ventures. Escalando la tecnología publicitaria hiperlocal en el Perú."
+            description="Oportunidad de inversión en PublicAdis para Aceleradoras. Escalando la tecnología publicitaria hiperlocal en el Perú."
         >
             <Head>
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
@@ -28,7 +28,7 @@ const DeckPage = () => {
                     <div className="max-w-6xl mx-auto px-4 text-center">
                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#d4af37]/10 border border-[#d4af37]/20 text-[#d4af37] text-sm font-bold mb-8 animate-fade-in-up">
                             <i className="fas fa-crown"></i>
-                            <span>EXCLUSIVO: UTEC VENTURES PITCH</span>
+                            <span>Publicadis for Accelerators</span>
                         </div>
 
                         <h1 className="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight bg-gradient-to-r from-white via-gray-200 to-gray-500 bg-clip-text text-transparent leading-[1.1]">
@@ -302,7 +302,7 @@ const DeckPage = () => {
 
                 {/* Footer info */}
                 <footer className="py-12 text-center text-gray-600 text-sm border-t border-white/5">
-                    <p>© 2026 ADIS TECHNOLOGICAL PLATFORMS S.A.C. | Cusco, Perú | Built for UTEC Ventures</p>
+                    <p>© 2026 ADIS TECHNOLOGICAL PLATFORMS S.A.C. | Cusco, Perú | Built for Accelerators</p>
                 </footer>
 
             </div>
