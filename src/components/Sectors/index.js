@@ -10,7 +10,7 @@ const Sectors = () => {
       icon: 'building',
       title: 'Sector Inmobiliario',
       description:
-        'Multiplique sus ventas y alquileres con nuestro alcance especializado en el sector inmobiliario de Cusco.',
+        'Multiplique sus ventas y alquileres con nuestro alcance especializado en el sector inmobiliario a nivel nacional.',
       stats: [
         { value: '300+', label: 'Inmobiliarias asociadas' },
         { value: '1200+', label: 'Propiedades vendidas al mes' },
@@ -54,7 +54,7 @@ const Sectors = () => {
       icon: 'plane',
       title: 'Turismo y Hostelería',
       description:
-        'Atraiga más turistas y visitantes a sus servicios turísticos y de hostelería en la región de Cusco.',
+        'Atraiga más turistas y visitantes a sus servicios turísticos y de hostelería en todo el Perú.',
       stats: [
         { value: '150+', label: 'Hoteles y hostales asociados' },
         { value: '75%', label: 'Incremento en reservas directas' },

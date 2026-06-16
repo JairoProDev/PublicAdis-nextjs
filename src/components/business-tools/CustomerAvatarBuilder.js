@@ -8,7 +8,7 @@ const CustomerAvatarBuilder = () => {
         { id: 'age', label: 'Edad', value: '', type: 'text', placeholder: 'Ej: 25-34' },
         { id: 'gender', label: 'Género', value: '', type: 'select', 
           options: ['', 'Hombre', 'Mujer', 'No binario', 'Prefiero no especificar'] },
-        { id: 'location', label: 'Ubicación', value: '', type: 'text', placeholder: 'Ej: Cusco, Perú' },
+        { id: 'location', label: 'Ubicación', value: '', type: 'text', placeholder: 'Ej: Lima, Perú' },
         { id: 'education', label: 'Nivel educativo', value: '', type: 'select',
           options: ['', 'Educación básica', 'Secundaria', 'Técnico', 'Universitario', 'Postgrado'] },
         { id: 'income', label: 'Nivel de ingresos', value: '', type: 'select',

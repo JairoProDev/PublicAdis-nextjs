@@ -342,7 +342,7 @@ export default function CaseStudies() {
     },
     {
       question: '¿Qué tipo de negocios se benefician más de los servicios de PublicAdis?',
-      answer: 'Nuestro ecosistema está diseñado para potenciar a una amplia gama de negocios, desde PYMEs y emprendedores locales hasta empresas más consolidadas que buscan innovar y expandir su alcance. Si tu negocio está en Cusco o cualquier parte de Latinoamérica y buscas crecer, generar más ventas, o mejorar tu visibilidad, PublicAdis tiene soluciones para ti.'
+      answer: 'Nuestro ecosistema está diseñado para potenciar a una amplia gama de negocios, desde PYMEs y emprendedores locales hasta empresas más consolidadas que buscan innovar y expandir su alcance. Si tu negocio está en Perú o cualquier parte de Latinoamérica y buscas crecer, generar más ventas o mejorar tu visibilidad, PublicAdis tiene soluciones para ti.'
     },
     {
       question: '¿Cómo se integra Buscadis en las estrategias de los casos de éxito?',
@@ -350,7 +350,7 @@ export default function CaseStudies() {
     },
     {
       question: '¿Y Noticiadis? ¿Cómo contribuye al éxito de los clientes?',
-      answer: 'Noticiadis es nuestro canal de noticias y contenido viral con una gran audiencia en Cusco y creciendo en Perú. Lo utilizamos para dar visibilidad a nuestros clientes a través de contenido patrocinado relevante (storytelling, artículos de interés), entrevistas, o promoción de eventos, conectando sus marcas con nuestra comunidad de forma orgánica y efectiva.'
+      answer: 'Noticiadis es nuestro canal de noticias y contenido viral con audiencia creciente en Perú y Latinoamérica. Lo utilizamos para dar visibilidad a nuestros clientes a través de contenido patrocinado relevante (storytelling, artículos de interés), entrevistas o promoción de eventos, conectando sus marcas con nuestra comunidad de forma orgánica y efectiva.'
     },
     {
       question: '¿Qué inversión mínima se requiere para trabajar con PublicAdis y ver resultados?',
@@ -367,7 +367,7 @@ export default function CaseStudies() {
   return (
     <Layout
       title="Casos de Éxito | PublicAdis - Resultados Reales para Negocios en LATAM"
-      description="Descubre cómo PublicAdis ha impulsado el crecimiento de empresas en Cusco y Latinoamérica con estrategias de publicidad innovadoras y efectivas en Buscadis, Noticiadis y más."
+      description="Descubre cómo PublicAdis ha impulsado el crecimiento de empresas en Perú y Latinoamérica con estrategias de publicidad innovadoras y efectivas en Buscadis, Noticiadis y más."
     >
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-br from-purple-600 via-pink-500 to-red-500 text-white">

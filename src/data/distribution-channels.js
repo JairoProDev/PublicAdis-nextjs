@@ -92,7 +92,7 @@ export const distributionChannels = [
   {
     id: 'physical-network',
     name: 'Red Física Estratégica',
-    description: 'Presencia en con multiples locales distribuidos en todo Cusco',
+    description: 'Red de locales estratégicos distribuidos en las principales ciudades del Perú',
     icon: 'store',
     color: '#dc2626', // Red
     platforms: [

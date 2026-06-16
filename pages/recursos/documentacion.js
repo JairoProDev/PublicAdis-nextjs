@@ -219,7 +219,7 @@ export default function ApiDocumentation() {
   "status": "active",
   "objective": "traffic",
   "targeting": {
-    "locations": ["Cusco"],
+    "locations": ["Lima", "Cusco", "Arequipa"],
     "age_range": [18, 65],
     "interests": ["turismo", "gastronomía"]
   }
@@ -449,7 +449,7 @@ print(metrics)`}
     "status": "active",
     "objective": "traffic",
     "targeting": {
-      "locations": ["Cusco"],
+      "locations": ["Lima", "Cusco", "Arequipa"],
       "age_range": [18, 65],
       "interests": ["turismo", "gastronomía"]
     }

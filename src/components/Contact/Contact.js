@@ -83,7 +83,7 @@ export class Contact {
                     <div class="method-info">
                       <h4>Visítenos</h4>
                       <p>Agenda una cita en nuestras oficinas premium</p>
-                      <address>San Sebastián, Cusco - Perú</address>
+                      <address>Sede en Cusco, Perú · Cobertura nacional</address>
                     </div>
                   </div>
                 </div>

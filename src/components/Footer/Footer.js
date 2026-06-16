@@ -23,7 +23,7 @@ export class Footer {
           </div>
 
           <div class="footer-slogan">
-            La plataforma publicitaria líder en Cusco
+            Publicidad multicanal para empresas en Perú y Latinoamérica
           </div>
 
           <div class="footer-social">
@@ -116,7 +116,7 @@ export class Footer {
             <ul class="footer-contact-info">
               <li>
                 <i class="fa-solid fa-location-dot"></i>
-                <span>Local físico en San Sebastián, Cusco</span>
+                <span>Sede en Cusco, Perú · Cobertura nacional</span>
               </li>
               <li>
                 <i class="fa-solid fa-phone"></i>

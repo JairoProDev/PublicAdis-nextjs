@@ -41,7 +41,7 @@ export default function AboutUs() {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="space-y-6 text-gray-700 text-lg">
               <p>
-                Surgimos de la misma trinchera que muchos negocios en Cusco y LATAM. Vimos de
+                Surgimos de la misma trinchera que muchos negocios en Perú y Latinoamérica. Vimos de
                 primera mano cómo ideas brillantes luchaban por ser vistas, cómo el potencial se
                 ahogaba en la complejidad de las herramientas digitales o en los costos prohibitivos
                 de la publicidad tradicional. El mercado estaba fragmentado, las soluciones eran
@@ -119,7 +119,7 @@ export default function AboutUs() {
               <p className="text-lg text-gray-700">
                 Aspiramos a un futuro donde PublicAdis, junto a Buscadis y Noticiadis, sea sinónimo
                 de oportunidad, innovación y crecimiento para cada rincón de Latinoamérica, desde
-                Cusco para el mundo. Queremos ser la prueba de que el ingenio latinoamericano puede
+                Perú hacia el mundo. Queremos ser la prueba de que el ingenio latinoamericano puede
                 construir el futuro.
               </p>
             </div>

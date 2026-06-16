@@ -109,7 +109,7 @@ const Footer = () => {
           </div>
 
           <div className="text-lg font-medium text-gray-300">
-            La plataforma publicitaria líder en Cusco
+            Publicidad multicanal para empresas en Perú y Latinoamérica
           </div>
 
           <div className="md:justify-self-end">
@@ -213,7 +213,7 @@ const Footer = () => {
             <ul className="space-y-3">
               <li className="flex items-start gap-3 text-gray-400">
                 <i className="fas fa-location-dot mt-1 text-amber-500"></i>
-                <span>Local físico en San Sebastián, Cusco</span>
+                <span>Sede en Cusco, Perú · Cobertura nacional</span>
               </li>
               <li className="flex items-start gap-3 text-gray-400">
                 <i className="fas fa-phone mt-1 text-amber-500"></i>

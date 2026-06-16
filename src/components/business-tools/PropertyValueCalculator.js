@@ -134,7 +134,7 @@ const PropertyValueCalculator = () => {
       <div className="mb-6">
         <p className="text-gray-600 mb-2">
           Esta herramienta te permite estimar el valor aproximado de propiedades inmobiliarias en
-          Cusco, basado en datos actualizados del mercado local.
+          propiedades inmobiliarias en Perú, basado en datos actualizados del mercado local.
         </p>
         <p className="text-gray-600 text-sm">
           Nota: Los resultados son orientativos y pueden variar según factores adicionales del

@@ -10,8 +10,8 @@ import Contact from '../src/components/Contact';
 export default function Home() {
   return (
     <Layout
-      title="PublicAdis | Plataforma Publicitaria Premium en Cusco"
-      description="La plataforma publicitaria más completa de Cusco que impulsa tus ventas en todos los canales de forma efectiva"
+      title="PublicAdis | Plataforma Publicitaria Multicanal en Perú"
+      description="Plataforma publicitaria con presencia en Perú y Latinoamérica que impulsa tus ventas a través de una estrategia multicanal integrada"
     >
       <Hero />
       <Benefits />

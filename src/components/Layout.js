@@ -7,8 +7,8 @@ import { distributionChannels } from '@/data/distribution-channels';
 
 const Layout = ({
   children,
-  title = 'PublicAdis - Publicidad Digital Efectiva en Cusco',
-  description = 'La plataforma publicitaria más completa de Cusco',
+  title = 'PublicAdis - Publicidad Digital Multicanal en Perú',
+  description = 'Plataforma publicitaria con presencia en Perú y Latinoamérica',
 }) => {
   return (
     <div className="min-h-screen flex flex-col">

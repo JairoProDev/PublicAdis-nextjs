@@ -16,7 +16,7 @@ export class Benefits {
         icon: 'fa-user-plus',
         title: 'Audiencia Local Altamente Interesada',
         description:
-          'Conecta con personas que realmente buscan tus productos o servicios en Cusco y alrededores.',
+          'Conecta con personas que realmente buscan tus productos o servicios en todo el Perú.',
         stats: [{ value: '+5K', label: 'Usuarios diarios' }],
         color: 'green',
       },
@@ -117,7 +117,7 @@ export class Benefits {
               <span class="section-title-highlight">PublicAdis</span>
             </h2>
             <p class="section-subtitle animate-on-scroll">
-              Descubre por qué los negocios en Cusco prefieren nuestra plataforma
+              Descubre por qué empresas en Perú y Latinoamérica confían en nuestra plataforma
             </p>
           </div>
 

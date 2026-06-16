@@ -5,7 +5,7 @@ export default function Contact() {
   return (
     <Layout
       title="Contacto | PublicAdis"
-      description="Ponte en contacto con PublicAdis para impulsar tu estrategia publicitaria en Cusco"
+      description="Ponte en contacto con PublicAdis para impulsar tu estrategia publicitaria en Perú y Latinoamérica"
     >
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
@@ -155,7 +155,7 @@ export default function Contact() {
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-800">Dirección</h3>
-                      <p className="text-gray-600">Local físico en San Sebastián, Cusco, Perú</p>
+                      <p className="text-gray-600">Sede en Cusco, Perú · Atención a nivel nacional</p>
                     </div>
                   </div>
 
@@ -278,14 +278,14 @@ export default function Contact() {
 
               <div className="border border-gray-200 rounded-lg overflow-hidden">
                 <button className="flex justify-between items-center w-full px-6 py-4 text-left font-medium">
-                  <span>¿Ofrecen servicios fuera de Cusco?</span>
+                  <span>¿Atienden en todo el Perú?</span>
                   <i className="fas fa-chevron-down text-gray-400"></i>
                 </button>
                 <div className="px-6 py-4 border-t border-gray-200">
                   <p className="text-gray-700">
-                    Sí, aunque nuestra especialidad es el mercado cusqueño, trabajamos con clientes
-                    de todo Perú y adaptamos nuestras estrategias según las particularidades de cada
-                    mercado regional.
+                    Sí. Con sede en Cusco y operaciones digitales en todo el país, trabajamos con
+                    clientes de Lima, Arequipa, Trujillo y otras ciudades del Perú, adaptando
+                    nuestras estrategias a cada mercado regional.
                   </p>
                 </div>
               </div>

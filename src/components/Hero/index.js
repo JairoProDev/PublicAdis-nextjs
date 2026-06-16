@@ -119,16 +119,16 @@ const Hero = () => {
   const logoMarginForAnim = 12; // 6px de cada lado (mx-1.5 = 0.375rem * 2 = 0.75rem = 12px si 1rem=16px)
   const totalWidthPerLogoAnim = logoWidthForAnim + logoMarginForAnim;
 
-  const baseCuscoClients = [
-    'https://placehold.co/100x35/FFFFFF/B71C1C?text=Cusque%C3%B1a&font=montserrat', // Cerveza Cusqueña
-    'https://placehold.co/100x35/FFFFFF/6D4C41?text=Chicha&font=montserrat', // Restaurante Chicha
-    'https://placehold.co/100x35/FFFFFF/FF8F00?text=IncaRail&font=montserrat', // Inca Rail
-    'https://placehold.co/100x35/FFFFFF/5D4037?text=ChocoMuseo&font=montserrat', // ChocoMuseo
-    'https://placehold.co/100x35/FFFFFF/004D40?text=EcoTerra&font=montserrat', // Agencia de Turismo Ecológico (Ejemplo)
-    'https://placehold.co/100x35/FFFFFF/880E4F?text=AlpacaArt&font=montserrat', // Tienda de Artesanía (Ejemplo)
-    'https://placehold.co/100x35/FFFFFF/BF360C?text=ValleSagradoCafe&font=montserrat', // Café local (Ejemplo)
+  const baseRegionalClients = [
+    'https://placehold.co/100x35/FFFFFF/1A237E?text=Lima+Retail&font=montserrat',
+    'https://placehold.co/100x35/FFFFFF/B71C1C?text=Arequipa+Food&font=montserrat',
+    'https://placehold.co/100x35/FFFFFF/004D40?text=Cusco+Turismo&font=montserrat',
+    'https://placehold.co/100x35/FFFFFF/5D4037?text=Trujillo+Moda&font=montserrat',
+    'https://placehold.co/100x35/FFFFFF/880E4F?text=Piura+Servicios&font=montserrat',
+    'https://placehold.co/100x35/FFFFFF/FF8F00?text=Chiclayo+Comercio&font=montserrat',
+    'https://placehold.co/100x35/FFFFFF/BF360C?text=Iquitos+Log%C3%ADstica&font=montserrat',
   ];
-  const cuscoClients = [...baseCuscoClients, ...baseCuscoClients];
+  const regionalClients = [...baseRegionalClients, ...baseRegionalClients];
 
   const basePeruvianClients = [
     'https://placehold.co/100x35/FFFFFF/0033A0?text=BCP&font=montserrat', // BCP
@@ -206,7 +206,7 @@ const Hero = () => {
             >
               <i className="fas fa-crown"></i>
               <span className="font-medium tracking-wide">
-                Multi-Plataforma Publicitaria Premium #1 en Cusco
+                Plataforma Publicitaria Multicanal con Presencia en Perú
               </span>
             </div>
 
@@ -234,8 +234,8 @@ const Hero = () => {
                   isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
                 } transition-all duration-700 delay-400`}
               >
-                La plataforma publicitaria más completa de Cusco que multiplica tus ventas a través
-                de una estrategia multicanal integrada.
+                La plataforma que conecta tu negocio con clientes en todo el Perú y Latinoamérica,
+                multiplicando tus ventas a través de una estrategia multicanal integrada.
               </p>
             </div>
 
@@ -454,7 +454,7 @@ const Hero = () => {
             <div className="mt-8 lg:mt-10 space-y-3">
               {' '}
               {/* Espacio entre cada fila con título */}
-              {/* Fila Cusco */}
+              {/* Fila Regiones */}
               <div
                 className={`flex items-center gap-3 ${
                   isLoaded ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'
@@ -464,7 +464,7 @@ const Hero = () => {
                   {' '}
                   {/* Ancho fijo para el título lateral */}
                   <span className="text-xs sm:text-sm font-semibold text-gray-500 transform group-hover:text-amber-600 transition-colors">
-                    Cusco
+                    Regiones
                   </span>
                 </div>
                 <div className="relative flex-grow w-full overflow-hidden group h-10 sm:h-12 flex items-center">
@@ -472,15 +472,15 @@ const Hero = () => {
                     className="flex animate-infinite-scroll group-hover:pause-animation"
                     style={{ animationDuration: '25s' }}
                   >
-                    {cuscoClients.map((client, index) => (
+                    {regionalClients.map((client, index) => (
                       <div
-                        key={`cusco-client-${index}`}
+                        key={`regional-client-${index}`}
                         className="flex-shrink-0 w-auto mx-1.5 grayscale hover:grayscale-0 transition-all duration-300 h-full flex items-center"
                       >
                         <div className="relative w-full h-[300px]">
                           <Image
                             src={client}
-                            alt={`Logo Negocio Cusqueño ${(index % baseCuscoClients.length) + 1}`}
+                            alt={`Logo Negocio Regional ${(index % baseRegionalClients.length) + 1}`}
                             fill
                             className="object-contain"
                           />
@@ -600,7 +600,7 @@ const Hero = () => {
             transform: translateX(0);
           }
           100% {
-            transform: translateX(-${baseCuscoClients.length * totalWidthPerLogoAnim}px);
+            transform: translateX(-${baseRegionalClients.length * totalWidthPerLogoAnim}px);
           }
         }
 

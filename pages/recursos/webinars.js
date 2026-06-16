@@ -20,9 +20,9 @@ export default function Webinars() {
     },
     {
       id: 2,
-      title: 'SEO local para empresas cusqueñas: estrategias para dominar las búsquedas locales',
+      title: 'SEO local para empresas en Perú: estrategias para dominar las búsquedas locales',
       description:
-        'Aprende cómo optimizar tu negocio para aparecer en los primeros resultados cuando los clientes busquen tus servicios en Cusco.',
+        'Aprende cómo optimizar tu negocio para aparecer en los primeros resultados cuando los clientes busquen tus servicios en tu ciudad.',
       speaker: 'Miguel Sánchez',
       speakerRole: 'Director de Tecnología, PublicAdis',
       date: '10 de Agosto, 2023',
@@ -39,7 +39,7 @@ export default function Webinars() {
       id: 3,
       title: 'Campañas de temporada alta: preparando tu negocio turístico para recibir visitantes',
       description:
-        'Estrategias de publicidad para hoteles, restaurantes y servicios turísticos durante la temporada de mayor afluencia en Cusco.',
+        'Estrategias de publicidad para hoteles, restaurantes y servicios turísticos durante la temporada de mayor afluencia en el Perú.',
       speaker: 'Lucía Herrera',
       speakerRole: 'Directora de Ventas, PublicAdis',
       date: '15 de Junio, 2023',

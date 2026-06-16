@@ -99,7 +99,7 @@ export default function Careers() {
   return (
     <Layout
       title="Carreras | PublicAdis"
-      description="Oportunidades laborales en PublicAdis, la plataforma publicitaria premium en Cusco"
+      description="Oportunidades laborales en PublicAdis, plataforma publicitaria con presencia en Perú y Latinoamérica"
     >
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">

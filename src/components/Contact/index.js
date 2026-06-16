@@ -219,7 +219,7 @@ const Contact = () => {
                       Agenda una cita en nuestras oficinas premium
                     </p>
                     <address className="text-gray-300 not-italic">
-                      San Sebastián, Cusco - Perú
+                      Sede en Cusco, Perú · Cobertura nacional
                     </address>
                   </div>
                 </div>

@@ -24,7 +24,7 @@ const BusinessTools = () => {
       icon: 'fa-home',
       title: 'Calculadora Inmobiliaria',
       description:
-        'Calcula el valor aproximado de propiedades basado en datos del mercado de Cusco.',
+        'Calcula el valor aproximado de propiedades basado en datos del mercado peruano.',
       component: PropertyValueCalculator,
     },
     {
