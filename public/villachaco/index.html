@@ -17,16 +17,16 @@
 <meta property="og:title" content="Villa Chaco Productos — Sabores que nacen de nuestra tierra">
 <meta property="og:description" content="Café de especialidad, chocolate bean to bar 70% cacao chuncho, bitters, derivados de cacao y miel gourmet desde Quillabamba, Cusco. Pedidos por WhatsApp.">
 <meta property="og:url" content="https://publicadis.com/p/villachaco">
-<meta property="og:image" content="https://publicadis.com/villachaco/images/hero-catalogo-productos.png">
+<meta property="og:image" content="https://publicadis.com/villachaco/images/hero-principal.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Catálogo de productos Villa Chaco — chocolate, café, miel y cacao">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Villa Chaco Productos — Sabores que nacen de nuestra tierra">
 <meta name="twitter:description" content="Café de especialidad, chocolate bean to bar, bitters, cacao chuncho y miel gourmet desde Quillabamba, Cusco.">
-<meta name="twitter:image" content="https://publicadis.com/villachaco/images/hero-catalogo-productos.png">
+<meta name="twitter:image" content="https://publicadis.com/villachaco/images/hero-principal.png">
 <meta name="theme-color" content="#B31E24">
-<link rel="preload" as="image" href="images/hero-catalogo-productos.png" fetchpriority="high">
+<link rel="preload" as="image" href="images/hero-principal.png" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Montserrat:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300;1,600&display=swap" rel="stylesheet">
@@ -38,7 +38,7 @@
   "description": "Café de especialidad, chocolate bean to bar, bitters de cacao, derivados de cacao chuncho y miel gourmet desde Quillabamba, La Convención, Cusco.",
   "url": "https://publicadis.com/p/villachaco",
   "telephone": "+51953034249",
-  "image": "https://publicadis.com/villachaco/images/hero-catalogo-productos.png",
+  "image": "https://publicadis.com/villachaco/images/hero-principal.png",
   "priceRange": "$$",
   "servesCuisine": "Productos gourmet peruanos",
   "address": {
@@ -93,6 +93,18 @@
   }
 
   img { max-width: 100%; height: auto; display: block; }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
 
   .andean-stripe {
     width: 100%;
@@ -189,24 +201,78 @@
   /* HERO */
   .hero {
     min-height: 100vh;
-    background: linear-gradient(135deg, var(--blanco) 0%, var(--crema) 45%, rgba(245,233,214,0.6) 100%);
+    min-height: 100dvh;
     position: relative;
     display: flex;
-    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 88px 32px 56px;
     overflow: hidden;
+    background: var(--oscuro);
   }
-  .hero-inner {
+  .hero-media {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  .hero-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 15%;
+    display: block;
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+      linear-gradient(to top, rgba(26,17,8,0.82) 0%, rgba(26,17,8,0.35) 28%, rgba(26,17,8,0.08) 55%, transparent 75%),
+      linear-gradient(to right, rgba(26,17,8,0.25) 0%, transparent 35%);
+    pointer-events: none;
+  }
+  .hero-bar {
     position: relative;
     z-index: 2;
-    display: grid;
-    grid-template-columns: minmax(320px, 1fr) minmax(380px, 1.15fr);
-    align-items: center;
-    gap: 40px;
-    flex: 1;
-    max-width: 1400px;
-    margin: 0 auto;
     width: 100%;
-    padding: 100px 60px 60px;
+    max-width: 1100px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .hero-bar-text {
+    flex: 1;
+    min-width: 260px;
+    max-width: 520px;
+  }
+  .hero-bar-text p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: rgba(245,233,214,0.85);
+    margin-bottom: 20px;
+  }
+  .hero-bar-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .hero-scroll-hint {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245,233,214,0.45);
+    animation: heroBounce 2s ease-in-out infinite;
+  }
+  @keyframes heroBounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(6px); }
   }
   .hero-bg {
     position: absolute;
@@ -724,51 +790,18 @@
     border: 1px solid rgba(212,160,23,0.25);
   }
 
-  .catalog-category-divider {
-    grid-column: 1 / -1;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    padding: 32px 0 16px;
-    margin-top: 8px;
-    border-top: 1px solid rgba(62,44,28,0.08);
+  .catalog-showcase {
+    width: 100%;
+    background: var(--crema-oscura);
+    overflow: hidden;
+    line-height: 0;
   }
-  .catalog-category-divider:first-child {
-    border-top: none;
-    margin-top: 0;
-    padding-top: 0;
-  }
-  .catalog-category-divider.hidden { display: none; }
-  .catalog-category-icon {
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--burdeos), #8a1820);
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
-    flex-shrink: 0;
-    box-shadow: 0 4px 16px rgba(179,30,36,0.2);
-  }
-  .catalog-category-icon.cacao { background: linear-gradient(135deg, #5C3D2E, var(--tierra)); }
-  .catalog-category-icon.miel { background: linear-gradient(135deg, var(--ambar), #b8860b); color: var(--oscuro); }
-  .catalog-category-icon.chocolate { background: linear-gradient(135deg, #4a2c2a, #2d1810); }
-  .catalog-category-icon.bitters { background: linear-gradient(135deg, #2d1810, #1a1108); }
-  .catalog-category-icon.bebidas { background: linear-gradient(135deg, var(--verde), #3a5234); }
-  .catalog-category-text h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 24px;
-    font-weight: 700;
-    color: var(--tierra);
-    margin-bottom: 4px;
-  }
-  .catalog-category-text p {
-    font-size: 14px;
-    color: rgba(62,44,28,0.6);
-    line-height: 1.5;
-    max-width: 600px;
+  .catalog-showcase img {
+    width: 100%;
+    height: auto;
+    display: block;
+    min-height: 220px;
+    object-fit: cover;
   }
 
   /* CAFÉ ESPECIALIDAD */
@@ -1336,14 +1369,9 @@
   .delay-4 { animation-delay: 0.6s; }
 
   @media (max-width: 1024px) {
-    .hero-inner {
-      grid-template-columns: 1fr;
-      padding: 100px 40px 60px;
-      gap: 48px;
-    }
-    .hero-content { max-width: 100%; }
-    .hero-catalog-frame { transform: none; max-width: 640px; margin: 0 auto; }
-    .hero-catalog-frame:hover { transform: none; }
+    .hero { padding: 80px 24px 48px; min-height: 88vh; }
+    .hero-media img { object-position: center 10%; }
+    .hero-bar { flex-direction: column; align-items: flex-start; }
     .coffee-varieties { grid-template-columns: repeat(3, 1fr); }
     .cafe-especialidad-visual { grid-template-columns: 1fr; }
     nav { padding: 0 24px; }
@@ -1396,13 +1424,12 @@
       box-shadow: 0 8px 24px rgba(62,44,28,0.08);
     }
     .nav-toggle { display: block; }
-    .hero-inner { padding: 90px 24px 48px; gap: 32px; }
-    .hero-pills { gap: 6px; }
-    .hero-pill { font-size: 10px; padding: 6px 10px; }
-    .hero-trust-row { gap: 12px; }
+    .hero { padding: 76px 20px 44px; min-height: 75vh; }
+    .hero-bar-text p { font-size: 14px; }
+    .hero-bar-actions { width: 100%; }
+    .hero-bar-actions .btn-primary,
+    .hero-bar-actions .btn-secondary { flex: 1; justify-content: center; min-width: 140px; }
     .coffee-varieties { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-    .coffee-variety-card { padding: 20px 14px; }
-    .catalog-category-divider { flex-direction: column; align-items: flex-start; gap: 12px; }
     .products-grid, .proceso-grid { grid-template-columns: 1fr; }
     .catalogo, .esencia, .proceso, .distribucion, footer, .redes-cliente, .cafe-especialidad { padding: 56px 24px; }
     nav { padding: 0 16px; }
@@ -1433,54 +1460,22 @@
 </nav>
 
 <section class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-texture"></div>
-  <div class="hero-inner">
-    <div class="hero-content">
-      <div class="hero-eyebrow fade-up">
-        <div class="hero-eyebrow-line"></div>
-        <span>Quillabamba · La Convención · Cusco</span>
-      </div>
-      <h1 class="hero-title fade-up delay-1">
-        Sabores que<br>
-        <span class="italic">nacen</span><br>
-        de la tierra
-      </h1>
-      <p class="hero-subtitle-large fade-up delay-2">Café de especialidad · Cacao Chuncho · Miel</p>
-      <p class="hero-desc fade-up delay-3">
-        Desde los valles de Echarate hasta cada hogar, Villa Chaco transforma café de variedades selectas, cacao chuncho y miel de abeja en productos auténticos de calidad excepcional. Origen a taza. Bean to bar. Colmena al frasco.
-      </p>
-      <div class="hero-pills fade-up delay-3">
-        <span class="hero-pill"><span class="hero-pill-icon">☕</span> Típica · Bourbon · Geisha</span>
-        <span class="hero-pill"><span class="hero-pill-icon">🍫</span> 70% Cacao Chuncho</span>
-        <span class="hero-pill"><span class="hero-pill-icon">🌿</span> 100% Natural</span>
-      </div>
-      <div class="hero-ctas fade-up delay-4">
-        <a href="#catalogo" class="btn-primary">Ver Catálogo</a>
-        <a href="#cafe" class="btn-secondary">Café de Especialidad</a>
-      </div>
-      <div class="hero-trust-row fade-up delay-4">
-        <div class="hero-trust-item">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-          Bean to Bar
-        </div>
-        <div class="hero-trust-item">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          La Convención, Cusco
-        </div>
-        <div class="hero-trust-item">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-          Sin aditivos
-        </div>
-      </div>
+  <h1 class="sr-only">Villa Chaco Productos — Sabores que nacen de la tierra</h1>
+  <div class="hero-media">
+    <img src="images/hero-principal.png" alt="Villa Chaco — Catálogo de productos: café de especialidad, cacao chuncho y miel de abeja desde La Convención, Cusco" width="1920" height="1080" fetchpriority="high" decoding="async">
+  </div>
+  <div class="hero-overlay" aria-hidden="true"></div>
+  <div class="hero-bar fade-up">
+    <div class="hero-bar-text">
+      <p>Chocolate bean to bar, café de especialidad y miel gourmet desde Quillabamba. Origen a taza · Bean to bar · Colmena al frasco.</p>
     </div>
-    <div class="hero-visual fade-up delay-2">
-      <div class="hero-catalog-glow"></div>
-      <div class="hero-catalog-frame">
-        <img src="images/hero-catalogo-productos.png" alt="Catálogo Villa Chaco — chocolate bean to bar, café de especialidad, miel gourmet y derivados de cacao" width="1200" height="630" fetchpriority="high" decoding="async">
-      </div>
+    <div class="hero-bar-actions">
+      <a href="#catalogo" class="btn-primary">Ver Catálogo</a>
+      <a href="#cafe" class="btn-secondary btn-secondary-light">Café de Especialidad</a>
+      <a href="https://wa.me/51953034249" class="btn-secondary btn-secondary-light" target="_blank" rel="noopener">WhatsApp</a>
     </div>
   </div>
+  <div class="hero-scroll-hint" aria-hidden="true">Descubre más ↓</div>
 </section>
 
 <div class="andean-stripe"></div>
@@ -1574,10 +1569,14 @@
 
 <div class="section-stripe"></div>
 
+<section class="catalog-showcase" aria-label="Línea completa de productos Villa Chaco">
+  <img src="images/hero-catalogo-productos.png" alt="Línea completa Villa Chaco — chocolates en barra, miel gourmet, nibs y derivados de cacao chuncho" width="1920" height="800" loading="lazy" decoding="async">
+</section>
+
 <section class="catalogo" id="catalogo">
   <div class="catalogo-header">
     <h2>Nuestros<br><em>Productos</em></h2>
-    <p>Catálogo completo organizado por línea: café de especialidad, chocolate bean to bar, bitters, derivados de cacao, miel gourmet y bebidas artesanales. Cada producto expresa la Selva Alta cusqueña.</p>
+    <p>Explora nuestra línea completa: café de especialidad, chocolate bean to bar, bitters, derivados de cacao, miel gourmet y bebidas artesanales. Filtra por categoría o recorre todo el catálogo.</p>
   </div>
 
   <div class="cat-tabs" role="tablist" aria-label="Filtrar productos">
@@ -1591,14 +1590,6 @@
   </div>
 
   <div class="products-grid">
-
-    <div class="catalog-category-divider" data-category-header="cafe">
-      <div class="catalog-category-icon">☕</div>
-      <div class="catalog-category-text">
-        <h3>Café de Especialidad</h3>
-        <p>Tostado artesanal de Típica, Bourbon Rojo, Bourbon Amarillo, Maragogype y Geisha — desde la Finca Santiago.</p>
-      </div>
-    </div>
 
     <div class="product-card" data-category="cafe" id="producto-cafe-tostado">
       <div class="product-img has-gallery">
@@ -1620,14 +1611,6 @@
         </div>
         <div class="product-detail">250g · Finca Santiago · 5 variedades selectas · Valle de Chaco, Cusco</div>
         <div class="product-price">Consultar <span>precio</span></div>
-      </div>
-    </div>
-
-    <div class="catalog-category-divider" data-category-header="chocolate">
-      <div class="catalog-category-icon chocolate">🍫</div>
-      <div class="catalog-category-text">
-        <h3>Chocolate en Barra</h3>
-        <p>Bean to bar con 70% cacao chuncho de La Convención. Nueve sabores con frutas y frutos secos peruanos.</p>
       </div>
     </div>
 
@@ -1781,14 +1764,6 @@
       </div>
     </div>
 
-    <div class="catalog-category-divider" data-category-header="bitters">
-      <div class="catalog-category-icon bitters">🥃</div>
-      <div class="catalog-category-text">
-        <h3>Bitters de Cacao</h3>
-        <p>Concentrado artesanal de cacao chuncho para coctelería y gastronomía. Intensidad y aroma que elevan cada creación.</p>
-      </div>
-    </div>
-
     <div class="product-card" data-category="bitters" id="producto-bitters-cacao">
       <div class="product-img has-gallery">
         <img class="product-img-primary" src="images/producto-cacao-polvo-foto.jpg" alt="Bitters de Cacao Chuncho artesanal — Villa Chaco" width="768" height="1344" loading="lazy" decoding="async">
@@ -1808,14 +1783,6 @@
         </div>
         <div class="product-detail">Cacao chuncho concentrado · Notas amargas y aromáticas · Ideal para mixología</div>
         <div class="product-price">Consultar <span>precio</span></div>
-      </div>
-    </div>
-
-    <div class="catalog-category-divider" data-category-header="cacao">
-      <div class="catalog-category-icon cacao">🫘</div>
-      <div class="catalog-category-text">
-        <h3>Derivados de Cacao</h3>
-        <p>Nibs, pasta pura y polvo 100% cacao chuncho — sin aditivos, directo del origen en Echarate.</p>
       </div>
     </div>
 
@@ -1881,14 +1848,6 @@
       </div>
     </div>
 
-    <div class="catalog-category-divider" data-category-header="miel">
-      <div class="catalog-category-icon miel">🍯</div>
-      <div class="catalog-category-text">
-        <h3>Miel de Abeja Gourmet</h3>
-        <p>Miel pura de colmenas locales de La Convención. Dulzor natural, sin procesar ni aditivos.</p>
-      </div>
-    </div>
-
     <div class="product-card" data-category="miel" id="producto-miel-gourmet">
       <div class="product-img has-gallery">
         <img class="product-img-primary" src="images/producto-miel-gourmet.jpg" alt="Miel de Abeja Gourmet 400g — Villa Chaco" width="681" height="1024" loading="lazy" decoding="async">
@@ -1908,14 +1867,6 @@
         </div>
         <div class="product-detail">400g · 17.64 oz · Colmenas locales · La Convención, Cusco</div>
         <div class="product-price">Consultar <span>precio</span></div>
-      </div>
-    </div>
-
-    <div class="catalog-category-divider" data-category-header="otros">
-      <div class="catalog-category-icon bebidas">🍹</div>
-      <div class="catalog-category-text">
-        <h3>Bebidas Artesanales</h3>
-        <p>Licores y cócteles elaborados con cacao chuncho de nuestra tierra.</p>
       </div>
     </div>
 
@@ -1946,7 +1897,7 @@
 
 <section class="featured">
   <div class="featured-visual">
-    <img src="images/hero-catalogo-productos.png" alt="Catálogo completo Villa Chaco — chocolate, café, miel y derivados de cacao" width="1200" height="630" loading="lazy" decoding="async">
+    <img src="images/featured-chocolate-coleccion.jpg" alt="Colección Chocolate Bean to Bar — 9 sabores Villa Chaco" width="1195" height="896" loading="lazy" decoding="async">
   </div>
   <div class="featured-content">
     <div class="section-label">Estrella de la Colección</div>
@@ -2143,11 +2094,6 @@
         const cat = card.dataset.category;
         card.classList.toggle('hidden', filter !== 'todos' && cat !== filter);
       });
-      document.querySelectorAll('.catalog-category-divider').forEach(divider => {
-        const header = divider.dataset.categoryHeader;
-        const show = filter === 'todos' || header === filter;
-        divider.classList.toggle('hidden', !show);
-      });
     });
   });
 
@@ -2187,7 +2133,7 @@
     });
   }, { threshold: 0.1 });
 
-  document.querySelectorAll('.stat-card, .product-card, .proceso-step, .coffee-variety-card, .catalog-category-divider').forEach(el => {
+  document.querySelectorAll('.stat-card, .product-card, .proceso-step, .coffee-variety-card').forEach(el => {
     el.style.opacity = '0';
     el.style.transform = 'translateY(20px)';
     el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
