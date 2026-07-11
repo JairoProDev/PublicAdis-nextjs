@@ -163,27 +163,27 @@ export default function QuivalCatalog() {
 
   const itemsPerPage = 12;
 
-  // 1. Fetch Products from Supabase on Load
+  // 1. Fetch Products from Buscadis catalog API (solo publicados con imagen)
+  const BUSCADIS_CATALOG_URL =
+    process.env.NEXT_PUBLIC_BUSCADIS_CATALOG_URL ||
+    'https://www.buscadis.com/api/public/catalog/quival';
+
   useEffect(() => {
     fetchProducts();
   }, []);
 
   const fetchProducts = async () => {
-    if (!supabase) {
-      console.error('Supabase client not initialized. Check NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY.');
-      setLoading(false);
-      return;
-    }
     setLoading(true);
-    const { data, error } = await supabase
-      .from('products')
-      .select('*')
-      .eq('in_stock', true); // Only fetch in-stock items
-
-    if (error) {
-      console.error('Error fetching products:', error);
-    } else {
-      setProducts(data || []);
+    try {
+      const res = await fetch(`${BUSCADIS_CATALOG_URL}?imagesOnly=1`, { cache: 'no-store' });
+      const json = await res.json();
+      if (!json.success) {
+        throw new Error(json.error || 'No se pudo cargar el catálogo');
+      }
+      setProducts(json.products || []);
+    } catch (error) {
+      console.error('Error fetching products from Buscadis:', error);
+      setProducts([]);
     }
     setLoading(false);
   };
