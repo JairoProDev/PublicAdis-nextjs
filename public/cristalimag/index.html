@@ -52,29 +52,40 @@
 </script>
 <style>
 :root {
-  --mist: #e8eef2;
-  --chalk: #f4f7f9;
+  --mist: #e6ecf1;
+  --chalk: #f3f6f8;
   --white: #fbfcfd;
   --ink: #0c1016;
   --ink-2: #2a323c;
   --mute: #5c6672;
-  --line: #c8d0d8;
+  --line: #b9c3cd;
   --alum: #12161d;
-  --glass: #1f6b75;
-  --glass-soft: #d7ebef;
+  --alum-mid: #3a424c;
+  --alum-shine: #8b949e;
+  --glass: #1a6570;
+  --glass-soft: #d4e9ed;
   --glass-glow: #8ec4cc;
+  --glass-face: rgba(180, 220, 228, 0.35);
+  --drywall: #dfe3e6;
+  --steel: #5a6570;
   --wa: #25d366;
   --display: "Outfit", system-ui, sans-serif;
   --serif: "Fraunces", Georgia, serif;
   --mono: "IBM Plex Mono", ui-monospace, monospace;
+  --frame: 2px;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
-  background:
-    radial-gradient(1200px 600px at 8% -10%, rgba(142, 196, 204, 0.22), transparent 55%),
-    radial-gradient(900px 500px at 100% 20%, rgba(31, 107, 117, 0.08), transparent 50%),
-    var(--mist);
+  /* Muro cortina: montantes + travesaños + brillo de vidrio */
+  background-color: var(--mist);
+  background-image:
+    linear-gradient(105deg, rgba(251,252,253,0.55) 0%, transparent 42%),
+    linear-gradient(rgba(18,22,29,0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(18,22,29,0.055) 1px, transparent 1px),
+    radial-gradient(1000px 520px at 12% -8%, rgba(142, 196, 204, 0.28), transparent 55%),
+    radial-gradient(800px 480px at 100% 18%, rgba(26, 101, 112, 0.1), transparent 50%);
+  background-size: auto, 72px 72px, 72px 72px, auto, auto;
   color: var(--ink);
   font-family: var(--display);
   font-size: 16px;
@@ -88,7 +99,7 @@ button, input, select { font: inherit; }
 .serif { font-family: var(--serif); }
 .mono { font-family: var(--mono); }
 
-/* Mullion — firma de marco de ventana */
+/* Perfil de aluminio / montante */
 .mullion {
   position: relative;
 }
@@ -96,10 +107,33 @@ button, input, select { font: inherit; }
   content: "";
   position: absolute;
   left: 0; top: 0; bottom: 0;
-  width: 2px;
-  background: linear-gradient(180deg, transparent, var(--glass), transparent);
-  opacity: 0.55;
+  width: 3px;
+  background:
+    linear-gradient(180deg, var(--alum-shine), var(--alum-mid) 35%, var(--alum) 70%, var(--alum-shine));
+  opacity: 0.85;
   pointer-events: none;
+}
+
+/* Esquinas de marco (ventana / mampara) */
+.frame-corners { position: relative; }
+.frame-corners::before,
+.frame-corners::after {
+  content: "";
+  position: absolute;
+  width: 18px; height: 18px;
+  border-color: var(--alum);
+  border-style: solid;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0.55;
+}
+.frame-corners::before {
+  top: 10px; left: 10px;
+  border-width: 2px 0 0 2px;
+}
+.frame-corners::after {
+  bottom: 10px; right: 10px;
+  border-width: 0 2px 2px 0;
 }
 
 .reveal {
@@ -112,12 +146,56 @@ button, input, select { font: inherit; }
   transform: none;
 }
 
-/* Header */
+/* Material rail — esencia del oficio */
+.materials {
+  display: flex; flex-wrap: wrap; gap: 0.55rem 1.1rem;
+  padding: 0.95rem 0;
+  border-bottom: 1px solid var(--line);
+  background: rgba(251,252,253,0.72);
+  backdrop-filter: blur(10px);
+}
+.materials .wrap {
+  display: flex; flex-wrap: wrap; gap: 0.55rem 1.25rem;
+  align-items: center;
+  width: min(1160px, calc(100% - 2.5rem));
+}
+.mat {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  font-family: var(--mono); font-size: 0.62rem;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--mute);
+}
+.mat i {
+  display: block; width: 14px; height: 14px; flex-shrink: 0;
+}
+.mat-glass i {
+  background: linear-gradient(145deg, rgba(251,252,253,0.95), var(--glass-glow) 55%, var(--glass));
+  box-shadow: inset 0 0 0 1px rgba(18,22,29,0.2);
+}
+.mat-alum i {
+  background: linear-gradient(180deg, #c5ccd3, #6a737c 45%, #2a323c 70%, #9aa3ab);
+  box-shadow: inset 0 0 0 1px rgba(18,22,29,0.35);
+}
+.mat-dry i {
+  background: var(--drywall);
+  box-shadow: inset 0 0 0 1px #aeb6be;
+  background-image: linear-gradient(#cfd5da 1px, transparent 1px);
+  background-size: 100% 4px;
+}
+.mat-struct i {
+  background:
+    linear-gradient(90deg, transparent 40%, var(--steel) 40% 60%, transparent 60%),
+    linear-gradient(var(--steel) 40%, transparent 40% 60%, var(--steel) 60%);
+  background-color: #e8ecf0;
+  box-shadow: inset 0 0 0 1px var(--steel);
+}
+
+/* Header — vidrio esmerilado */
 .site-header {
   position: sticky; top: 0; z-index: 60;
-  background: rgba(232, 238, 242, 0.86);
-  backdrop-filter: blur(16px) saturate(1.2);
-  border-bottom: 1px solid rgba(200, 208, 216, 0.85);
+  background: rgba(230, 236, 241, 0.72);
+  backdrop-filter: blur(18px) saturate(1.25);
+  border-bottom: 1px solid rgba(185, 195, 205, 0.9);
+  box-shadow: 0 1px 0 rgba(251,252,253,0.5) inset;
 }
 .nav {
   display: flex; align-items: center; justify-content: space-between;
@@ -129,25 +207,38 @@ button, input, select { font: inherit; }
   display: flex; align-items: center; gap: 0.55rem;
 }
 .brand-mark {
-  width: 20px; height: 20px;
+  width: 22px; height: 22px;
+  position: relative;
   background:
-    linear-gradient(135deg, rgba(251,252,253,0.95) 0%, rgba(142,196,204,0.85) 42%, var(--glass) 100%);
-  box-shadow: inset 0 0 0 1px rgba(12,16,22,0.15);
-  clip-path: polygon(0 0, 100% 0, 100% 72%, 72% 100%, 0 100%);
+    linear-gradient(145deg, rgba(251,252,253,0.95) 0%, rgba(142,196,204,0.75) 48%, var(--glass) 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(12,16,22,0.22),
+    3px 3px 0 -1px rgba(18,22,29,0.18),
+    3px 3px 0 0 rgba(142,196,204,0.45);
+}
+.brand-mark::after {
+  content: "";
+  position: absolute;
+  inset: 3px 3px 3px auto;
+  width: 1px;
+  background: rgba(18,22,29,0.35);
 }
 .nav-links { display: flex; gap: 1.7rem; font-size: 0.84rem; font-weight: 500; color: var(--ink-2); }
 .nav-links a { position: relative; }
 .nav-links a::after {
   content: ""; position: absolute; left: 0; right: 100%; bottom: -4px; height: 1px;
-  background: var(--glass); transition: right 0.25s ease;
+  background: linear-gradient(90deg, var(--alum-shine), var(--glass)); transition: right 0.25s ease;
 }
 .nav-links a:hover::after { right: 0; }
 .nav-cta {
-  background: var(--alum); color: var(--white);
+  background: linear-gradient(180deg, #2a323c 0%, var(--alum) 55%, #0a0d12 100%);
+  color: var(--white);
   padding: 0.58rem 1rem; font-size: 0.78rem; font-weight: 600;
   letter-spacing: 0.03em;
+  border: 1px solid rgba(139,148,158,0.35);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
 }
-.nav-cta:hover { background: var(--glass); }
+.nav-cta:hover { background: var(--glass); border-color: var(--glass-glow); }
 @media (max-width: 820px) { .nav-links { display: none; } }
 
 /* Hero */
@@ -169,10 +260,25 @@ button, input, select { font: inherit; }
   animation: settle 1.8s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 .hero-edge {
-  position: absolute; left: 0; top: 0; bottom: 0; width: 3px; z-index: 2;
-  background: linear-gradient(180deg, transparent, var(--glass-glow), transparent);
-  opacity: 0.7;
+  position: absolute; left: 0; top: 0; bottom: 0; width: 4px; z-index: 2;
+  background: linear-gradient(180deg, var(--alum-shine), var(--glass-glow) 40%, var(--alum) 100%);
+  opacity: 0.85;
 }
+.hero-frame {
+  position: absolute; inset: 14px; z-index: 2; pointer-events: none;
+  border: 1px solid rgba(251,252,253,0.22);
+  box-shadow: inset 0 0 0 1px rgba(18,22,29,0.15);
+}
+.hero-frame::before,
+.hero-frame::after {
+  content: "";
+  position: absolute;
+  width: 28px; height: 28px;
+  border-color: rgba(251,252,253,0.65);
+  border-style: solid;
+}
+.hero-frame::before { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+.hero-frame::after { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
 @keyframes settle {
   from { transform: scale(1.08); }
   to { transform: scale(1); }
@@ -218,11 +324,25 @@ button, input, select { font: inherit; }
   padding: 0.88rem 1.25rem; font-size: 0.86rem; font-weight: 600;
   border: 1px solid transparent; transition: 0.18s ease; cursor: pointer;
 }
-.btn-primary { background: var(--white); color: var(--ink); }
-.btn-primary:hover { background: var(--glass-soft); }
-.btn-ghost { border-color: rgba(251,252,253,0.4); color: var(--white); }
-.btn-ghost:hover { background: rgba(251,252,253,0.1); }
-.btn-dark { background: var(--alum); color: var(--white); }
+.btn-primary {
+  background: linear-gradient(180deg, #fff, var(--chalk));
+  color: var(--ink);
+  border-color: rgba(185,195,205,0.9);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.8) inset;
+}
+.btn-primary:hover { background: var(--glass-soft); border-color: var(--glass-glow); }
+.btn-ghost {
+  border-color: rgba(251,252,253,0.45); color: var(--white);
+  backdrop-filter: blur(6px);
+  background: rgba(18,22,29,0.18);
+}
+.btn-ghost:hover { background: rgba(251,252,253,0.12); }
+.btn-dark {
+  background: linear-gradient(180deg, #2a323c, var(--alum));
+  color: var(--white);
+  border-color: rgba(139,148,158,0.3);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+}
 .btn-dark:hover { background: var(--glass); }
 
 /* Thesis */
@@ -296,30 +416,49 @@ button, input, select { font: inherit; }
 }
 .section-intro { color: var(--mute); font-size: 1.02rem; max-width: 42ch; }
 
-/* Solutions */
+/* Solutions — paneles como paños de fachada */
 .solutions {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 0;
-  border-top: 1px solid var(--line);
+  gap: 0.65rem;
 }
 @media (max-width: 980px) { .solutions { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 520px) { .solutions { grid-template-columns: 1fr; } }
 .sol {
-  padding: 1.7rem 1.2rem 1.9rem 0;
-  border-bottom: 1px solid var(--line);
-  border-right: 1px solid var(--line);
-  padding-left: 1.2rem;
-  background: transparent;
-  transition: background 0.2s ease;
+  position: relative;
+  padding: 1.55rem 1.15rem 1.7rem;
+  background:
+    linear-gradient(160deg, rgba(251,252,253,0.92) 0%, rgba(232,238,242,0.75) 100%);
+  border: 1px solid var(--line);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.85),
+    inset 0 -1px 0 rgba(18,22,29,0.04);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  overflow: hidden;
 }
-.sol:nth-child(5n) { border-right: none; }
-@media (max-width: 980px) {
-  .sol:nth-child(5n) { border-right: 1px solid var(--line); }
-  .sol:nth-child(2n) { border-right: none; }
+.sol::before {
+  content: "";
+  position: absolute; left: 0; right: 0; top: 0; height: 3px;
+  background: var(--glass);
 }
-@media (max-width: 520px) { .sol { border-right: none; } }
-.sol:hover { background: rgba(251,252,253,0.7); }
+.sol-vidrio::before { background: linear-gradient(90deg, var(--glass-glow), var(--glass)); }
+.sol-alum::before { background: linear-gradient(90deg, #c5ccd3, var(--alum-mid)); }
+.sol-dry::before {
+  background: repeating-linear-gradient(90deg, #cfd5da 0 8px, #e8ecf0 8px 14px);
+  height: 4px;
+}
+.sol-struct::before {
+  background: repeating-linear-gradient(90deg, var(--steel) 0 3px, transparent 3px 8px);
+  height: 3px;
+}
+.sol-obra::before { background: linear-gradient(90deg, var(--alum-mid), var(--alum)); }
+.sol:hover {
+  transform: translateY(-2px);
+  border-color: var(--alum-shine);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.9),
+    0 12px 28px rgba(18,22,29,0.08);
+}
 .sol-code {
   font-family: var(--mono); font-size: 0.66rem;
   letter-spacing: 0.1em; color: var(--mute); margin-bottom: 0.9rem;
@@ -333,7 +472,7 @@ button, input, select { font: inherit; }
 }
 .sol li::before {
   content: ""; position: absolute; left: 0; top: 0.55em;
-  width: 5px; height: 1px; background: var(--glass);
+  width: 5px; height: 1px; background: var(--alum-mid);
 }
 
 /* Projects */
@@ -348,7 +487,21 @@ button, input, select { font: inherit; }
   position: relative; overflow: hidden; background: #d5dde4;
   min-height: 270px;
   display: block;
+  border: 1px solid rgba(18,22,29,0.12);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.2);
 }
+.proj::before,
+.proj::after {
+  content: "";
+  position: absolute;
+  width: 16px; height: 16px;
+  border-color: rgba(251,252,253,0.75);
+  border-style: solid;
+  z-index: 3;
+  pointer-events: none;
+}
+.proj::before { top: 10px; left: 10px; border-width: 1.5px 0 0 1.5px; }
+.proj::after { bottom: 10px; right: 10px; border-width: 0 1.5px 1.5px 0; }
 .proj-lg { min-height: 560px; grid-row: span 2; }
 @media (max-width: 800px) { .proj-lg { min-height: 340px; grid-row: auto; } }
 .proj img {
@@ -408,13 +561,23 @@ button, input, select { font: inherit; }
 .quality-visual {
   position: relative; min-height: 440px; overflow: hidden;
   background: #d5dde4;
+  border: 1px solid var(--line);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.25),
+    8px 8px 0 0 rgba(18,22,29,0.06);
 }
+.quality-visual::before,
 .quality-visual::after {
   content: "";
-  position: absolute; inset: 12px;
-  border: 1px solid rgba(251,252,253,0.35);
+  position: absolute;
+  width: 22px; height: 22px;
+  border-color: rgba(251,252,253,0.7);
+  border-style: solid;
+  z-index: 2;
   pointer-events: none;
 }
+.quality-visual::before { top: 12px; left: 12px; border-width: 2px 0 0 2px; }
+.quality-visual::after { bottom: 12px; right: 12px; border-width: 0 2px 2px 0; }
 .quality-visual img { width: 100%; height: 100%; object-fit: cover; min-height: 440px; }
 .quality-points { display: grid; gap: 1.25rem; margin-top: 1.6rem; }
 .qp strong { display: block; font-size: 1.02rem; margin-bottom: 0.22rem; letter-spacing: -0.02em; }
@@ -464,15 +627,17 @@ button, input, select { font: inherit; }
   display: grid;
   grid-template-columns: 1.05fr 0.95fr;
   gap: 1.15rem;
-  background: var(--white);
+  background:
+    linear-gradient(160deg, rgba(251,252,253,0.95), rgba(232,238,242,0.9));
   border: 1px solid var(--line);
   padding: 1.5rem;
   position: relative;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.9);
 }
 .estimate::before {
   content: "";
-  position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
-  background: var(--glass);
+  position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+  background: linear-gradient(180deg, var(--alum-shine), var(--alum-mid) 40%, var(--alum));
 }
 @media (max-width: 800px) { .estimate { grid-template-columns: 1fr; } }
 .field { margin-bottom: 1rem; }
@@ -577,6 +742,7 @@ footer {
 <section class="hero" aria-label="Inicio">
   <div class="hero-media" role="img" aria-label="Residencia moderna con fachada de vidrio, aluminio y piscina"></div>
   <span class="hero-edge" aria-hidden="true"></span>
+  <span class="hero-frame" aria-hidden="true"></span>
   <div class="hero-inner">
     <p class="hero-kicker">Cerro Colorado · Arequipa</p>
     <p class="hero-brand">Cristalimag</p>
@@ -587,6 +753,16 @@ footer {
     </div>
   </div>
 </section>
+
+<div class="materials" aria-label="Líneas de material">
+  <div class="wrap">
+    <span class="mat mat-glass"><i aria-hidden="true"></i> Vidrio</span>
+    <span class="mat mat-alum"><i aria-hidden="true"></i> Aluminio</span>
+    <span class="mat mat-dry"><i aria-hidden="true"></i> Drywall</span>
+    <span class="mat mat-struct"><i aria-hidden="true"></i> Estructura</span>
+    <span class="mat mat-alum"><i aria-hidden="true"></i> Obra completa</span>
+  </div>
+</div>
 
 <section class="thesis">
   <div class="wrap mullion" style="padding-left:1.25rem;">
@@ -613,7 +789,7 @@ footer {
       <p class="section-intro">Diseño técnico, fabricación e instalación. Menos proveedores. Más control de calidad.</p>
     </div>
     <div class="solutions reveal">
-      <article class="sol">
+      <article class="sol sol-vidrio">
         <p class="sol-code">01 · VIDRIO</p>
         <h3>Vidrios arquitectónicos</h3>
         <p>Luz, seguridad y presencia.</p>
@@ -625,7 +801,7 @@ footer {
           <li>Templado / laminado / curvo</li>
         </ul>
       </article>
-      <article class="sol">
+      <article class="sol sol-alum">
         <p class="sol-code">02 · ALUMINIO</p>
         <h3>Aluminio arquitectónico</h3>
         <p>Perfiles con precisión de taller.</p>
@@ -636,7 +812,7 @@ footer {
           <li>Negro mate / anodizado</li>
         </ul>
       </article>
-      <article class="sol">
+      <article class="sol sol-dry">
         <p class="sol-code">03 · DRYWALL</p>
         <h3>Drywall y acabados</h3>
         <p>Volúmenes limpios e iluminación.</p>
@@ -647,7 +823,7 @@ footer {
           <li>Casas y oficinas</li>
         </ul>
       </article>
-      <article class="sol">
+      <article class="sol sol-struct">
         <p class="sol-code">04 · ESTRUCTURA</p>
         <h3>Estructuras y pérgolas</h3>
         <p>Terrazas, techos y sombra.</p>
@@ -658,7 +834,7 @@ footer {
           <li>Cocheras y patios</li>
         </ul>
       </article>
-      <article class="sol">
+      <article class="sol sol-obra">
         <p class="sol-code">05 · OBRA</p>
         <h3>Proyecto completo</h3>
         <p>Una sola responsabilidad.</p>
