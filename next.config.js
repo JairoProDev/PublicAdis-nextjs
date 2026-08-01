@@ -36,6 +36,10 @@ const nextConfig = {
         // Assets viven en /villachaco/* y /cristalimag/* (base href apunta ahí).
         { source: '/', has: host('villachaco.adis.lat'), destination: '/villachaco/index.html' },
         { source: '/', has: host('cristalimag.adis.lat'), destination: '/cristalimag/index.html' },
+        // OG/share y assets sin el prefijo /cristalimag/ en el subdominio
+        { source: '/images/:path*', has: host('cristalimag.adis.lat'), destination: '/cristalimag/images/:path*' },
+        { source: '/robots.txt', has: host('cristalimag.adis.lat'), destination: '/cristalimag/robots.txt' },
+        { source: '/sitemap.xml', has: host('cristalimag.adis.lat'), destination: '/cristalimag/sitemap.xml' },
         { source: '/', has: host('quival.adis.lat'), destination: '/quival' },
         { source: '/', has: host('agrilsur.adis.lat'), destination: `${agrilsurOrigin}/p/agrilsur` },
         { source: '/:path*', has: host('agrilsur.adis.lat'), destination: `${agrilsurOrigin}/:path*` },
