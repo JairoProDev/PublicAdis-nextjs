@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://buscadis.com/villachaco/sitemap.xml
+Sitemap: https://villachaco.adis.lat/sitemap.xml

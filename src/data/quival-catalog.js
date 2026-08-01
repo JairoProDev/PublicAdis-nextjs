@@ -11,7 +11,7 @@ export const businessInfo = {
     whatsapp: '+51 984 804 843',
     whatsapp2: '+51 984 989 866',
     email: 'corporacionquival@gmail.com',
-    website: 'https://publicadis.com/quival',
+    website: 'https://quival.adis.lat',
   },
   location: {
     address: 'Av. Fernando Tupac Amaru K-9 Via de Evitamiento - San Sebastián Cusco',
