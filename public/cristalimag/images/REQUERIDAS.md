@@ -1,25 +1,14 @@
-# Imágenes — Cristalimag
+# Imágenes — reemplazo rápido
 
-## En uso ahora
+Ver la guía completa en [BIBLIOTECA-VISUAL.md](BIBLIOTECA-VISUAL.md).
 
-| Archivo | Rol |
-|---------|-----|
-| `hero-glass.jpg` | Hero full-bleed + galería |
-| `facade-light.jpg` | Sección “Por qué Cristalimag” |
-| `detail-glass.jpg` | Galería — detalle |
-| `window-detail.jpg` | Galería — ventanería |
-| `shower-glass.jpg` | Galería — duchas |
-| `mirror-light.jpg` | Galería — espejos/interiores |
+Prioridad home:
 
-## Reemplazar con fotos reales del negocio
+1. `library/hero/hero-01.jpg` … `hero-03.jpg`
+2. `library/mamparas/mampara-01.jpg`
+3. `library/banos/bano-01.jpg`
+4. `library/pergolas/pergola-01.jpg`
+5. `library/detalles/detalle-01.jpg`
+6. `library/drywall/drywall-01.jpg`
 
-Cuando tengas material propio, sustituye con el **mismo nombre de archivo** (misma proporción aprox.):
-
-1. Fachada o local en Cerro Colorado → `facade-light.jpg`
-2. Obra instalada (ventana/mampara) → `hero-glass.jpg`
-3. Detalle de corte / taller → `detail-glass.jpg`
-4. Ventana instalada → `window-detail.jpg`
-5. Ducha / mampara → `shower-glass.jpg`
-6. Espejo o interior → `mirror-light.jpg`
-
-Luego: `pnpm sync:cristalimag -- --force` y deploy Publicadis.
+Misma ruta + mismo nombre = se actualiza el sitio al sincronizar.
