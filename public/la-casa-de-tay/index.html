@@ -3,22 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>La Casa de Tay — bungalows en Urubamba, Valle Sagrado</title>
-<meta name="description" content="Casa de campo familiar en Urubamba, Valle Sagrado. Bungalows y habitaciones con jardín, fogata y parrilla. A 2.870 m: acá no da mal de altura. Desayuno, WiFi y estacionamiento incluidos.">
+<title>Casa de Tay — tu refugio en el Valle Sagrado, Urubamba</title>
+<meta name="description" content="Casitas de campo en Urubamba, Valle Sagrado. Jardines orgánicos, cocina propia, WiFi y garage. A 2.870 m: acá no da mal de altura. 7 min en motito a la plaza o al terminal. Reserva por WhatsApp.">
 <link rel="canonical" href="https://lacasadetay.adis.lat/">
 <meta name="robots" content="index,follow">
 <meta name="theme-color" content="#2F4A3C">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="images/brand/logo-casa-de-tay.jpg" type="image/jpeg">
+<link rel="apple-touch-icon" href="images/brand/logo-casa-de-tay.jpg">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="es_PE">
-<meta property="og:site_name" content="La Casa de Tay">
-<meta property="og:title" content="La Casa de Tay — bungalows en Urubamba, Valle Sagrado">
-<meta property="og:description" content="Casa de campo familiar en Urubamba. Jardín, fogata y el Valle Sagrado a la puerta. Sin mal de altura.">
+<meta property="og:site_name" content="Casa de Tay">
+<meta property="og:title" content="Casa de Tay — tu refugio en el Valle Sagrado">
+<meta property="og:description" content="Casitas con jardines orgánicos en Urubamba. Cocina propia, WiFi y garage. 7 min en motito a la plaza.">
 <meta property="og:url" content="https://lacasadetay.adis.lat/">
 <meta property="og:image" content="https://lacasadetay.adis.lat/images/library/hero/exterior-fachada-verde-andes.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="La Casa de Tay — bungalows en Urubamba, Valle Sagrado">
-<meta name="twitter:description" content="Urubamba, Valle Sagrado. Casa de campo familiar, jardín y fogata.">
+<meta name="twitter:title" content="Casa de Tay — tu refugio en el Valle Sagrado">
+<meta name="twitter:description" content="Casitas en Urubamba, Valle Sagrado. Jardines orgánicos, cocina propia y garage incluido.">
 <meta name="twitter:image" content="https://lacasadetay.adis.lat/images/library/hero/exterior-fachada-verde-andes.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,13 +28,15 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "BedAndBreakfast",
-  "name": "La Casa de Tay",
-  "alternateName": "Casa de Tay",
-  "description": "Casa de campo familiar en Urubamba, Valle Sagrado de los Incas. Bungalows y habitaciones con jardín, fogata y parrilla. A 2.870 m.s.n.m.",
+  "@type": "LodgingBusiness",
+  "name": "Casa de Tay",
+  "alternateName": "La Casa de Tay",
+  "description": "Casitas de campo en Urubamba, Valle Sagrado. Jardines orgánicos, cocina propia, WiFi y garage. A 2.870 m.s.n.m.",
   "url": "https://lacasadetay.adis.lat/",
   "telephone": "+51984622809",
   "image": "https://lacasadetay.adis.lat/images/library/hero/exterior-fachada-verde-andes.jpg",
+  "logo": "https://lacasadetay.adis.lat/images/brand/logo-casa-de-tay.jpg",
+  "priceRange": "PEN 100-120",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "Larespampa",
@@ -43,12 +46,13 @@
     "addressCountry": "PE"
   },
   "amenityFeature": [
-    {"@type": "LocationFeatureSpecification", "name": "Jardín"},
+    {"@type": "LocationFeatureSpecification", "name": "Jardines orgánicos"},
+    {"@type": "LocationFeatureSpecification", "name": "Áreas verdes amplias"},
+    {"@type": "LocationFeatureSpecification", "name": "Cocina equipada"},
+    {"@type": "LocationFeatureSpecification", "name": "WiFi"},
+    {"@type": "LocationFeatureSpecification", "name": "Garage incluido"},
     {"@type": "LocationFeatureSpecification", "name": "Fogata exterior"},
-    {"@type": "LocationFeatureSpecification", "name": "Parrilla"},
-    {"@type": "LocationFeatureSpecification", "name": "WiFi gratis"},
-    {"@type": "LocationFeatureSpecification", "name": "Estacionamiento privado gratis"},
-    {"@type": "LocationFeatureSpecification", "name": "Desayuno incluido"}
+    {"@type": "LocationFeatureSpecification", "name": "Parrilla"}
   ],
   "petsAllowed": false,
   "checkinTime": "14:00",
@@ -167,14 +171,16 @@ h2 { font-size: clamp(1.85rem, 3.4vw, 2.7rem); line-height: 1.15; color: var(--b
 }
 .brand {
   display: flex; align-items: center; gap: 0.6rem;
-  font-family: var(--display);
-  font-weight: 700;
-  font-size: 1.28rem;
   color: var(--bosque);
 }
-.brand-mark {
-  width: 28px; height: 28px;
-  flex-shrink: 0;
+.brand-logo {
+  height: 72px;
+  width: auto;
+  display: block;
+  border-radius: 6px;
+}
+@media (max-width: 820px) {
+  .brand-logo { height: 52px; }
 }
 .nav-links { display: flex; gap: 1.55rem; font-size: 0.88rem; font-weight: 500; color: var(--ink-2); }
 .nav-links a { position: relative; }
@@ -427,6 +433,20 @@ h2 { font-size: clamp(1.85rem, 3.4vw, 2.7rem); line-height: 1.15; color: var(--b
 }
 .unit-body { padding: 1.55rem 1.5rem 1.65rem; display: flex; flex-direction: column; gap: 0.7rem; }
 .unit-body h3 { font-size: 1.85rem; color: var(--bosque-ink); }
+.price {
+  font-family: var(--display);
+  font-size: 1.7rem;
+  font-weight: 600;
+  color: var(--bosque);
+  line-height: 1;
+}
+.price span {
+  font-family: var(--body);
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--mute);
+  margin-left: 0.2rem;
+}
 .unit-spec {
   display: flex; flex-wrap: wrap; gap: 0.45rem;
 }
@@ -712,23 +732,16 @@ dialog.lightbox button {
 <header class="site-header">
   <nav class="nav" aria-label="Principal">
     <a class="brand" href="#inicio">
-      <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
-        <rect width="32" height="32" rx="8" fill="#2F4A3C"/>
-        <path d="M3 21.5 11 11l5 6.2 5.2-8.2L29 21.5Z" fill="#E8A33D"/>
-        <path d="M10.2 23.2 16 17.8l5.8 5.4H10.2Z" fill="#FFF6E2"/>
-        <rect x="12.4" y="21.6" width="7.2" height="5.6" fill="#8C5A3C"/>
-        <rect x="15.1" y="23.6" width="1.8" height="3.6" fill="#FFF6E2"/>
-      </svg>
-      La Casa de Tay
+      <img class="brand-logo" src="images/brand/logo-casa-de-tay.jpg" width="1024" height="1024" alt="Casa de Tay — tu refugio en el Valle Sagrado">
     </a>
     <div class="nav-links">
-      <a href="#unidades">Unidades</a>
+      <a href="#casitas">Casitas</a>
       <a href="#jardin">El jardín</a>
       <a href="#valle">El Valle</a>
-      <a href="#tay">Tay</a>
+      <a href="#eventos">Eventos</a>
       <a href="#reservar">Reservar</a>
     </div>
-    <a class="nav-cta" href="https://wa.me/51984622809?text=Hola%20Tay%2C%20quiero%20consultar%20disponibilidad%20en%20La%20Casa%20de%20Tay." target="_blank" rel="noopener">WhatsApp</a>
+    <a class="nav-cta" href="https://wa.me/51984622809?text=Hola%20Tay%2C%20quiero%20consultar%20disponibilidad%20en%20Casa%20de%20Tay." target="_blank" rel="noopener">WhatsApp</a>
   </nav>
 </header>
 
@@ -736,34 +749,34 @@ dialog.lightbox button {
   <section class="hero" aria-label="Inicio">
     <img
       src="images/library/hero/exterior-fachada-verde-andes.jpg"
-      alt="La Casa de Tay en Urubamba, con el jardín adelante y los Andes al fondo"
+      alt="Casita de Casa de Tay en Urubamba, con el jardín adelante y los Andes al fondo"
       width="1600" height="1200"
       fetchpriority="high">
     <div class="hero-scrim" aria-hidden="true"></div>
     <div class="hero-inner">
       <p class="hero-place">Urubamba · Valle Sagrado · Cusco</p>
-      <h1>Bungalows con <em>jardín</em>, en el corazón del Valle Sagrado.</h1>
-      <p class="hero-lead">Una casa de campo familiar. Te recibe Tay. Desayuno, jardín, fogata y el Valle a la puerta — sin mal de altura.</p>
+      <h1>Tu refugio en el <em>Valle Sagrado</em>.</h1>
+      <p class="hero-lead">Casitas con jardines orgánicos, cocina propia y espacio al aire libre. Te recibe Tay. A 2.870 m: acá no da mal de altura.</p>
       <div class="hero-ctas">
         <a class="btn btn-primary" href="#reservar">Consultar fechas</a>
-        <a class="btn btn-ghost" href="#unidades">Ver unidades</a>
+        <a class="btn btn-ghost" href="#casitas">Ver casitas</a>
       </div>
       <div class="hero-meta">
         <div><strong>2.870 m</strong> Acá no da soroche</div>
-        <div><strong>Hasta 13</strong> Casa completa</div>
-        <div><strong>15 min</strong> Al centro, a pie</div>
+        <div><strong>7 min</strong> A la plaza, en motito</div>
+        <div><strong>Garage</strong> Incluido</div>
       </div>
     </div>
   </section>
 
   <div class="garden-rail" aria-label="Lo que incluye el lugar">
     <div class="wrap">
-      <span class="chip"><i></i> Jardín</span>
-      <span class="chip"><i></i> Fogata</span>
-      <span class="chip"><i></i> Parrilla</span>
-      <span class="chip"><i></i> Juegos para niños</span>
-      <span class="chip"><i></i> Desayuno</span>
-      <span class="chip"><i></i> WiFi y parking</span>
+      <span class="chip"><i></i> Jardines orgánicos</span>
+      <span class="chip"><i></i> Áreas verdes</span>
+      <span class="chip"><i></i> Cocina en cada casita</span>
+      <span class="chip"><i></i> Fogata y parrilla</span>
+      <span class="chip"><i></i> WiFi</span>
+      <span class="chip"><i></i> Garage incluido</span>
     </div>
   </div>
 
@@ -772,7 +785,7 @@ dialog.lightbox button {
       <div class="path" style="padding-left:1.35rem;">
         <p class="kicker">Por qué acá</p>
         <p class="lead">El Valle se recorre mejor cuando duermes más abajo que Cusco.</p>
-        <p class="body">Urubamba está casi 600 metros más bajo que la ciudad. Llegas del aeropuerto, te aclimatas en el jardín y al día siguiente sales a Maras, Moray, las Salineras u Ollantaytambo. El tren a Machu Picchu queda en la ruta natural.</p>
+        <p class="body">Urubamba está casi 600 metros más bajo que la ciudad. Llegas, te aclimatas en el jardín y al día siguiente sales a Maras, Moray, las Salineras u Ollantaytambo. A la plaza o al terminal: unos 7 minutos en motito.</p>
       </div>
       <aside class="stake" aria-label="Comparación de altitud">
         <p class="stake-label">Estaca del huerto · altitud</p>
@@ -791,71 +804,66 @@ dialog.lightbox button {
     </div>
   </section>
 
-  <section class="section" id="unidades">
+  <section class="section" id="casitas">
     <div class="wrap">
       <div class="section-head reveal">
         <p class="kicker">Dónde dormir</p>
-        <h2>Tres unidades. O toda la casa.</h2>
-        <p class="section-intro">Habitación doble, suite familiar y bungalow independiente. Todas con vista al jardín. Desayuno, WiFi y estacionamiento incluidos.</p>
+        <h2>Tres casitas. Cada una con su cocina.</h2>
+        <p class="section-intro">El cobro es por casita, por día o por semana. WiFi y garage incluidos. El desayuno no va en la tarifa: cada casita tiene cocina; si lo desean, Tay recomienda un lugar o lo prepara.</p>
       </div>
 
       <div class="units">
         <article class="unit reveal">
           <div class="unit-media">
-            <img src="images/library/habitaciones/doble-terracotta-textil.jpg" alt="Habitación Doble: cama con textil andino y paredes de tierra" width="1200" height="1600" loading="lazy">
+            <img src="images/library/habitaciones/doble-terracotta-textil.jpg" alt="Casita matrimonial: cama con textil andino y paredes de tierra" width="1200" height="1600" loading="lazy">
           </div>
           <div class="unit-body">
             <div class="unit-spec">
-              <span class="pill">45 m²</span>
-              <span class="pill">2–3 personas</span>
-              <span class="pill">Vista al jardín</span>
+              <span class="pill">Baño interno</span>
+              <span class="pill">Ducha solar</span>
+              <span class="pill">Cocina y frigobar</span>
+              <span class="pill">Sala para trabajar</span>
             </div>
-            <h3>Habitación Doble</h3>
-            <p>Una habitación amplia, cálida, con techo de vigas y la montaña cerca. Ideal para pareja o para quien viaja con un tercero.</p>
-            <a class="btn btn-forest" href="https://wa.me/51984622809?text=Hola%20Tay%2C%20quiero%20consultar%20la%20Habitaci%C3%B3n%20Doble." target="_blank" rel="noopener">Consultar esta unidad</a>
+            <h3>Casita matrimonial</h3>
+            <p class="price">S/ 120 <span>por día</span></p>
+            <p>Cama matrimonial, cocina equipada, frigobar y un estar para trabajar. El baño está dentro de la casita. WiFi y garage incluidos.</p>
+            <a class="btn btn-forest" href="https://wa.me/51984622809?text=Hola%20Tay%2C%20quiero%20consultar%20la%20casita%20matrimonial." target="_blank" rel="noopener">Consultar esta casita</a>
           </div>
         </article>
 
         <article class="unit reveal">
           <div class="unit-media">
-            <img src="images/library/habitaciones/cama-azul-pared-piedra.jpg" alt="Suite Familiar Jardín: cama azul contra muro de piedra y textil andino" width="1600" height="1200" loading="lazy">
+            <img src="images/library/exteriores/entrada-ladrillo-porche.jpg" alt="Casita Jardín: porche de ladrillo y sillones frente al pasto" width="1600" height="1200" loading="lazy">
           </div>
           <div class="unit-body">
             <div class="unit-spec">
-              <span class="pill">100 m²</span>
-              <span class="pill">Hasta 6</span>
-              <span class="pill">Familias</span>
+              <span class="pill">Baño exclusivo contiguo</span>
+              <span class="pill">Ducha eléctrica</span>
+              <span class="pill">Cocina propia</span>
             </div>
-            <h3>Suite Familiar Jardín</h3>
-            <p>Espacio de verdad: para que los niños se muevan y los adultos descansen. Sale al jardín. La unidad que más sentido tiene cuando viajan varios.</p>
-            <a class="btn btn-forest" href="https://wa.me/51984622809?text=Hola%20Tay%2C%20quiero%20consultar%20la%20Suite%20Familiar%20Jard%C3%ADn." target="_blank" rel="noopener">Consultar esta unidad</a>
+            <h3>Casita Jardín</h3>
+            <p class="price">S/ 100 <span>por día</span></p>
+            <p>Casita independiente con cocina. El baño es exclusivo, junto a la casita — no compartido, aunque no está dentro. Ducha eléctrica. WiFi y garage incluidos.</p>
+            <a class="btn btn-forest" href="https://wa.me/51984622809?text=Hola%20Tay%2C%20quiero%20consultar%20la%20Casita%20Jard%C3%ADn." target="_blank" rel="noopener">Consultar esta casita</a>
           </div>
         </article>
 
         <article class="unit reveal">
           <div class="unit-media">
-            <img src="images/library/hero/exterior-bungalow-porche-jardin.jpg" alt="Bungalow Andino: porche de piedra y madera rodeado de jardín" width="1200" height="1600" loading="lazy">
+            <img src="images/library/exteriores/bungalow-madera-valle.jpg" alt="Casita Valle: madera y muro verde con el valle al fondo" width="1600" height="1200" loading="lazy">
           </div>
           <div class="unit-body">
             <div class="unit-spec">
-              <span class="pill">60 m²</span>
-              <span class="pill">Hasta 5</span>
-              <span class="pill">Entrada propia</span>
+              <span class="pill">Baño exclusivo contiguo</span>
+              <span class="pill">Ducha eléctrica</span>
+              <span class="pill">Cocina propia</span>
             </div>
-            <h3>Bungalow Andino</h3>
-            <p>Dos dormitorios, estar, cocina y puerta independiente. Sales al jardín, a la parrilla y a la fogata. Privacidad de casa, sin irte lejos.</p>
-            <a class="btn btn-forest" href="https://wa.me/51984622809?text=Hola%20Tay%2C%20quiero%20consultar%20el%20Bungalow%20Andino." target="_blank" rel="noopener">Consultar esta unidad</a>
+            <h3>Casita Valle</h3>
+            <p class="price">S/ 100 <span>por día</span></p>
+            <p>Otra casita independiente, con cocina y vista al entorno. Baño exclusivo al lado de la casita y ducha eléctrica. WiFi y garage incluidos.</p>
+            <a class="btn btn-forest" href="https://wa.me/51984622809?text=Hola%20Tay%2C%20quiero%20consultar%20la%20Casita%20Valle." target="_blank" rel="noopener">Consultar esta casita</a>
           </div>
         </article>
-      </div>
-
-      <div class="house-full reveal">
-        <div>
-          <p class="kicker" style="color:var(--dorado);">Para grupos y familias grandes</p>
-          <h3>Casa completa · hasta 13 personas</h3>
-          <p>Jardín, parrilla y fogata exclusivos. Familias grandes, grupos, celebraciones tranquilas. Una sola reserva, toda la propiedad.</p>
-        </div>
-        <a class="btn btn-primary" href="https://wa.me/51984622809?text=Hola%20Tay%2C%20quiero%20consultar%20la%20casa%20completa%20para%20un%20grupo." target="_blank" rel="noopener">Consultar casa completa</a>
       </div>
     </div>
   </section>
@@ -869,8 +877,8 @@ dialog.lightbox button {
       <div class="day-list reveal">
         <article class="day-item">
           <time>Mañana</time>
-          <h3>Desayuno y jardín</h3>
-          <p>Desayuno americano. Café. El valle todavía fresco. Los niños al césped.</p>
+          <h3>Cocina o jardín</h3>
+          <p>Cada casita tiene su cocina. Café, cosecha del huerto si hay temporada, el valle todavía fresco.</p>
         </article>
         <article class="day-item">
           <time>Mediodía</time>
@@ -895,8 +903,8 @@ dialog.lightbox button {
     <div class="wrap">
       <div class="section-head reveal">
         <p class="kicker">El jardín</p>
-        <h2>Lo que se vive afuera vale más que la cama.</h2>
-        <p class="section-intro">Fogata, parrilla, picnic y juegos. Eso ya está. Falta que se vea — por eso hoy fotografiamos el atardecer.</p>
+        <h2>Áreas verdes, huerto y espacio al aire libre.</h2>
+        <p class="section-intro">Jardines orgánicos donde se pueden cosechar alimentos. Fogata, parrilla y un predio amplio. Con aviso previo, Tay arma turismo vivencial alrededor de las plantas que se cultivan acá.</p>
       </div>
       <div class="mosaic reveal">
         <figure>
@@ -922,16 +930,16 @@ dialog.lightbox button {
       </div>
       <div class="live-grid reveal">
         <article class="live-card">
-          <h3>Fogata</h3>
-          <p>La foto que falta — y la que más vende. Hoy, golden hour, fuego prendido.</p>
+          <h3>Jardines orgánicos</h3>
+          <p>Se cultivan alimentos en el predio. En temporada se puede cosechar. No es un jardín de postal: es huerto de verdad.</p>
         </article>
         <article class="live-card">
-          <h3>Parrilla y picnic</h3>
-          <p>Cocina afuera, mesa en el pasto. Familias se quedan más noches cuando pueden comer acá.</p>
+          <h3>Espacio al aire libre</h3>
+          <p>Áreas verdes amplias. Fogata, parrilla y sitio para estar afuera, no encerrado en la casita.</p>
         </article>
         <article class="live-card">
-          <h3>Niños</h3>
-          <p>Juegos al aire libre. El Valle no es solo para parejas; esta casa está pensada para familias.</p>
+          <h3>Turismo vivencial</h3>
+          <p>Con aviso previo: flores y plantas que se cultivan acá. Un día de huerto, no un tour de agencia.</p>
         </article>
       </div>
     </div>
@@ -942,12 +950,12 @@ dialog.lightbox button {
       <div>
         <p class="kicker">Desde la puerta</p>
         <h2>Base para el Valle, no escala de paso.</h2>
-        <p class="section-intro">Estadías de 3, 5 y 7 noches tienen sentido: el boleto a Machu Picchu obliga a esperar fecha. Acá se espera bien.</p>
+        <p class="section-intro">Estadías de varios días tienen sentido: el boleto a Machu Picchu obliga a esperar fecha. Acá se espera bien. También hay tarifa por semana.</p>
       </div>
       <dl class="valley-list">
         <div class="valley-item">
-          <dt>~15 min a pie</dt>
-          <dd>Centro de Urubamba y Santuario del Señor de Torrechayoc</dd>
+          <dt>7 min en motito</dt>
+          <dd>Plaza de Urubamba o terminal — no suelen venir caminando</dd>
         </div>
         <div class="valley-item">
           <dt>Ruta del día</dt>
@@ -965,15 +973,27 @@ dialog.lightbox button {
     </div>
   </section>
 
+  <section class="section" id="eventos">
+    <div class="wrap">
+      <div class="house-full reveal">
+        <div>
+          <p class="kicker" style="color:var(--dorado);">El predio</p>
+          <h3>Eventos al aire libre · hasta unas 50 personas</h3>
+          <p>Baby shower, noche de pizza, watia. Ustedes traen todo; acá se alquila el espacio. Cumpleaños sí, con aviso previo y condiciones de horario: el lugar es para descansar, no para fiesta hasta tarde.</p>
+        </div>
+        <a class="btn btn-primary" href="https://wa.me/51984622809?text=Hola%20Tay%2C%20quiero%20consultar%20el%20espacio%20para%20un%20evento." target="_blank" rel="noopener">Consultar evento</a>
+      </div>
+    </div>
+  </section>
+
   <section class="section" id="tay">
     <div class="wrap">
       <article class="host reveal">
         <img src="images/library/exteriores/bungalow-madera-valle.jpg" alt="Bungalow de madera y turquesa con el valle al fondo" width="1600" height="1200" loading="lazy">
         <div class="host-copy">
           <p class="kicker">La anfitriona</p>
-          <blockquote>“Acá los recibo yo, les preparo el desayuno y los ayudo a organizar el Valle.”</blockquote>
-          <p>Tay — Tania — es el nombre de la casa porque es quien abre la puerta. En el Valle Sagrado las reseñas de 5 estrellas no las gana el resort: las gana quien te nombra por tu nombre y te consigue el taxi a las Salineras.</p>
-          <p style="margin-top:0.7rem;color:var(--ink-2);">Hoy queremos su foto en el jardín. Esa es la imagen que convierte “un hospedaje” en La Casa de Tay.</p>
+          <blockquote>“Acá los recibo yo y los ayudo a organizar el Valle. Si quieren desayuno, me avisan.”</blockquote>
+          <p>Tay — Tania — es el nombre de la casa porque es quien abre la puerta. Cada casita tiene su cocina: el desayuno no está en la tarifa; si lo piden, ella recomienda un lugar o lo prepara.</p>
         </div>
       </article>
     </div>
@@ -991,16 +1011,20 @@ dialog.lightbox button {
           <p>No. Urubamba está a 2.870 m, casi 600 metros más bajo que Cusco ciudad. Muchos viajeros bajan directo del aeropuerto justamente para aclimatarse acá.</p>
         </details>
         <details class="faq-item" name="faq">
-          <summary>¿Qué tan lejos está Machu Picchu?</summary>
-          <p>Estamos en la ruta natural. Ollantaytambo, de donde sale el tren, queda a unos 30 minutos. Te ayudamos a coordinar traslados y tours.</p>
+          <summary>¿El desayuno está incluido?</summary>
+          <p>No. Cada casita tiene cocina equipada, así que la mayoría se prepara acá. Si lo desean, Tay recomienda un lugar o puede prepararles el desayuno — avisen con tiempo.</p>
         </details>
         <details class="faq-item" name="faq">
-          <summary>¿Se puede alquilar toda la casa?</summary>
-          <p>Sí. Hasta 13 personas, con jardín, parrilla y fogata exclusivos. Ideal para familias grandes y grupos.</p>
+          <summary>¿Qué tan lejos está la plaza?</summary>
+          <p>Unos 7 minutos en motito a la plaza de Urubamba o al terminal. No es una caminata al centro: así se mueve la gente de acá.</p>
         </details>
         <details class="faq-item" name="faq">
-          <summary>¿Qué incluye?</summary>
-          <p>Desayuno, WiFi en toda la propiedad y estacionamiento privado gratis. Hay cocina para usar, picnic y parrilla. Mascotas: no, por ahora.</p>
+          <summary>¿Se pueden hacer eventos?</summary>
+          <p>Sí, con aviso previo. Baby shower, noche de pizza, watia: ustedes traen todo y se alquila el espacio, hasta unas 50 personas. Cumpleaños también, con horario y condiciones — el predio es para descansar.</p>
+        </details>
+        <details class="faq-item" name="faq">
+          <summary>¿Qué incluye la tarifa?</summary>
+          <p>La casita, WiFi y garage. El cobro es por día o por semana, por casita — no por persona. Desayuno aparte. Preferimos no recibir mascotas por los cultivos; si traen, con sus implementos y sin salir del espacio asignado.</p>
         </details>
         <details class="faq-item" name="faq">
           <summary>¿Check-in y check-out?</summary>
@@ -1015,7 +1039,7 @@ dialog.lightbox button {
       <div class="section-head">
         <p class="kicker" style="color:var(--dorado);">Reserva directa</p>
         <h2>Escríbele a Tay. Sin comisión de plataforma.</h2>
-        <p class="section-intro">Dile fechas y cuántas personas. Te responde por WhatsApp, como en casa.</p>
+        <p class="section-intro">Dile fechas y qué casita. Te responde por WhatsApp. También hay tarifa por semana.</p>
       </div>
       <div class="book-grid">
         <form id="reserva" action="https://wa.me/51984622809" method="get">
@@ -1032,16 +1056,16 @@ dialog.lightbox button {
           <div class="row-2">
             <div class="field">
               <label for="personas">Personas</label>
-              <input id="personas" name="personas" type="number" min="1" max="13" value="2" required>
+              <input id="personas" name="personas" type="number" min="1" max="50" value="2" required>
             </div>
             <div class="field">
               <label for="unidad">Unidad</label>
               <select id="unidad" name="unidad">
                 <option>Me ayuda a elegir</option>
-                <option>Habitación Doble</option>
-                <option>Suite Familiar Jardín</option>
-                <option>Bungalow Andino</option>
-                <option>Casa completa</option>
+                <option>Casita matrimonial (S/ 120)</option>
+                <option>Casita Jardín (S/ 100)</option>
+                <option>Casita Valle (S/ 100)</option>
+                <option>Evento / espacio (hasta 50)</option>
               </select>
             </div>
           </div>
@@ -1052,11 +1076,11 @@ dialog.lightbox button {
           <button class="btn btn-primary" type="submit">Abrir WhatsApp</button>
         </form>
         <aside>
-          <p style="font-family:var(--display);font-size:1.55rem;line-height:1.25;">La reserva directa le deja a ella lo que Booking se lleva: 15 a 18%.</p>
+          <p style="font-family:var(--display);font-size:1.55rem;line-height:1.25;">La tarifa es por casita, por día o por semana — no por persona.</p>
           <ul>
             <li>WhatsApp 984 622 809</li>
             <li>Instagram @casadetay</li>
-            <li>Larespampa, Urubamba</li>
+            <li>Larespampa, Urubamba · 7 min en motito a la plaza</li>
             <li>Check-in 14:00 · out 13:00</li>
           </ul>
         </aside>
@@ -1067,7 +1091,7 @@ dialog.lightbox button {
 
 <footer>
   <div class="wrap" style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:0.75rem;width:min(1120px, calc(100% - 2.4rem));margin-inline:auto;">
-    <p>La Casa de Tay · Urubamba, Valle Sagrado</p>
+    <p>Casa de Tay · Urubamba, Valle Sagrado</p>
     <p>
       <a href="https://www.instagram.com/casadetay/" target="_blank" rel="noopener">Instagram</a>
       ·
@@ -1097,7 +1121,7 @@ dialog.lightbox button {
     const personas = document.getElementById("personas").value;
     const unidad = document.getElementById("unidad").value;
     const nota = document.getElementById("nota").value.trim();
-    let msg = "Hola Tay, quiero consultar disponibilidad en La Casa de Tay.%0A";
+    let msg = "Hola Tay, quiero consultar disponibilidad en Casa de Tay.%0A";
     msg += "Llegada: " + llegada + "%0ASalida: " + salida + "%0A";
     msg += "Personas: " + personas + "%0AUnidad: " + unidad;
     if (nota) msg += "%0ANota: " + nota;
